@@ -1,7 +1,6 @@
 package bll.login;
 
 import be.User;
-import be.UserType;
 
 public interface LoginFacade {
 

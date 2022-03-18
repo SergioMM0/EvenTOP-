@@ -29,7 +29,6 @@ public class MainLogController implements Initializable {
 
     @FXML
     void login(ActionEvent event) {
-        boolean correct;
 
     }
 }
