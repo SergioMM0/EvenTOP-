@@ -13,8 +13,6 @@ import java.util.ResourceBundle;
 
 public class MainLogController implements Initializable {
 
-    private boolean isEM = false;
-
     @FXML
     private TextField emailField;
 
@@ -24,9 +22,6 @@ public class MainLogController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
-    @FXML
-    private JFXButton switchLoginButton;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -34,15 +29,7 @@ public class MainLogController implements Initializable {
 
     @FXML
     void login(ActionEvent event) {
+        boolean correct;
 
-    }
-
-    @FXML
-    void switchLoginAct(ActionEvent event) {
-        isEM = !isEM;
-        if (isEM){
-            switchLoginButton.setText("I'm a customer");
-        }
-        else switchLoginButton.setText("I'm an Event Manager");
     }
 }
