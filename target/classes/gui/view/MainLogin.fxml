@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.MainLogController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.MainLogController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="400.0" layoutX="50.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXButton layoutX="342.0" layoutY="455.0" prefHeight="30.0" prefWidth="144.0" text="I'm an Event Manager" />
-      <PasswordField layoutX="75.0" layoutY="278.0" prefHeight="20.0" prefWidth="350.0" />
-      <TextField layoutX="75.0" layoutY="225.0" prefHeight="20.0" prefWidth="350.0" />
-      <JFXButton layoutX="223.0" layoutY="334.0" text="Log in" />
+      <ImageView fx:id="frontImage" fitHeight="150.0" fitWidth="400.0" layoutX="50.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="40.0" />
+      <JFXButton fx:id="switchLogin" layoutX="335.0" layoutY="405.0" maxHeight="30.0" maxWidth="150.0" minHeight="30.0" minWidth="150.0" prefHeight="30.0" prefWidth="150.0" text="I'm an Event Manager" AnchorPane.bottomAnchor="14.600000000000001" AnchorPane.rightAnchor="14.599999999999994" />
+      <PasswordField fx:id="passwordField" layoutX="75.0" layoutY="293.0" prefHeight="20.0" prefWidth="350.0" promptText="Password..." AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="74.60000000000002" AnchorPane.topAnchor="293.0" />
+      <TextField fx:id="emailField" layoutX="75.0" layoutY="255.0" prefHeight="20.0" prefWidth="350.0" promptText="Email..." AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="74.60000000000002" AnchorPane.topAnchor="255.0" />
+      <JFXButton fx:id="loginButton" layoutX="223.0" layoutY="334.0" text="Log in" AnchorPane.leftAnchor="223.0" AnchorPane.rightAnchor="228.2" AnchorPane.topAnchor="334.0" />
+      <Label layoutX="180.0" layoutY="220.0" prefHeight="18.0" prefWidth="144.0" text="Introduce your credentials:" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="220.0" />
    </children>
 </AnchorPane>
