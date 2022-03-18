@@ -1,6 +1,7 @@
 package gui.controller;
 
 import com.jfoenix.controls.JFXButton;
+import gui.model.LoginModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +14,8 @@ import java.util.ResourceBundle;
 
 public class MainLogController implements Initializable {
 
+    private LoginModel loginModel;
+
     @FXML
     private TextField emailField;
 
@@ -22,6 +25,10 @@ public class MainLogController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
+    public MainLogController(){
+        loginModel = new LoginModel();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -29,6 +36,6 @@ public class MainLogController implements Initializable {
 
     @FXML
     void login(ActionEvent event) {
-
+        loginModel.checkCredentials(emailField.getText(),passwordField.getText());
     }
 }
