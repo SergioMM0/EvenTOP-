@@ -44,7 +44,7 @@ public class DAOLogin {
         }
         System.out.println(user);
         if(user == null){
-            throw new LoginEX("Wrong email or password", new Exception());
+            throw new LoginEX("Wrong email or password, try again", new Exception());
         }
         return user;
     }

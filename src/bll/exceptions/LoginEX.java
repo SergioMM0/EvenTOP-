@@ -8,7 +8,6 @@ public class LoginEX extends Throwable {
         this.message = message;
     }
 
-
     public String getExceptionMessage(){
         return this.message;
     }

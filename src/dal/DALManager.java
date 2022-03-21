@@ -17,8 +17,4 @@ public class DALManager implements DALFacade{
         return daoLogin.checkCredentials(email,password);
     }
 
-    public Exception loginFailed(Exception ex){
-        return ex;
-    }
-
 }

@@ -1,6 +1,7 @@
 package gui.controller;
 
 import bll.exceptions.LoginEX;
+import com.jfoenix.controls.JFXButton;
 import gui.model.LoginModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,11 +11,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainLogController implements Initializable {
+public class LoginController implements Initializable {
 
     private LoginModel loginModel;
 
@@ -22,22 +24,24 @@ public class MainLogController implements Initializable {
     private TextField emailField;
 
     @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
     private ImageView frontImage;
+
+    @FXML
+    private JFXButton loginButton;
 
     @FXML
     private PasswordField passwordField;
 
-    public MainLogController() {
+    public LoginController() {
         loginModel = new LoginModel();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-    private void displayException(){
-
+        anchorPane.getStylesheets().add("gui/css/Login.css");
     }
 
     @FXML
