@@ -1,6 +1,7 @@
 package bll.login;
 
 import be.User;
+import bll.exceptions.LoginEX;
 import dal.DALFacade;
 import dal.DALManager;
 
@@ -13,7 +14,7 @@ public class LoginManager implements LoginFacade{
     }
 
     @Override
-    public User checkCredentials(String email, String password) {
+    public User checkCredentials(String email, String password) throws LoginEX {
         return dalFacade.checkCredentials(email, password);
     }
 

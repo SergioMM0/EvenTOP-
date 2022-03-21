@@ -1,10 +1,12 @@
 package gui.controller;
 
-import com.jfoenix.controls.JFXButton;
+import bll.exceptions.LoginEX;
 import gui.model.LoginModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -25,7 +27,7 @@ public class MainLogController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
-    public MainLogController(){
+    public MainLogController() {
         loginModel = new LoginModel();
     }
 
@@ -34,8 +36,22 @@ public class MainLogController implements Initializable {
 
     }
 
+    private void displayException(){
+
+    }
+
     @FXML
     void login(ActionEvent event) {
-        loginModel.checkCredentials(emailField.getText(),passwordField.getText());
+        try{
+            loginModel.checkCredentials(emailField.getText(), passwordField.getText());
+        } catch(LoginEX loginEX){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Login credentials");
+                alert.setHeaderText(loginEX.getExceptionMessage());
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+        }
     }
+
 }

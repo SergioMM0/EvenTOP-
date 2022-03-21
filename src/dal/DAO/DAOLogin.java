@@ -3,10 +3,8 @@ package dal.DAO;
 
 import be.User;
 import be.UserType;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
+import bll.exceptions.LoginEX;
 import dal.connectionProvider.ConnectionProvider;
-
-import javax.security.auth.login.LoginException;
 import java.sql.*;
 
 public class DAOLogin {
@@ -29,7 +27,7 @@ public class DAOLogin {
         return matched;
     }
 
-    public User checkCredentials(String email, String password){
+    public User checkCredentials(String email, String password) throws LoginEX {
         User user = null;
         String sql = "SELECT Email, [Password], UserType FROM Users WHERE Email = ? AND [Password] = ?";
         try (Connection connection = connectionProvider.getConnection()){
@@ -45,6 +43,9 @@ public class DAOLogin {
             throwables.printStackTrace();
         }
         System.out.println(user);
+        if(user == null){
+            throw new LoginEX("Wrong email or password", new Exception());
+        }
         return user;
     }
 

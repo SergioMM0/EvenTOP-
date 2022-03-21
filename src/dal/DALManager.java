@@ -1,6 +1,7 @@
 package dal;
 
 import be.User;
+import bll.exceptions.LoginEX;
 import dal.DAO.DAOLogin;
 
 public class DALManager implements DALFacade{
@@ -12,7 +13,7 @@ public class DALManager implements DALFacade{
     }
 
     @Override
-    public User checkCredentials(String email, String password) {
+    public User checkCredentials(String email, String password) throws LoginEX {
         return daoLogin.checkCredentials(email,password);
     }
 
