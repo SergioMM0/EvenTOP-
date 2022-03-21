@@ -13,3 +13,20 @@
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
     -fx-padding: 10 20 10 20;
 }
+
+#anchorPane{
+    -fx-background-color: #424E51;
+}
+.label{
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-text-alignment: center;
+}
+.password-field{
+    -fx-background-color: #B8BDBE;
+    -fx-prompt-text-fill: grey;
+}
+.text-field{
+    -fx-background-color: #B8BDBE;
+    -fx-prompt-text-fill: grey;
+}
