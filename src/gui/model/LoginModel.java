@@ -7,7 +7,7 @@ import bll.login.LoginManager;
 
 public class LoginModel {
 
-    private LoginFacade loginF;
+    private final LoginFacade loginF;
 
     public LoginModel(){
         loginF = new LoginManager();
