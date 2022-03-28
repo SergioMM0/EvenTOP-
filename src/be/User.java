@@ -11,16 +11,6 @@ public class User {
         this.password = password;
     }
 
-    public User(UserType userType,String email){
-        this.type = userType;
-        this.email = email;
-    }
-
-    public User(String email,String password){
-        this.email = email;
-        this.password = password;
-    }
-
     public UserType getType() {
         return type;
     }
