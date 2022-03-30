@@ -11,9 +11,9 @@ public class Event {
     private List<User> eventManagers;
     private String location;
     private List<Ticket> tickets;
-    private String[] info;
+    private String info;
 
-    public Event(int id, String name, Date date, List<User> eventManagers, String location, List<Ticket> tickets, String[] info) {
+    public Event(int id, String name, Date date, List<User> eventManagers, String location, List<Ticket> tickets, String info) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -75,11 +75,11 @@ public class Event {
         return list.size();
     }
 
-    public String[] getInfo() {
+    public String getInfo() {
         return info;
     }
 
-    public void setInfo(String[] info) {
+    public void setInfo(String info) {
         this.info = info;
     }
 }

@@ -82,9 +82,8 @@ public class LoginController implements Initializable {
         try{root = loader.load();}
         catch (IOException conn){}
         assert root != null;
-        EMVController emvController = new EMVController();
         root.getStylesheets().add("");  //CSS after
-        loader.setController(emvController.getInstance());
+        loader.setController(EMVController.getInstance());
         Stage stage = new Stage();
         stage.setTitle("EVENTOP");
         stage.setScene(new Scene(root,1000,650));
