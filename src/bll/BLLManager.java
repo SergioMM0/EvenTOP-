@@ -3,8 +3,6 @@ package bll;
 import be.Event;
 import dal.DAO.DAOEvents;
 
-import java.sql.SQLException;
-
 public class BLLManager implements BLLFacade{
 
     private DAOEvents daoEvents;
@@ -14,7 +12,7 @@ public class BLLManager implements BLLFacade{
     }
 
     @Override
-    public void addEvent(Event event) throws SQLException {
+    public void addEvent(Event event){
         daoEvents.addEvent(event);
     }
 }

@@ -10,5 +10,5 @@ public interface DALFacade {
 
     User checkCredentials(String email,String password) throws LoginEX;
 
-    void addEvent(Event event) throws SQLException;
+    void addEvent(Event event);
 }

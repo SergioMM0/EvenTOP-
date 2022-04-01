@@ -23,6 +23,13 @@ public class Event {
         this.info = info;
     }
 
+    public Event(String name, Date date, String location, String info){
+        this.name = name;
+        this.date = date;
+        this.location = location;
+        this.info = info;
+    }
+
     public int getId() {
         return id;
     }
@@ -81,5 +88,18 @@ public class Event {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                ", eventManagers=" + eventManagers +
+                ", location='" + location + '\'' +
+                ", tickets=" + tickets +
+                ", info='" + info + '\'' +
+                '}';
     }
 }

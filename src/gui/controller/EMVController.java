@@ -14,10 +14,7 @@ import java.util.ResourceBundle;
 
 public class EMVController implements Initializable {
 
-    public static EMVController emvController;
-
     public EMVController(){
-
     }
 
     @FXML
@@ -26,30 +23,23 @@ public class EMVController implements Initializable {
     }
 
     private void openNewEventWindow(){
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/view/NewEventView.fxml"));
         Parent root = null;
-        try{root = loader.load();}
-        catch (IOException conn){}
-        assert root != null;
-        root.getStylesheets().add("");  //CSS after
-        loader.setController(NewEventController.getInstance());
-        Stage stage = new Stage();
-        stage.setTitle("EVENTOP");
-        stage.setScene(new Scene(root,600,420));
-        stage.setResizable(false);
-        stage.show();
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("gui/view/NewEventView.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("EvenTOP");
+
+            stage.setScene(new Scene(root, 600, 420));
+            stage.setResizable(false);
+            //root.getStylesheets().add("");  //CSS after
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    }
-
-    public static EMVController getInstance(){
-        if(emvController == null){
-            emvController = new EMVController();
-        }
-        return emvController;
     }
 }

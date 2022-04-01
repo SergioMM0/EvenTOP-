@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public interface BLLFacade {
 
-    void addEvent(Event event) throws SQLException;
+    void addEvent(Event event);
 
 
 }

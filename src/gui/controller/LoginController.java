@@ -18,7 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
@@ -83,7 +82,6 @@ public class LoginController implements Initializable {
         catch (IOException conn){}
         assert root != null;
         root.getStylesheets().add("");  //CSS after
-        loader.setController(EMVController.getInstance());
         Stage stage = new Stage();
         stage.setTitle("EVENTOP");
         stage.setScene(new Scene(root,1000,650));
