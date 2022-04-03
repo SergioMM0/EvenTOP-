@@ -5,11 +5,9 @@ import be.User;
 import bll.BLLFacade;
 import bll.BLLManager;
 import dal.exceptions.DALException;
-import gui.controller.NewEventController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NewEventModel {
@@ -54,8 +52,6 @@ public class NewEventModel {
         allEms.remove(user);
     }
 
-
-
     public User getUser(String name){
         for(User user : allEms){
             if(user.getName().equals(name)){
@@ -72,5 +68,9 @@ public class NewEventModel {
             }
         }
         return null;
+    }
+
+    public void addEventAndEMs(Event event, List<User> ems) throws DALException{
+        bllFacade.addEventAndEMs(event,ems);
     }
 }

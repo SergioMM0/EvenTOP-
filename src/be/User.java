@@ -1,6 +1,7 @@
 package be;
 
 public class User {
+    private int id;
     private UserType type;
     private String email;
     private String password;
@@ -12,7 +13,8 @@ public class User {
         this.password = password;
     }
 
-    public User(String name){
+    public User(int id,String name){
+        this.id = id;
         this.name = name;
     }
 
@@ -46,6 +48,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

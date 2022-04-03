@@ -37,4 +37,8 @@ public class DALManager implements DALFacade{
         return daoEventManagers.getAllEms();
     }
 
+    public void addEventAndEMs(Event event, List<User> ems) throws DALException{
+        daoEvents.addEventAndEMs(event,ems);
+    }
+
 }

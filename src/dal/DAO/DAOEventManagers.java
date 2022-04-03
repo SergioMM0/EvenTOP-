@@ -20,17 +20,17 @@ public class DAOEventManagers {
 
     public List<User> getAllEms() throws DALException {
         List<User> allUsers = new ArrayList<>();
-        String sql = "SELECT [Name] FROM Users WHERE UserType = 'EVENTMANAGER'";
+        String sql = "SELECT [Name],[ID] FROM Users WHERE UserType = 'EVENTMANAGER'";
         try(Connection conn = connectionProvider.getConnection()){
             PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.execute();
             ResultSet rs = st.getResultSet();
             while(rs.next()){
-                allUsers.add(new User(rs.getString("Name")));
+                allUsers.add(new User(rs.getInt("ID"),rs.getString("Name")));
             }
         }
         catch (SQLException sqlException) {
-            throw new DALException("Not connected to database", sqlException);
+            throw new DALException("Not able to connect to database", sqlException);
         }
         return allUsers;
     }

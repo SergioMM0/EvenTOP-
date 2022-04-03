@@ -13,7 +13,9 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Date;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class NewEventController implements Initializable {
 
@@ -35,6 +37,18 @@ public class NewEventController implements Initializable {
     @FXML
     private ListView<String> emList = new ListView<>();
 
+    @FXML
+    private TextField endHour;
+
+    @FXML
+    private TextField endMin;
+
+    @FXML
+    private TextField startHour;
+
+    @FXML
+    private TextField startMin;
+
     private NewEventModel newEventModel;
 
 
@@ -43,7 +57,7 @@ public class NewEventController implements Initializable {
         populateComboBox();
     }
 
-    public NewEventController(){
+    public NewEventController() {
         newEventModel = new NewEventModel();
     }
 
@@ -55,20 +69,19 @@ public class NewEventController implements Initializable {
         repopulateComboBox();
     }
 
-    private void repopulateComboBox(){
+    private void repopulateComboBox() {
         emComboBox.getItems().clear();
-        for(User user : newEventModel.getObservableEms()){
+        for (User user : newEventModel.getObservableEms()) {
             emComboBox.getItems().add(user.getName());
         }
     }
 
-    public void populateComboBox(){
-        try{
-            for(User user : newEventModel.getAllEms()){
+    public void populateComboBox() {
+        try {
+            for (User user : newEventModel.getAllEms()) {
                 emComboBox.getItems().add(user.getName());
             }
-        }
-        catch(DALException dalException){
+        } catch (DALException dalException) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Database error");
             alert.setHeaderText(dalException.getMessage());
@@ -86,9 +99,9 @@ public class NewEventController implements Initializable {
         repopulateEmList();
     }
 
-    private void repopulateEmList(){
+    private void repopulateEmList() {
         emList.getItems().clear();
-        for(User user : newEventModel.getRemovedEms()){
+        for (User user : newEventModel.getRemovedEms()) {
             emList.getItems().add(user.getName());
         }
     }
@@ -102,24 +115,22 @@ public class NewEventController implements Initializable {
     void createEventButton(ActionEvent event) {
         Date currentDate = java.sql.Date.valueOf(LocalDate.now());
         Date setDate = null;
-        try{
-            if(Objects.equals(eventName.getText(), "") || eventName.getText() == null){
+        try {
+            if (Objects.equals(eventName.getText(), "") || eventName.getText() == null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Login credentials");
                 alert.setHeaderText("Introduce a name for the event");
                 ButtonType okButton = new ButtonType("OK");
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
-            }
-            else if(currentDate.compareTo(java.sql.Date.valueOf(eventDate.getValue())) > 0 || eventDate.getValue() == null){
+            } else if (currentDate.compareTo(java.sql.Date.valueOf(eventDate.getValue())) > 0 || eventDate.getValue() == null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Login credentials");
                 alert.setHeaderText("Introduce a valid date for the event");
                 ButtonType okButton = new ButtonType("OK");
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
-            }
-            else if(Objects.equals(eventLocation.getText(), "") || eventLocation.getText() == null){
+            } else if (Objects.equals(eventLocation.getText(), "") || eventLocation.getText() == null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Login credentials");
                 alert.setHeaderText("Introduce a location for the event");
@@ -127,8 +138,7 @@ public class NewEventController implements Initializable {
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
             }
-            //To implement when an EM is not assigned to an event.
-            else{
+            else {
                 setDate = java.sql.Date.valueOf(eventDate.getValue());
                 try {
                     addEvent();
@@ -142,7 +152,7 @@ public class NewEventController implements Initializable {
                 }
                 closeWindow();
             }
-        }catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Login credentials");
             alert.setHeaderText("Introduce a valid date for the event");
@@ -153,12 +163,25 @@ public class NewEventController implements Initializable {
     }
 
     private void addEvent() throws DALException {
-        newEventModel.addEvent(new Event(eventName.getText(),java.sql.Date.valueOf(eventDate.getValue()),eventLocation.getText(),eventInformation.getText()));
+        if()
+
+        switch{
+            case 1{
+
+            }
+        }
+
+        /*
+        if (!emList.hasProperties()) {
+            newEventModel.addEvent(new Event(eventName.getText(), java.sql.Date.valueOf(eventDate.getValue()), eventLocation.getText(), eventInformation.getText()));
+        } else {
+            newEventModel.addEventAndEMs(new Event(eventName.getText(), java.sql.Date.valueOf(eventDate.getValue()), eventLocation.getText(), eventInformation.getText()), newEventModel.getRemovedEms());
+        }
+         */
     }
 
-    private void closeWindow(){
+    private void closeWindow() {
         Stage st = (Stage) eventName.getScene().getWindow();
         st.close();
     }
-
 }

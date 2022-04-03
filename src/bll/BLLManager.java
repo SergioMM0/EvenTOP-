@@ -24,4 +24,8 @@ public class BLLManager implements BLLFacade{
     public List<User> getAllEms() throws DALException {
         return dalFacade.getAllEms();
     }
+
+    public void addEventAndEMs(Event event, List<User> ems) throws DALException{
+        dalFacade.addEventAndEMs(event,ems);
+    }
 }
