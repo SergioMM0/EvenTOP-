@@ -1,12 +1,15 @@
 package bll;
 
 import be.Event;
+import be.User;
+import dal.exceptions.DALException;
 
-import java.sql.SQLException;
+import java.util.List;
 
 public interface BLLFacade {
 
-    void addEvent(Event event);
+    void addEvent(Event event) throws DALException;
 
+    List<User> getAllEms() throws DALException;
 
 }

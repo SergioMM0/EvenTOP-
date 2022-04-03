@@ -4,11 +4,16 @@ public class User {
     private UserType type;
     private String email;
     private String password;
+    private String name;
 
     public User(UserType type, String email, String password){
         this.type = type;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String name){
+        this.name = name;
     }
 
     public UserType getType() {
@@ -33,6 +38,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

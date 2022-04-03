@@ -1,18 +1,27 @@
 package bll;
 
 import be.Event;
-import dal.DAO.DAOEvents;
+import be.User;
+import dal.DALFacade;
+import dal.DALManager;
+import dal.exceptions.DALException;
+
+import java.util.List;
 
 public class BLLManager implements BLLFacade{
 
-    private DAOEvents daoEvents;
+    private DALFacade dalFacade;
 
     public BLLManager(){
-        daoEvents = new DAOEvents();
+        dalFacade = new DALManager();
     }
 
     @Override
-    public void addEvent(Event event){
-        daoEvents.addEvent(event);
+    public void addEvent(Event event) throws DALException {
+        dalFacade.addEvent(event);
+    }
+
+    public List<User> getAllEms() throws DALException {
+        return dalFacade.getAllEms();
     }
 }

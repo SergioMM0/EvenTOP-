@@ -43,7 +43,7 @@ public class DAOLogin {
                 user = new User(parseType(rs.getString("UserType")),rs.getString("Email"),rs.getString("Password"));
             }
         } catch (SQLException throwables) {
-            throw new DALException("Incorrect database tables", throwables);
+            throw new DALException("Not connected to database", throwables);
         }
         return user;
     }

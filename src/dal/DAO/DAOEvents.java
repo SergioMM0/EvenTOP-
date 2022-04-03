@@ -2,6 +2,7 @@ package dal.DAO;
 
 import be.Event;
 import dal.connectionProvider.ConnectionProvider;
+import dal.exceptions.DALException;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,7 +17,7 @@ public class DAOEvents {
         this.connectionProvider = new ConnectionProvider();
     }
 
-    public void addEvent(Event event){
+    public void addEvent(Event event) throws DALException {
         try {
             String sql = "INSERT INTO Events([Name],[Date],[Location],[Info]) VALUES (?,?,?,?)";
             Connection connection = connectionProvider.getConnection();
@@ -27,8 +28,8 @@ public class DAOEvents {
             st.setString(4, event.getInfo());
             st.execute();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException sqlException) {
+            throw new DALException("Not connected to database",sqlException);
         }
     }
 }
