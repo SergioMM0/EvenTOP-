@@ -2,11 +2,10 @@ package dal;
 
 import be.Event;
 import be.User;
-import bll.exceptions.LoginEX;
+import bll.exceptions.BLLException;
 import dal.DAO.DAOEvents;
 import dal.DAO.DAOLogin;
-
-import java.sql.SQLException;
+import dal.exceptions.DALException;
 
 public class DALManager implements DALFacade{
 
@@ -19,7 +18,7 @@ public class DALManager implements DALFacade{
     }
 
     @Override
-    public User checkCredentials(String email, String password) throws LoginEX {
+    public User checkCredentials(String email, String password) throws BLLException, DALException {
         return daoLogin.checkCredentials(email,password);
     }
 

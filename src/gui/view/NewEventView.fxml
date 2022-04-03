@@ -21,7 +21,7 @@
       <TextField fx:id="eventInformation" layoutX="28.0" layoutY="200.0" prefHeight="132.0" prefWidth="284.0" />
       <ListView layoutX="359.0" layoutY="131.0" prefHeight="200.0" prefWidth="200.0" />
       <JFXComboBox layoutX="363.0" layoutY="69.0" prefHeight="26.0" prefWidth="191.0" promptText="Add EM..." />
-      <JFXButton layoutX="30.0" layoutY="366.0" text="Cancel" />
+      <JFXButton layoutX="30.0" layoutY="366.0" onAction="#closeWindow" text="Cancel" />
       <JFXButton layoutX="475.0" layoutY="366.0" onAction="#createEventButton" text="Create Event" />
       <JFXButton layoutX="360.0" layoutY="332.0" prefHeight="26.0" prefWidth="75.0" text="Delete EM" />
    </children>

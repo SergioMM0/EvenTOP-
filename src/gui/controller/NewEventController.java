@@ -44,20 +44,48 @@ public class NewEventController implements Initializable {
         newEventModel = new NewEventModel();
     }
 
+
+    @FXML
+    void closeWindow(ActionEvent event) {
+        closeWindow();
+    }
+
     @FXML
     void createEventButton(ActionEvent event) {
         Date currentDate = java.sql.Date.valueOf(LocalDate.now());
-        Date setDate = java.sql.Date.valueOf(eventDate.getValue());
-
-        if(Objects.equals(eventName.getText(), "") || eventName.getText() == null){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Login credentials");
-            alert.setHeaderText("Introduce a name for the event");
-            ButtonType okButton = new ButtonType("OK");
-            alert.getButtonTypes().setAll(okButton);
-            alert.showAndWait();
-        }
-        else if(currentDate.compareTo(setDate) > 0 || eventDate.getValue() == null){
+        Date setDate = null;
+        try{
+            if(Objects.equals(eventName.getText(), "") || eventName.getText() == null){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Login credentials");
+                alert.setHeaderText("Introduce a name for the event");
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+            }
+            else if(currentDate.compareTo(java.sql.Date.valueOf(eventDate.getValue())) > 0 || eventDate.getValue() == null){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Login credentials");
+                alert.setHeaderText("Introduce a valid date for the event");
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+            }
+            else if(Objects.equals(eventLocation.getText(), "") || eventLocation.getText() == null){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Login credentials");
+                alert.setHeaderText("Introduce a location for the event");
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+            }
+            //To implement when an EM is not assigned to an event.
+            else{
+                setDate = java.sql.Date.valueOf(eventDate.getValue());
+                addEvent();
+                closeWindow();
+            }
+        }catch (NullPointerException ex){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Login credentials");
             alert.setHeaderText("Introduce a valid date for the event");
@@ -65,22 +93,15 @@ public class NewEventController implements Initializable {
             alert.getButtonTypes().setAll(okButton);
             alert.showAndWait();
         }
-        else if(Objects.equals(eventLocation.getText(), "") || eventLocation.getText() == null){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Login credentials");
-            alert.setHeaderText("Introduce a location for the event");
-            ButtonType okButton = new ButtonType("OK");
-            alert.getButtonTypes().setAll(okButton);
-            alert.showAndWait();
-        }
-        //To implement when an EM is not assigned to an event.
-        else addEvent();
-
     }
 
-    public void addEvent(){
+    private void addEvent(){
         newEventModel.addEvent(new Event(eventName.getText(),java.sql.Date.valueOf(eventDate.getValue()),eventLocation.getText(),eventInformation.getText()));
+    }
+
+    private void closeWindow(){
         Stage st = (Stage) eventName.getScene().getWindow();
         st.close();
     }
+
 }

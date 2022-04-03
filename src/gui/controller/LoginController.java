@@ -1,10 +1,10 @@
 package gui.controller;
 
 import be.User;
-import bll.exceptions.LoginEX;
+import bll.exceptions.BLLException;
 import com.jfoenix.controls.JFXButton;
+import dal.exceptions.DALException;
 import gui.model.LoginModel;
-import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,15 +62,23 @@ public class LoginController implements Initializable {
                 case ADMIN:
                     //implement
                     break;
-
             }
-        } catch(LoginEX loginEX){
+        } catch(BLLException loginEX){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Login credentials");
-                alert.setHeaderText(loginEX.getExceptionMessage());
+                alert.setTitle("Wrong login credentials");
+                alert.setHeaderText(loginEX.getMessage());
                 ButtonType okButton = new ButtonType("OK");
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
+                System.out.println(loginEX.getCause());
+        } catch (DALException databaseEx) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Database error");
+            alert.setHeaderText(databaseEx.getMessage());
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+            System.out.println(databaseEx.getCause());
         }
     }
 
@@ -79,7 +87,7 @@ public class LoginController implements Initializable {
         loader.setLocation(getClass().getClassLoader().getResource("gui/view/EMView.fxml"));
         Parent root = null;
         try{root = loader.load();}
-        catch (IOException conn){}
+        catch (IOException ignored){}
         assert root != null;
         root.getStylesheets().add("");  //CSS after
         Stage stage = new Stage();

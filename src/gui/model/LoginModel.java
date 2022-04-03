@@ -1,9 +1,10 @@
 package gui.model;
 
 import be.User;
-import bll.exceptions.LoginEX;
+import bll.exceptions.BLLException;
 import bll.login.LoginFacade;
 import bll.login.LoginManager;
+import dal.exceptions.DALException;
 
 public class LoginModel {
 
@@ -13,7 +14,7 @@ public class LoginModel {
         loginF = new LoginManager();
     }
 
-    public User checkCredentials(String email, String password) throws LoginEX {
+    public User checkCredentials(String email, String password) throws BLLException, DALException {
         return loginF.checkCredentials(email,password);
     }
 }

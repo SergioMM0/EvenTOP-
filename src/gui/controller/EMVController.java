@@ -28,7 +28,6 @@ public class EMVController implements Initializable {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("gui/view/NewEventView.fxml"));
             Stage stage = new Stage();
             stage.setTitle("EvenTOP");
-
             stage.setScene(new Scene(root, 600, 420));
             stage.setResizable(false);
             //root.getStylesheets().add("");  //CSS after

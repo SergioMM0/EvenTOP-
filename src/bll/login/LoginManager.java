@@ -1,9 +1,12 @@
 package bll.login;
 
 import be.User;
-import bll.exceptions.LoginEX;
+import bll.exceptions.BLLException;
 import dal.DALFacade;
 import dal.DALManager;
+import dal.exceptions.DALException;
+
+import java.security.InvalidParameterException;
 
 
 public class LoginManager implements LoginFacade{
@@ -14,8 +17,12 @@ public class LoginManager implements LoginFacade{
     }
 
     @Override
-    public User checkCredentials(String email, String password) throws LoginEX {
-        return dalFacade.checkCredentials(email, password);
+    public User checkCredentials(String email, String password) throws BLLException, DALException {
+        User user = dalFacade.checkCredentials(email, password);
+        if(user == null){
+            throw new BLLException("Wrong email or password, try again", new InvalidParameterException());
+        }
+        return user;
     }
 
 }
