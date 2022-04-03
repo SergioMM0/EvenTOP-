@@ -12,6 +12,8 @@ public class Event {
     private String location;
     private List<Ticket> tickets;
     private String info;
+    private String startTime;
+    private String endTime;
 
     public Event(int id, String name, Date date, List<User> eventManagers, String location, List<Ticket> tickets, String info) {
         this.id = id;
@@ -23,11 +25,13 @@ public class Event {
         this.info = info;
     }
 
-    public Event(String name, Date date, String location, String info){
+    public Event(String name, Date date, String location, String info,String startTime,String endTime){
         this.name = name;
         this.date = date;
         this.location = location;
         this.info = info;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public int getId() {
@@ -88,6 +92,22 @@ public class Event {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String hour,String min) {
+        this.startTime = hour + ":" + min;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String hour, String min) {
+        this.endTime = hour + ":" + min;
     }
 
     @Override

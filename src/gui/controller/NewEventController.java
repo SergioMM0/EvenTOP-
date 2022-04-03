@@ -118,22 +118,29 @@ public class NewEventController implements Initializable {
         try {
             if (Objects.equals(eventName.getText(), "") || eventName.getText() == null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Login credentials");
+                alert.setTitle("Creating event");
                 alert.setHeaderText("Introduce a name for the event");
                 ButtonType okButton = new ButtonType("OK");
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
             } else if (currentDate.compareTo(java.sql.Date.valueOf(eventDate.getValue())) > 0 || eventDate.getValue() == null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Login credentials");
+                alert.setTitle("Creating event");
                 alert.setHeaderText("Introduce a valid date for the event");
                 ButtonType okButton = new ButtonType("OK");
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
             } else if (Objects.equals(eventLocation.getText(), "") || eventLocation.getText() == null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Login credentials");
+                alert.setTitle("Creating event");
                 alert.setHeaderText("Introduce a location for the event");
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+            } else if (!timeIsCorrect()){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Creating event");
+                alert.setHeaderText("Introduce a valid start time");
                 ButtonType okButton = new ButtonType("OK");
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
@@ -162,22 +169,38 @@ public class NewEventController implements Initializable {
         }
     }
 
+    private boolean timeIsCorrect(){
+        if(Integer.parseInt(startHour.getText())>23 || Integer.parseInt(startHour.getText()) < 0){
+            return false;
+        }
+        else if(Integer.parseInt(startMin.getText())>59 || Integer.parseInt(startMin.getText()) < 0 ){
+            return false;
+        }
+        else return true;
+    }
+
     private void addEvent() throws DALException {
-        if()
-
-        switch{
-            case 1{
-
-            }
-        }
-
-        /*
         if (!emList.hasProperties()) {
-            newEventModel.addEvent(new Event(eventName.getText(), java.sql.Date.valueOf(eventDate.getValue()), eventLocation.getText(), eventInformation.getText()));
+            newEventModel.addEvent(
+                    new Event(
+                            eventName.getText(),
+                            java.sql.Date.valueOf(eventDate.getValue()),
+                            eventLocation.getText(),
+                            eventInformation.getText(),
+                            startHour.getText() + ":" + startMin.getText(),
+                            endHour.getText()+ ":" +endMin.getText()
+                            ));
         } else {
-            newEventModel.addEventAndEMs(new Event(eventName.getText(), java.sql.Date.valueOf(eventDate.getValue()), eventLocation.getText(), eventInformation.getText()), newEventModel.getRemovedEms());
+            newEventModel.addEventAndEMs(
+                    new Event(
+                            eventName.getText(),
+                            java.sql.Date.valueOf(eventDate.getValue()),
+                            eventLocation.getText(),
+                            eventInformation.getText(),
+                            startHour.getText()+ ":" +startMin.getText(),
+                            endHour.getText()+ ":" +endMin.getText()
+                            ),newEventModel.getRemovedEms());
         }
-         */
     }
 
     private void closeWindow() {

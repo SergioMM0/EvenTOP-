@@ -12,8 +12,8 @@
          <children>
             <JFXButton defaultButton="true" layoutX="20.0" layoutY="20.0" onAction="#openNewEventView" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Create event" />
             <JFXButton layoutX="771.0" layoutY="20.0" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Assistance list" />
-            <JFXButton layoutX="266.0" layoutY="20.0" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Event's info" />
-            <JFXButton layoutX="513.0" layoutY="20.0" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Generate ticket for event..." />
+            <JFXButton layoutX="266.0" layoutY="20.0" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Event's info..." />
+            <JFXButton layoutX="513.0" layoutY="20.0" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Manage tickets for event..." />
             <AnchorPane layoutX="20.0" layoutY="88.0" prefHeight="416.0" prefWidth="918.0" style="-fx-background-color: ffffff;">
                <children>
                   <TableView layoutX="20.0" layoutY="20.0" prefHeight="372.0" prefWidth="876.0">

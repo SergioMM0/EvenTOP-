@@ -18,13 +18,15 @@ public class DAOEvents {
 
     public void addEvent(Event event) throws DALException {
         try {
-            String sql = "INSERT INTO Events([Name],[Date],[Location],[Info]) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO Events([Name],[Date],[Location],[Info],[StartTime],[EndTime]) VALUES (?,?,?,?,?,?)";
             Connection connection = connectionProvider.getConnection();
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, event.getName());
             st.setDate(2, (Date) event.getDate());
             st.setString(3, event.getLocation());
             st.setString(4, event.getInfo());
+            st.setString(5,event.getStartTime());
+            st.setString(6,event.getEndTime());
             st.execute();
         } catch (SQLException sqlException) {
             throw new DALException("Not connected to database",sqlException);
