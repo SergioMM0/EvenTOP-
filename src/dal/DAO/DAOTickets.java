@@ -1,5 +1,7 @@
 package dal.DAO;
 
+import be.TicketRS;
+import be.TicketG;
 import dal.connectionProvider.ConnectionProvider;
 
 public class DAOTickets {
@@ -9,6 +11,7 @@ public class DAOTickets {
     public DAOTickets(){
         connectionProvider = new ConnectionProvider();
     }
+
 
 
 }
