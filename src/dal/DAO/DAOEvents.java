@@ -6,6 +6,7 @@ import dal.connectionProvider.ConnectionProvider;
 import dal.exceptions.DALException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DAOEvents {
@@ -78,6 +79,23 @@ public class DAOEvents {
                 throw new DALException("Not able to connect to database",sqlException);
             }
         }
+    }
+
+    public List<Event> getAllEvents() throws DALException{
+        List<Event> allEvents = new ArrayList<>();
+        try{
+            String sql = "SELECT * FROM Events";
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            st.execute();
+            ResultSet rs = st.getResultSet();
+            while(rs.next()){
+                return null; // IMPLEMENT FIRST TICKETS
+            }
+        }catch(SQLException sql){
+            throw new DALException("Not able to connect to database", sql);
+        }
+        return null;
     }
 
 }
