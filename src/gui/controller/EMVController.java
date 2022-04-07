@@ -152,6 +152,8 @@ public class EMVController implements Initializable {
             nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
             emsColumn.setCellValueFactory(new PropertyValueFactory<>("eventManagers"));
+            assistantsColumn.setCellValueFactory(new PropertyValueFactory<>("tickets"));
+            locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
 
         }catch (DALException dalException){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
