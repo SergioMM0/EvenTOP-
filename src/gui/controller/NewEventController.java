@@ -35,7 +35,7 @@ public class NewEventController implements Initializable {
     private TextField eventName;
 
     @FXML
-    private ListView<String> emList = new ListView<>();
+    private ListView<String> emList;
 
     @FXML
     private TextField endHour;
@@ -59,6 +59,7 @@ public class NewEventController implements Initializable {
 
     public NewEventController() {
         newEventModel = new NewEventModel();
+        emList = new ListView<>();
     }
 
     @FXML
