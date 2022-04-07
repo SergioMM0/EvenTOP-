@@ -1,6 +1,7 @@
 package gui.controller;
 
 import be.Event;
+import be.User;
 import com.jfoenix.controls.JFXButton;
 import dal.exceptions.DALException;
 import gui.model.EMVModel;
@@ -11,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -37,7 +39,7 @@ public class EMVController implements Initializable {
     private TableColumn<Date,Event> dateColumn;
 
     @FXML
-    private TableColumn<Integer,Event> emsColumn;
+    private TableColumn<String, Event> emsColumn;
 
     @FXML
     private JFXButton eventInfoButton;
@@ -83,7 +85,7 @@ public class EMVController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        populateEventsTable();
     }
 
     @FXML
@@ -142,9 +144,15 @@ public class EMVController implements Initializable {
 
     }
 
+
+
     public void populateEventsTable(){
         try{
-            emvModel.getAllEvents();
+            eventTableView.getItems().addAll(emvModel.getAllEvents());
+            nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+            dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+            emsColumn.setCellValueFactory(new PropertyValueFactory<>("eventManagers"));
+
         }catch (DALException dalException){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("An error has ocurred");

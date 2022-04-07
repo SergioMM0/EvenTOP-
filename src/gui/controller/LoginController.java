@@ -70,7 +70,7 @@ public class LoginController implements Initializable {
                 ButtonType okButton = new ButtonType("OK");
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
-                System.out.println(loginEX.getCause());
+
         } catch (DALException databaseEx) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Database error");
@@ -78,7 +78,7 @@ public class LoginController implements Initializable {
             ButtonType okButton = new ButtonType("OK");
             alert.getButtonTypes().setAll(okButton);
             alert.showAndWait();
-            System.out.println(databaseEx.getCause());
+
         }
     }
 

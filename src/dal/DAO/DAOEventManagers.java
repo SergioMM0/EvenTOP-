@@ -54,6 +54,9 @@ public class DAOEventManagers {
         }catch(SQLException sqlEx){
             throw new DALException("Not able to connect to database", sqlEx);
         }
+        for(User user : emsInEvent){
+            System.out.println(user.getName());
+        }
         return emsInEvent;
     }
 

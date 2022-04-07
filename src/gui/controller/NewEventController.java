@@ -181,7 +181,7 @@ public class NewEventController implements Initializable {
     }
 
     private void addEvent() throws DALException {
-        if (!emList.hasProperties()) {
+        if (newEventModel.getRemovedEms().isEmpty()) {
             newEventModel.addEvent(
                     new Event(
                             eventName.getText(),

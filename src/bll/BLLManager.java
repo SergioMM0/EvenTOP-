@@ -36,18 +36,16 @@ public class BLLManager implements BLLFacade{
     }
 
     public List<Event> getAllEvents()throws DALException {
-        List<Event> fulfilledEvents = new ArrayList<>();
         int tickets = 0; // TO IMPLEMENT
-        for(Event event : dalFacade.getAllEventsB()){
-            fulfilledEvents.add(new Event(event.getId(),
-                    event.getName(),
-                    event.getDate(),
-                    dalFacade.getEmsInEvent(event.getId(),dalFacade.getAllEms()),
-                    event.getLocation(),
-                    tickets,
-                    event.getInfo()));
+        List<Event> events = dalFacade.getAllEventsB();
+        List<User> allEms = dalFacade.getAllEms();
+        for(Event event : events){
+            for(User user : dalFacade.getEmsInEvent(event.getId(),allEms)){
+                event.addEventManager(user.getName());
+            }
+            event.setTickets(tickets);
         }
-        return fulfilledEvents;
+        return events;
     }
 
     public void fixStartHour(Event event){

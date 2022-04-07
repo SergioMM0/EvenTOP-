@@ -8,14 +8,14 @@ public class Event {
     private int id;
     private String name;
     private Date date;
-    private List<User> eventManagers;
+    private String eventManagers;
     private String location;
     private int tickets;
     private String info;
     private String startTime;
     private String endTime;
 
-    public Event(int id, String name, Date date, List<User> eventManagers, String location, int tickets, String info) {
+    public Event(int id, String name, Date date, String eventManagers, String location, int tickets, String info) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -66,14 +66,16 @@ public class Event {
         this.date = date;
     }
 
-    public List<User> getEventManagers() {
+    public String getEventManagers() {
         return eventManagers;
     }
 
-    public void addEventManager(User user) {
-        eventManagers.add(user);
+    public void addEventManager(String eventManager) {
+        if(eventManagers == null){
+            this.eventManagers = eventManager;
+        }
+        else this.eventManagers = eventManagers + ", " + eventManager;
     }
-
 
     public String getLocation() {
         return location;
@@ -121,10 +123,12 @@ public class Event {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", date=" + date +
-                ", eventManagers=" + eventManagers +
+                ", eventManagers='" + eventManagers + '\'' +
                 ", location='" + location + '\'' +
                 ", tickets=" + tickets +
                 ", info='" + info + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
                 '}';
     }
 }
