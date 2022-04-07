@@ -81,21 +81,29 @@ public class DAOEvents {
         }
     }
 
-    public List<Event> getAllEvents() throws DALException{
+    public List<Event> getAllEventsB() throws DALException{
         List<Event> allEvents = new ArrayList<>();
         try{
-            String sql = "SELECT * FROM Events";
+            String sql = "SELECT [ID],[Name],[Date],[Location],[Info] FROM Events;";
             Connection connection = connectionProvider.getConnection();
             PreparedStatement st = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             st.execute();
             ResultSet rs = st.getResultSet();
             while(rs.next()){
-                return null; // IMPLEMENT FIRST TICKETS
+                allEvents.add(new Event(rs.getInt("ID"),
+                        rs.getString("Name"),
+                        parseDate(rs.getDate("Date")),
+                        rs.getString("Location"),
+                        rs.getString("Info")));
             }
         }catch(SQLException sql){
             throw new DALException("Not able to connect to database", sql);
         }
-        return null;
+        return allEvents;
+    }
+
+    private java.util.Date parseDate(Date sqlDate){
+        return new Date(sqlDate.getTime());
     }
 
 }

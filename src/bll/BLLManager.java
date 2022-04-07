@@ -2,10 +2,12 @@ package bll;
 
 import be.Event;
 import be.User;
+import bll.exceptions.BLLException;
 import dal.DALFacade;
 import dal.DALManager;
 import dal.exceptions.DALException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BLLManager implements BLLFacade{
@@ -31,6 +33,21 @@ public class BLLManager implements BLLFacade{
         fixStartHour(event);
         fixEndHour(event);
         dalFacade.addEventAndEMs(event,ems);
+    }
+
+    public List<Event> getAllEvents()throws DALException {
+        List<Event> fulfilledEvents = new ArrayList<>();
+        int tickets = 0; // TO IMPLEMENT
+        for(Event event : dalFacade.getAllEventsB()){
+            fulfilledEvents.add(new Event(event.getId(),
+                    event.getName(),
+                    event.getDate(),
+                    dalFacade.getEmsInEvent(event.getId(),dalFacade.getAllEms()),
+                    event.getLocation(),
+                    tickets,
+                    event.getInfo()));
+        }
+        return fulfilledEvents;
     }
 
     public void fixStartHour(Event event){

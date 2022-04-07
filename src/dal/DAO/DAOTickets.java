@@ -36,4 +36,5 @@ public class DAOTickets {
             throw new DALException("Not able to connect to database", sqlException);
         }
     }
+
 }

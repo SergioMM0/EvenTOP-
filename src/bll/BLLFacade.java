@@ -14,4 +14,6 @@ public interface BLLFacade {
 
     void addEventAndEMs(Event event, List<User> ems) throws DALException;
 
+    List<Event> getAllEvents() throws DALException;
+
 }

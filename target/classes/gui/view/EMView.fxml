@@ -6,37 +6,37 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.EMVController">
+<AnchorPane fx:id="mainAnchorPane" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.EMVController">
    <children>
-      <AnchorPane layoutX="22.0" layoutY="140.0" prefHeight="520.0" prefWidth="960.0" style="-fx-background-color: bfbfbf;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0">
+      <AnchorPane fx:id="bottomAnchorPane" layoutX="22.0" layoutY="140.0" prefHeight="520.0" prefWidth="960.0" style="-fx-background-color: bfbfbf;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0">
          <children>
-            <JFXButton defaultButton="true" layoutX="20.0" layoutY="20.0" onAction="#openNewEventView" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Create event" />
-            <JFXButton layoutX="771.0" layoutY="20.0" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Assistance list" />
-            <JFXButton layoutX="266.0" layoutY="20.0" onAction="#openEventInfo" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Event's info..." />
-            <JFXButton layoutX="513.0" layoutY="20.0" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Manage tickets for event..." />
-            <AnchorPane layoutX="20.0" layoutY="88.0" prefHeight="416.0" prefWidth="918.0" style="-fx-background-color: ffffff;">
+            <JFXButton fx:id="createEventButton" defaultButton="true" layoutX="20.0" layoutY="20.0" onAction="#openNewEventView" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Create event" />
+            <JFXButton fx:id="assistanceListButton" layoutX="771.0" layoutY="20.0" onAction="#openAssistanceList" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Assistance list" />
+            <JFXButton fx:id="eventInfoButton" layoutX="266.0" layoutY="20.0" onAction="#openEventInfo" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Event's info..." />
+            <JFXButton fx:id="manageTicketsButton" layoutX="513.0" layoutY="20.0" onAction="#openManageTickets" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Manage tickets for event..." />
+            <AnchorPane fx:id="subBottomAnchorPane" layoutX="20.0" layoutY="88.0" prefHeight="416.0" prefWidth="918.0" style="-fx-background-color: ffffff;">
                <children>
-                  <TableView layoutX="20.0" layoutY="20.0" prefHeight="372.0" prefWidth="876.0">
+                  <TableView fx:id="eventTableView" layoutX="20.0" layoutY="20.0" prefHeight="372.0" prefWidth="876.0">
                     <columns>
-                      <TableColumn prefWidth="165.59997177124023" text="Name" />
-                      <TableColumn prefWidth="142.40003967285156" text="Date" />
-                        <TableColumn minWidth="0.0" prefWidth="183.99993896484375" text="EM's" />
-                        <TableColumn prefWidth="63.20001220703125" text="Assistants" />
-                        <TableColumn prefWidth="330.4000244140625" text="Location" />
+                      <TableColumn fx:id="nameColumn" prefWidth="165.59997177124023" text="Name" />
+                      <TableColumn fx:id="dateColumn" prefWidth="142.40003967285156" text="Date" />
+                        <TableColumn fx:id="emsColumn" minWidth="0.0" prefWidth="183.99993896484375" text="EM's" />
+                        <TableColumn fx:id="assistantsColumn" prefWidth="63.20001220703125" text="Assistants" />
+                        <TableColumn fx:id="locationColumn" prefWidth="330.4000244140625" text="Location" />
                     </columns>
                   </TableView>
                </children>
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="66.0" prefWidth="960.0" style="-fx-background-color: bfbfbf;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <AnchorPane fx:id="topAnchorPane" layoutX="20.0" layoutY="20.0" prefHeight="66.0" prefWidth="960.0" style="-fx-background-color: bfbfbf;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
             <Label layoutX="20.0" layoutY="20.0" prefHeight="25.0" prefWidth="90.0" text="Event Manager:" />
-            <Label layoutX="130.0" layoutY="13.0" prefHeight="40.0" prefWidth="200.0" text="EVENT MANAGER #ID" />
+            <Label fx:id="eventManagerLabel" layoutX="130.0" layoutY="13.0" prefHeight="40.0" prefWidth="200.0" text="EVENT MANAGER #ID" />
             <Label layoutX="389.0" layoutY="22.0" prefHeight="20.0" prefWidth="90.0" text="Events in charge:" />
-            <Label layoutX="487.0" layoutY="22.0" prefHeight="20.0" prefWidth="50.0" text="nº events" />
-            <JFXButton defaultButton="true" layoutX="713.0" layoutY="18.0" prefHeight="30.0" prefWidth="50.0" style="-fx-background-color: ffffff;" text="Info" />
-            <JFXButton defaultButton="true" layoutX="778.0" layoutY="17.0" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: ffffff;" text="Log out" />
+            <Label fx:id="eventsCounterLabel" layoutX="487.0" layoutY="22.0" prefHeight="20.0" prefWidth="50.0" text="nº events" />
+            <JFXButton fx:id="infoButton" defaultButton="true" layoutX="713.0" layoutY="18.0" onAction="#openEmInfo" prefHeight="30.0" prefWidth="50.0" style="-fx-background-color: ffffff;" text="Info" />
+            <JFXButton fx:id="logOutButton" defaultButton="true" layoutX="778.0" layoutY="17.0" onAction="#logOut" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: ffffff;" text="Log out" />
          </children>
       </AnchorPane>
    </children>

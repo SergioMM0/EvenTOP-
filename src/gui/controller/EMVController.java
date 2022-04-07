@@ -2,6 +2,7 @@ package gui.controller;
 
 import be.Event;
 import com.jfoenix.controls.JFXButton;
+import dal.exceptions.DALException;
 import gui.model.EMVModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,9 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -143,8 +142,18 @@ public class EMVController implements Initializable {
 
     }
 
-    public void populateEventTableView(){
-        emvModel.getAllEvents();
+    public void populateEventsTable(){
+        try{
+            emvModel.getAllEvents();
+        }catch (DALException dalException){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("An error has ocurred");
+            alert.setHeaderText("Error updating events table, please check your connection");
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+        }
+
     }
 }
 

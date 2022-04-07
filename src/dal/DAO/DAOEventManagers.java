@@ -1,10 +1,10 @@
 package dal.DAO;
 
 import be.User;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dal.connectionProvider.ConnectionProvider;
 import dal.exceptions.DALException;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,28 @@ public class DAOEventManagers {
             throw new DALException("Not able to connect to database", sqlException);
         }
         return allUsers;
+    }
+
+    public List<User> getEmsInEvent(int id,List<User> allEms) throws DALException{
+        List<User> emsInEvent = new ArrayList<>();
+        String sql = "SELECT [EmID] FROM EmsInEvent WHERE EventID = ?";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            st.setInt(1,id);
+            st.execute();
+            ResultSet rs = st.getResultSet();
+            while(rs.next()){
+                for(User user : allEms){
+                    if(user.getId() == rs.getInt("EmID")){
+                        emsInEvent.add(user);
+                    }
+                }
+            }
+        }catch(SQLException sqlEx){
+            throw new DALException("Not able to connect to database", sqlEx);
+        }
+        return emsInEvent;
     }
 
 }

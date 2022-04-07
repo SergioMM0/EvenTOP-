@@ -3,6 +3,7 @@ package gui.model;
 import be.Event;
 import bll.BLLFacade;
 import bll.BLLManager;
+import dal.exceptions.DALException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,8 +17,9 @@ public class EMVModel {
         events = FXCollections.observableArrayList();
     }
 
-    public void getAllEvents() {
-
+    public ObservableList<Event> getAllEvents() throws DALException {
+        events.addAll(bllFacade.getAllEvents());
+        return events;
     }
 
 }
