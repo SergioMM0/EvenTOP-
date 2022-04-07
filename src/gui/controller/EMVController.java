@@ -41,4 +41,9 @@ public class EMVController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
+    @FXML
+    void openEventInfo(ActionEvent event) {
+
+    }
 }

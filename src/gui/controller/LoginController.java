@@ -87,7 +87,9 @@ public class LoginController implements Initializable {
         loader.setLocation(getClass().getClassLoader().getResource("gui/view/EMView.fxml"));
         Parent root = null;
         try{root = loader.load();}
-        catch (IOException ignored){}
+        catch (IOException ignored){
+            ignored.printStackTrace();
+        }
         assert root != null;
         root.getStylesheets().add("");  //CSS after
         Stage stage = new Stage();
