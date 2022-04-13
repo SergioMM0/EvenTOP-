@@ -39,6 +39,14 @@ public class EventInfoModel {
         return emsNotInEvent;
     }
 
+    public ObservableList<User> getObservableEmsInCharge(){
+        return emsInEvent;
+    }
+
+    public ObservableList<User> getObservableEmsNotInCharge(){
+        return emsNotInEvent;
+    }
+
     public User getEmInEvent(String name){
         for(User user : emsInEvent){
             if(user.getName().equals(name)){
@@ -57,5 +65,13 @@ public class EventInfoModel {
         return null;
     }
 
-    
+    public void addEmInCharge(User user){
+        emsInEvent.add(user);
+        emsNotInEvent.remove(user);
+    }
+
+    public void removeEmInCharge(User user){
+        emsNotInEvent.add(user);
+        emsInEvent.remove(user);
+    }
 }

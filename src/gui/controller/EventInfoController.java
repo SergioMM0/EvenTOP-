@@ -110,7 +110,24 @@ public class EventInfoController implements Initializable {
 
     @FXML
     void addEM(ActionEvent event) {
+        User selected = eventInfoModel.getEmNotInEvent(emComboBox.getValue());
+        eventInfoModel.addEmInCharge(selected);
+        repopulateEmComboBox();
+        repopulateEmList();
+    }
 
+    private void repopulateEmComboBox() {
+        emComboBox.getItems().clear();
+        for(User user : eventInfoModel.getObservableEmsNotInCharge()) {
+            emComboBox.getItems().add(user.getName());
+        }
+    }
+
+    private void repopulateEmList(){
+        emList.getItems().clear();
+        for(User user : eventInfoModel.getObservableEmsInCharge()){
+            emList.getItems().add(user.getName());
+        }
     }
 
     @FXML
@@ -130,7 +147,10 @@ public class EventInfoController implements Initializable {
 
     @FXML
     void deleteEM(ActionEvent event) {
-
+        User selected = eventInfoModel.getEmInEvent(emList.getSelectionModel().getSelectedItem());
+        eventInfoModel.removeEmInCharge(selected);
+        repopulateEmList();
+        repopulateEmComboBox();
     }
 
     private void closeWindow(){
