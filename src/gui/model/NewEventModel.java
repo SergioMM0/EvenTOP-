@@ -24,13 +24,11 @@ public class NewEventModel {
 
     public void addEvent(Event event) throws DALException {
         bllFacade.addEvent(event);
-        System.out.println(event);
     }
 
     public ObservableList<User> getAllEms() throws DALException {
         allEms.clear();
         allEms.addAll(bllFacade.getAllEms());
-
         return allEms;
     }
 

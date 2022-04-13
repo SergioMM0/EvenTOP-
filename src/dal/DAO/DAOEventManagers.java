@@ -1,9 +1,11 @@
 package dal.DAO;
 
+import be.Event;
 import be.User;
 import dal.connectionProvider.ConnectionProvider;
 import dal.exceptions.DALException;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,29 +36,25 @@ public class DAOEventManagers {
         return allUsers;
     }
 
-    public List<User> getEmsInEvent(int id,List<User> allEms) throws DALException{
-        List<User> emsInEvent = new ArrayList<>();
-        String sql = "SELECT [EmID] FROM EmsInEvent WHERE EventID = ?";
+    public List<User> getEmsInEvent(Event event) throws DALException{
+        List<User> allEms = new ArrayList<>();
         try{
+            String sql = "SELECT [ID],[Name] FROM Users WHERE UserType = 'EVENTMANAGER' AND Users.ID IN(SELECT EmId FROM EmsInEvent WHERE EventID = ?)";
             Connection connection = connectionProvider.getConnection();
-            PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            st.setInt(1,id);
+            PreparedStatement st = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            st.setInt(1,event.getId());
             st.execute();
             ResultSet rs = st.getResultSet();
             while(rs.next()){
-                for(User user : allEms){
-                    if(user.getId() == rs.getInt("EmID")){
-                        emsInEvent.add(user);
-                    }
-                }
+                allEms.add(
+                        new User(
+                                rs.getInt("ID"),
+                                rs.getString("Name")));
             }
-        }catch(SQLException sqlEx){
-            throw new DALException("Not able to connect to database", sqlEx);
-        }
-        for(User user : emsInEvent){
-            System.out.println(user.getName());
-        }
-        return emsInEvent;
-    }
 
+        }catch(SQLException sqlException){
+            throw new DALException("Not able to connect to database",sqlException);
+        }
+        return allEms;
+    }
 }

@@ -41,11 +41,14 @@ public class DALManager implements DALFacade{
         daoEvents.addEventAndEMs(event,ems);
     }
 
-    public List<Event> getAllEventsB()throws DALException{
-        return daoEvents.getAllEventsB();
+    public List<Event> getAllEvents() throws DALException{
+        return daoEvents.getAllEvents();
     }
 
-    public List<User> getEmsInEvent(int id, List<User> allEms) throws DALException{
-        return daoEventManagers.getEmsInEvent(id,allEms);
+    @Override
+    public List<User> getEmsInEvent(Event event) throws DALException {
+        return daoEventManagers.getEmsInEvent(event);
     }
+
+
 }

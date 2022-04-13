@@ -16,7 +16,7 @@
             <JFXButton fx:id="manageTicketsButton" layoutX="513.0" layoutY="20.0" onAction="#openManageTickets" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: ffffff;" text="Manage tickets for event..." />
             <AnchorPane fx:id="subBottomAnchorPane" layoutX="20.0" layoutY="88.0" prefHeight="416.0" prefWidth="918.0" style="-fx-background-color: ffffff;">
                <children>
-                  <TableView fx:id="eventTableView" layoutX="20.0" layoutY="20.0" prefHeight="372.0" prefWidth="876.0">
+                  <TableView fx:id="eventTableView" layoutX="20.0" layoutY="20.0" onMouseClicked="#eventClicked" prefHeight="372.0" prefWidth="876.0">
                     <columns>
                       <TableColumn fx:id="nameColumn" prefWidth="165.59997177124023" text="Name" />
                       <TableColumn fx:id="dateColumn" prefWidth="142.40003967285156" text="Date" />

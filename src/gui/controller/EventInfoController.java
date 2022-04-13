@@ -1,7 +1,8 @@
 package gui.controller;
 
+import be.Event;
 import com.jfoenix.controls.JFXComboBox;
-import gui.model.NewEventModel;
+import gui.model.EventInfoModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
 public class EventInfoController implements Initializable {
@@ -45,10 +47,12 @@ public class EventInfoController implements Initializable {
     @FXML
     private TextField startMin;
 
-    private NewEventModel eventModel;
+    private EventInfoModel infoModel;
+    private EMVController emvController;
+    private Event chosenEvent;
 
     public EventInfoController(){
-        eventModel = new NewEventModel();
+        infoModel = new EventInfoModel();
         emList = new ListView<>();
     }
 
@@ -57,8 +61,21 @@ public class EventInfoController implements Initializable {
 
     }
 
+    public void populateEventInfo(){
+        eventName.setText(chosenEvent.getName());
+        eventDate.setValue(chosenEvent.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        eventLocation.setText(chosenEvent.getLocation());
+        eventInformation.setText(chosenEvent.getInfo());
+        startHour.setText(chosenEvent.getStartTime());
+    }
+
     @FXML
     void addEM(ActionEvent event) {
+
+    }
+
+    @FXML
+    void DeleteEvent(ActionEvent event) {
 
     }
 
@@ -68,7 +85,7 @@ public class EventInfoController implements Initializable {
     }
 
     @FXML
-    void createEventButton(ActionEvent event) {
+    void editEvent(ActionEvent event) {
 
     }
 
@@ -81,4 +98,14 @@ public class EventInfoController implements Initializable {
         Stage st = (Stage) eventName.getScene().getWindow();
         st.close();
     }
+
+    public void setController(EMVController emvController) {
+        this.emvController = emvController;
+    }
+
+    public void setChosenEvent(Event event){
+        this.chosenEvent = event;
+    }
+
+
 }

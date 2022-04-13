@@ -16,7 +16,7 @@ public interface DALFacade {
 
     void addEventAndEMs(Event event, List<User> ems) throws DALException;
 
-    List<Event> getAllEventsB() throws DALException;
+    List<Event> getAllEvents() throws DALException;
 
-    List<User> getEmsInEvent(int id, List<User> allEms) throws DALException;
+    List<User> getEmsInEvent(Event event) throws DALException;
 }
