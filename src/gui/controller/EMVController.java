@@ -94,6 +94,21 @@ public class EMVController implements Initializable {
     }
 
     private void openNewEventWindow(){
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/NewEventView.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        NewEventController newEventController = loader.getController();
+        newEventController.setController(this); //establishes the main controller as the controller.
+        Stage stage = new Stage();
+        stage.setTitle("Add event");
+        stage.setScene(new Scene(root, 600, 420));
+        stage.show();
+    }
+        /*
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("gui/view/NewEventView.fxml"));
@@ -107,6 +122,8 @@ public class EMVController implements Initializable {
             e.printStackTrace();
         }
     }
+
+         */
 
     @FXML
     void openEventInfo(ActionEvent event) {

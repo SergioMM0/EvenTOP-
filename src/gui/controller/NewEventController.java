@@ -50,6 +50,7 @@ public class NewEventController implements Initializable {
     private TextField startMin;
 
     private NewEventModel newEventModel;
+    private EMVController emvController;
 
 
     @Override
@@ -168,6 +169,7 @@ public class NewEventController implements Initializable {
             alert.getButtonTypes().setAll(okButton);
             alert.showAndWait();
         }
+
     }
 
     private boolean timeIsCorrect(){
@@ -202,10 +204,15 @@ public class NewEventController implements Initializable {
                             endHour.getText()+ ":" +endMin.getText()
                             ),newEventModel.getRemovedEms());
         }
+        emvController.populateEventsTable();
     }
 
     private void closeWindow() {
         Stage st = (Stage) eventName.getScene().getWindow();
         st.close();
+    }
+
+    public void setController(EMVController emvController) {
+        this.emvController = emvController;
     }
 }
