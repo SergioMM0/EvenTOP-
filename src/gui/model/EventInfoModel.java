@@ -1,5 +1,6 @@
 package gui.model;
 
+import be.Event;
 import be.User;
 import bll.BLLFacade;
 import bll.BLLManager;
@@ -11,6 +12,7 @@ public class EventInfoModel {
     private BLLFacade bllFacade;
     private ObservableList<User> allEms;
     private ObservableList<User> removedEms;
+    private Event chosenEvent = null;
 
     public EventInfoModel(){
         bllFacade = new BLLManager();
@@ -19,4 +21,11 @@ public class EventInfoModel {
     }
 
 
+    public void setSelectedEvent(Event chosenEvent) {
+        this.chosenEvent = chosenEvent;
+    }
+
+    public Event getChosenEvent(){
+        return chosenEvent;
+    }
 }

@@ -15,7 +15,7 @@ public class Event {
     private String startTime;
     private String endTime;
 
-    public Event(int id, String name, Date date, String eventManagers, String location, int tickets, String info) {
+    public Event(int id, String name, Date date, String eventManagers, String location, int tickets, String info,String startTime, String endTime) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -23,6 +23,8 @@ public class Event {
         this.location = location;
         this.tickets = tickets;
         this.info = info;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public Event (int id, String name, Date date, String location, String info){

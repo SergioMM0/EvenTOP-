@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
 
@@ -47,12 +49,12 @@ public class EventInfoController implements Initializable {
     @FXML
     private TextField startMin;
 
-    private EventInfoModel infoModel;
+    private EventInfoModel eventInfoModel;
     private EMVController emvController;
     private Event chosenEvent;
 
     public EventInfoController(){
-        infoModel = new EventInfoModel();
+        eventInfoModel = new EventInfoModel();
         emList = new ListView<>();
     }
 
@@ -61,12 +63,17 @@ public class EventInfoController implements Initializable {
 
     }
 
-    public void populateEventInfo(){
-        eventName.setText(chosenEvent.getName());
-        eventDate.setValue(chosenEvent.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-        eventLocation.setText(chosenEvent.getLocation());
-        eventInformation.setText(chosenEvent.getInfo());
-        startHour.setText(chosenEvent.getStartTime());
+    public void populateEventInfo(Event event){
+        eventName.setText(event.getName());
+        eventDate.setValue(Instant.ofEpochMilli(event.getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate());
+        eventLocation.setText(event.getLocation());
+        eventInformation.setText(event.getInfo());
+        String[] start = event.getStartTime().split(":");
+        String[] end = event.getEndTime().split(":");
+        startHour.setText(start[0]);
+        startMin.setText(start[1]);
+        endHour.setText(end[0]);
+        endMin.setText(end[1]);
     }
 
     @FXML
@@ -102,10 +109,5 @@ public class EventInfoController implements Initializable {
     public void setController(EMVController emvController) {
         this.emvController = emvController;
     }
-
-    public void setChosenEvent(Event event){
-        this.chosenEvent = event;
-    }
-
-
 }
+

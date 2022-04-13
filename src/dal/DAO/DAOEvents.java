@@ -88,7 +88,7 @@ public class DAOEvents {
     public List<Event> getAllEvents() throws DALException{
         List<Event> allEvents = new ArrayList<>();
         try{
-            String sql = "SELECT [ID],[Name],[Date],[Location],[Info] FROM Events ";
+            String sql = "SELECT [ID],[Name],[Date],[Location],[Info],[StartTime],[EndTime] FROM Events ";
             Connection connection = connectionProvider.getConnection();
             PreparedStatement st = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             st.execute();
@@ -103,7 +103,9 @@ public class DAOEvents {
                         ems,
                         rs.getString("Location"),
                         tickets,
-                        rs.getString("Info")
+                        rs.getString("Info"),
+                        rs.getString("StartTime"),
+                        rs.getString("EndTime")
                 );
                 try{
                     String sql2 = "SELECT [Name] FROM Users WHERE Users.ID IN (SELECT [EmID] FROM EmsInEvent WHERE EventID = ?)";
@@ -140,5 +142,6 @@ public class DAOEvents {
         }
         return allEvents;
     }
+
 
 }

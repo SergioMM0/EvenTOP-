@@ -5,6 +5,7 @@ import be.User;
 import com.jfoenix.controls.JFXButton;
 import dal.exceptions.DALException;
 import gui.model.EMVModel;
+import gui.model.EventInfoModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,9 +81,11 @@ public class EMVController implements Initializable {
 
     private EMVModel emvModel;
     private Event chosenEvent;
+    private EventInfoModel eventInfoModel;
 
     public EMVController(){
         emvModel = new EMVModel();
+        eventInfoModel = new EventInfoModel();
     }
 
     @Override
@@ -110,22 +113,6 @@ public class EMVController implements Initializable {
         stage.setScene(new Scene(root, 600, 420));
         stage.show();
     }
-        /*
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("gui/view/NewEventView.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("EvenTOP");
-            stage.setScene(new Scene(root, 600, 420));
-            stage.setResizable(false);
-            //root.getStylesheets().add("");  //CSS after
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-         */
 
     @FXML
     void openEventInfo(ActionEvent event) {
@@ -138,22 +125,27 @@ public class EMVController implements Initializable {
             alert.showAndWait();
         }
         else{
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/EventInfo.fxml"));
-            Parent root = null;
-            try {
-                root = loader.load();
-            } catch (IOException e) {
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/EventInfo.fxml"));
+                Parent root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                EventInfoController eventInfoController = loader.getController();
+                eventInfoController.setController(this); //establishes the main controller as the controller.
+                eventInfoController.populateEventInfo(eventTableView.getSelectionModel().getSelectedItem());
+                Stage stage = new Stage();
+                stage.setTitle("Event's info");
+                assert root != null;
+                stage.setScene(new Scene(root, 600, 450));
+                stage.show();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            EventInfoController eventInfoController = loader.getController();
-            eventInfoController.setController(this); //establishes the main controller as the controller.
-            Stage stage = new Stage();
-            stage.setTitle("Event's info");
-            assert root != null;
-            stage.setScene(new Scene(root, 600, 420));
-            stage.show();
-        }
 
+        }
     }
 
     @FXML
@@ -199,6 +191,7 @@ public class EMVController implements Initializable {
     @FXML
     void eventClicked(MouseEvent event) {
         chosenEvent = eventTableView.getSelectionModel().getSelectedItem();
+        eventInfoModel.setSelectedEvent(eventTableView.getSelectionModel().getSelectedItem());
     }
 }
 
