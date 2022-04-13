@@ -38,4 +38,24 @@ public class EventInfoModel {
         emsNotInEvent.addAll(bllFacade.getEmsNotInEvent(chosenEvent));
         return emsNotInEvent;
     }
+
+    public User getEmInEvent(String name){
+        for(User user : emsInEvent){
+            if(user.getName().equals(name)){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User getEmNotInEvent(String name){
+        for(User user : emsNotInEvent){
+            if(user.getName().equals(name)){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    
 }

@@ -75,6 +75,7 @@ public class EventInfoController implements Initializable {
         endMin.setText(end[1]);
         eventInfoModel.setChosenEvent(event);
         populateEmList();
+        populateEmComboBox();
     }
 
     public void populateEmList(){
