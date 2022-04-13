@@ -41,6 +41,12 @@ public class BLLManager implements BLLFacade{
         return dalFacade.getEmsInEvent(event);
     }
 
+    @Override
+    public List<User> getEmsNotInEvent(Event event) throws DALException {
+        return dalFacade.getEmsNotInEvent(event);
+    }
+
+
     public void fixStartHour(Event event){
         String[] wrong = event.getStartTime().split(":");
         if(Integer.parseInt(wrong[0]) < 10 ){

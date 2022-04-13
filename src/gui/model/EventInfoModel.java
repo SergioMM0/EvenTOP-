@@ -4,28 +4,38 @@ import be.Event;
 import be.User;
 import bll.BLLFacade;
 import bll.BLLManager;
+import dal.exceptions.DALException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class EventInfoModel {
 
     private BLLFacade bllFacade;
-    private ObservableList<User> allEms;
-    private ObservableList<User> removedEms;
-    private Event chosenEvent = null;
+    private ObservableList<User> emsNotInEvent;
+    private ObservableList<User> emsInEvent;
+    private Event chosenEvent;
 
     public EventInfoModel(){
         bllFacade = new BLLManager();
-        allEms = FXCollections.observableArrayList();
-        removedEms = FXCollections.observableArrayList();
+        emsNotInEvent = FXCollections.observableArrayList();
+        emsInEvent = FXCollections.observableArrayList();
     }
 
-
-    public void setSelectedEvent(Event chosenEvent) {
-        this.chosenEvent = chosenEvent;
+    public void setChosenEvent(Event event){
+        this.chosenEvent = event;
     }
 
     public Event getChosenEvent(){
         return chosenEvent;
+    }
+
+    public ObservableList<User> getEmsInEvent() throws DALException {
+        emsInEvent.addAll(bllFacade.getEmsInEvent(chosenEvent));
+        return emsInEvent;
+    }
+
+    public ObservableList<User> getEmsNotInEvent() throws DALException{
+        emsNotInEvent.addAll(bllFacade.getEmsNotInEvent(chosenEvent));
+        return emsNotInEvent;
     }
 }

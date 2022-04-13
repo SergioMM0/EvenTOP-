@@ -18,4 +18,6 @@ public interface BLLFacade {
 
     List<User> getEmsInEvent(Event event) throws DALException;
 
+    List<User> getEmsNotInEvent(Event event) throws DALException;
+
 }

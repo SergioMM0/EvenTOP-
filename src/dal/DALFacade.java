@@ -19,4 +19,6 @@ public interface DALFacade {
     List<Event> getAllEvents() throws DALException;
 
     List<User> getEmsInEvent(Event event) throws DALException;
+
+    List<User> getEmsNotInEvent(Event event) throws DALException;
 }

@@ -134,7 +134,7 @@ public class EMVController implements Initializable {
                     e.printStackTrace();
                 }
                 EventInfoController eventInfoController = loader.getController();
-                eventInfoController.setController(this); //establishes the main controller as the controller.
+                eventInfoController.setController(this); //establishes the EMVController as the controller.
                 eventInfoController.populateEventInfo(eventTableView.getSelectionModel().getSelectedItem());
                 Stage stage = new Stage();
                 stage.setTitle("Event's info");
@@ -191,7 +191,6 @@ public class EMVController implements Initializable {
     @FXML
     void eventClicked(MouseEvent event) {
         chosenEvent = eventTableView.getSelectionModel().getSelectedItem();
-        eventInfoModel.setSelectedEvent(eventTableView.getSelectionModel().getSelectedItem());
     }
 }
 

@@ -1,19 +1,18 @@
 package gui.controller;
 
 import be.Event;
+import be.User;
 import com.jfoenix.controls.JFXComboBox;
+import dal.exceptions.DALException;
 import gui.model.EventInfoModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ResourceBundle;
 
@@ -74,6 +73,38 @@ public class EventInfoController implements Initializable {
         startMin.setText(start[1]);
         endHour.setText(end[0]);
         endMin.setText(end[1]);
+        eventInfoModel.setChosenEvent(event);
+        populateEmList();
+    }
+
+    public void populateEmList(){
+        try{
+            for(User user : eventInfoModel.getEmsInEvent()){
+                emList.getItems().add(user.getName());
+            }
+        }catch(DALException dalException){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Database error");
+            alert.setHeaderText(dalException.getMessage());
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+        }
+    }
+
+    public void populateEmComboBox(){
+        try{
+            for(User user : eventInfoModel.getEmsNotInEvent()){
+                emComboBox.getItems().add(user.getName());
+            }
+        }catch (DALException dalException){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Database error");
+            alert.setHeaderText(dalException.getMessage());
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+        }
     }
 
     @FXML
