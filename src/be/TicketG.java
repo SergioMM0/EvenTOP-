@@ -7,9 +7,9 @@ public class TicketG extends Ticket {
     private String startTime;
     private String endTime;
 
-    public TicketG(int id, String barCode, String name, String extras, String startTime, String endTime) {
+    public TicketG(int id, String barCode, String typeName, String extras, String startTime, String endTime) {
         super(id, barCode);
-        this.typeName = name;
+        this.typeName = typeName;
         this.extras = extras;
         this.startTime = startTime;
         this.endTime = endTime;

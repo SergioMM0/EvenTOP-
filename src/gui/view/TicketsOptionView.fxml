@@ -3,12 +3,11 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.view.TicketsOptionView">
+<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.TicketsOptionController">
    <children>
-      <JFXButton layoutX="100.0" layoutY="46.0" prefHeight="50.0" prefWidth="200.0" text="Create ticket" />
-      <JFXButton layoutX="100.0" layoutY="118.0" prefHeight="50.0" prefWidth="200.0" text="Manage Tickets" />
-      <JFXButton layoutX="100.0" layoutY="194.0" prefHeight="50.0" prefWidth="200.0" text="Delete a Ticket" />
-      <JFXButton layoutX="100.0" layoutY="263.0" prefHeight="50.0" prefWidth="200.0" text="See tickets" />
+      <JFXButton fx:id="createTicketButton" layoutX="100.0" layoutY="46.0" onAction="#openCreateTicketView" prefHeight="50.0" prefWidth="200.0" text="Create ticket" />
+      <JFXButton fx:id="manageTicketsButton" layoutX="100.0" layoutY="118.0" onAction="#openManageTicketsView" prefHeight="50.0" prefWidth="200.0" text="Manage Tickets" />
+      <JFXButton fx:id="printTicketButton" layoutX="100.0" layoutY="194.0" onAction="#openPrintTicketView" prefHeight="50.0" prefWidth="200.0" text="Print ticket" />
+      <JFXButton fx:id="backButton" layoutX="100.0" layoutY="263.0" onAction="#back" prefHeight="50.0" prefWidth="200.0" text="Back" />
    </children>
 </AnchorPane>

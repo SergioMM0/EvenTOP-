@@ -155,7 +155,32 @@ public class EMVController implements Initializable {
 
     @FXML
     void openManageTickets(ActionEvent event) {
-
+        if(chosenEvent == null){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("EvenTOP");
+            alert.setHeaderText("Chose an event to continue");
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+        }
+        else{
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/TicketsOptionView.fxml"));
+                Parent root = null;
+                try {
+                    root = loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Stage stage = new Stage();
+                stage.setTitle("Ticket options");
+                assert root != null;
+                stage.setScene(new Scene(root, 400, 400));
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML

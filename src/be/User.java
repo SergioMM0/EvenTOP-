@@ -6,6 +6,15 @@ public class User {
     private String email;
     private String password;
     private String name;
+    private String phoneNumber;
+
+    public User(int id, UserType type, String email, String name, String phoneNumber) {
+        this.id = id;
+        this.type = type;
+        this.email = email;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
 
     public User(UserType type, String email, String password){
         this.type = type;
@@ -56,6 +65,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override

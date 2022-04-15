@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.EMVController">
+   <children>
+      <TableView layoutX="39.0" layoutY="163.0" prefHeight="366.0" prefWidth="821.0">
+        <columns>
+          <TableColumn prefWidth="85.60003662109375" text="Ticket Type" />
+            <TableColumn prefWidth="85.60003662109375" text="Assist time" />
+            <TableColumn prefWidth="85.60003662109375" text="Leave time" />
+            <TableColumn prefWidth="48.0" text="Seat" />
+            <TableColumn prefWidth="48.800018310546875" text="Row" />
+          <TableColumn prefWidth="159.1999740600586" text="Extras" />
+            <TableColumn prefWidth="306.4000244140625" text="Barcode" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="14.0" layoutY="559.0" prefHeight="26.0" prefWidth="130.0" text="Back" />
+      <JFXButton layoutX="39.0" layoutY="54.0" prefHeight="40.0" prefWidth="148.0" text="Change extras" />
+      <JFXButton layoutX="204.0" layoutY="54.0" prefHeight="40.0" prefWidth="148.0" text="Change type" />
+      <JFXButton layoutX="738.0" layoutY="54.0" prefHeight="40.0" prefWidth="148.0" text="Delete ticket" />
+      <JFXButton layoutX="384.0" layoutY="54.0" prefHeight="40.0" prefWidth="148.0" text="Change seat/row" />
+      <JFXButton layoutX="577.0" layoutY="54.0" prefHeight="40.0" prefWidth="148.0" text="Change assist/leave time" />
+   </children>
+</AnchorPane>
