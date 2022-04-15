@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.EMVController">
+   <children>
+      <Label layoutX="25.0" layoutY="82.0" prefHeight="18.0" prefWidth="70.0" text="Assist time:" />
+      <TextField fx:id="assistHour" layoutX="103.0" layoutY="78.0" prefHeight="26.0" prefWidth="34.0" promptText="13" />
+      <TextField fx:id="assistMin" layoutX="150.0" layoutY="78.0" prefHeight="26.0" prefWidth="34.0" promptText="00" />
+      <Label layoutX="142.0" layoutY="82.0" prefHeight="18.0" prefWidth="5.0" text=":" />
+      <Label layoutX="25.0" layoutY="122.0" prefHeight="18.0" prefWidth="70.0" text="Leave time:" />
+      <TextField fx:id="leaveHour" layoutX="104.0" layoutY="118.0" prefHeight="26.0" prefWidth="34.0" promptText="01" />
+      <TextField fx:id="leaveMin" layoutX="151.0" layoutY="118.0" prefHeight="26.0" prefWidth="34.0" promptText="30" />
+      <Label layoutX="143.0" layoutY="122.0" prefHeight="18.0" prefWidth="5.0" text=":" />
+      <Label layoutX="194.0" layoutY="98.0" prefHeight="18.0" prefWidth="70.0" text="(24hr format)" />
+      <Label layoutX="76.0" layoutY="22.0" prefHeight="20.0" prefWidth="120.0" text="Ticket information" />
+      <CheckBox layoutX="335.0" layoutY="42.0" mnemonicParsing="false" text="Add row and seat number" />
+      <Label layoutX="336.0" layoutY="82.0" prefHeight="18.0" prefWidth="79.0" text="Row number:" />
+      <Label layoutX="336.0" layoutY="122.0" prefHeight="18.0" prefWidth="79.0" text="Seat number:" />
+      <TextField fx:id="rowNumber" layoutX="426.0" layoutY="78.0" prefHeight="26.0" prefWidth="57.0" promptText="3" />
+      <TextField fx:id="seatNumber" layoutX="426.0" layoutY="118.0" prefHeight="26.0" prefWidth="57.0" promptText="15" />
+      <Label layoutX="86.0" layoutY="186.0" prefHeight="18.0" prefWidth="70.0" text="Extras" />
+      <JFXButton layoutX="160.0" layoutY="183.0" prefHeight="26.0" prefWidth="94.0" text="Manage Extras" />
+      <JFXComboBox layoutX="24.0" layoutY="223.0" prefHeight="26.0" prefWidth="224.0" />
+      <ListView fx:id="emList" layoutX="24.0" layoutY="287.0" prefHeight="132.0" prefWidth="224.0" />
+   </children>
+</AnchorPane>
