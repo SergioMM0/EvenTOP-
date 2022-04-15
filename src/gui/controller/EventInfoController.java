@@ -13,7 +13,10 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Date;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class EventInfoController implements Initializable {
@@ -50,7 +53,6 @@ public class EventInfoController implements Initializable {
 
     private EventInfoModel eventInfoModel;
     private EMVController emvController;
-    private Event chosenEvent;
 
     public EventInfoController(){
         eventInfoModel = new EventInfoModel();
@@ -142,7 +144,85 @@ public class EventInfoController implements Initializable {
 
     @FXML
     void editEvent(ActionEvent event) {
+        Date currentDate = java.sql.Date.valueOf(LocalDate.now());
+        Date setDate = null;
+        try {
+            if (Objects.equals(eventName.getText(), "") || eventName.getText() == null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Editing event");
+                alert.setHeaderText("Introduce a name for the event");
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+            } else if (currentDate.compareTo(java.sql.Date.valueOf(eventDate.getValue())) > 0 || eventDate.getValue() == null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Editing event");
+                alert.setHeaderText("Introduce a valid date for the event");
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+            } else if (Objects.equals(eventLocation.getText(), "") || eventLocation.getText() == null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Editing event");
+                alert.setHeaderText("Introduce a location for the event");
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+            } else if (!timeIsCorrect()){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Editing event");
+                alert.setHeaderText("Introduce a valid start time");
+                ButtonType okButton = new ButtonType("OK");
+                alert.getButtonTypes().setAll(okButton);
+                alert.showAndWait();
+            }
+            else {
+                setDate = java.sql.Date.valueOf(eventDate.getValue());
+                try {
+                    editEvent();
+                } catch (DALException dalException) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Not able to connect to database, check your internet connection");
+                    alert.setHeaderText(dalException.getMessage());
+                    ButtonType okButton = new ButtonType("OK");
+                    alert.getButtonTypes().setAll(okButton);
+                    alert.showAndWait();
+                }
+                closeWindow();
+            }
+        } catch (NullPointerException ex) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Login credentials");
+            alert.setHeaderText("Introduce a valid date for the event");
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+        }
+    }
 
+    private boolean timeIsCorrect(){
+        if(Integer.parseInt(startHour.getText())>23 || Integer.parseInt(startHour.getText()) < 0){
+            return false;
+        }
+        else if(Integer.parseInt(startMin.getText())>59 || Integer.parseInt(startMin.getText()) < 0 ){
+            return false;
+        }
+        else return true;
+    }
+
+    public void editEvent()throws DALException{
+            eventInfoModel.updateEventAndEms(
+                    new Event(
+                            eventInfoModel.getChosenEvent().getId(),
+                            eventName.getText(),
+                            java.sql.Date.valueOf(eventDate.getValue()),
+                            eventLocation.getText(),
+                            eventInformation.getText(),
+                            startHour.getText() + ":" + startMin.getText(),
+                            endHour.getText() + ":" + endMin.getText()
+                    ), eventInfoModel.getObservableEmsInCharge());
+        closeWindow();
+        emvController.repopulateEventsTable();
     }
 
     @FXML

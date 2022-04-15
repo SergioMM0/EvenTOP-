@@ -69,6 +69,9 @@ public class NewEventModel {
     }
 
     public void addEventAndEMs(Event event, List<User> ems) throws DALException{
+        for(User user : ems){
+            System.out.println(user.getId());
+        }
         bllFacade.addEventAndEMs(event,ems);
     }
 }

@@ -18,6 +18,7 @@ public class EMVModel {
     }
 
     public ObservableList<Event> getAllEvents() throws DALException {
+        events.clear();
         events.addAll(bllFacade.getAllEvents());
         return events;
     }

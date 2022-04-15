@@ -26,74 +26,59 @@ public class DAOEvents {
             st.setDate(2, (Date) event.getDate());
             st.setString(3, event.getLocation());
             st.setString(4, event.getInfo());
-            st.setString(5,event.getStartTime());
-            st.setString(6,event.getEndTime());
+            st.setString(5, event.getStartTime());
+            st.setString(6, event.getEndTime());
             st.execute();
         } catch (SQLException sqlException) {
-            throw new DALException("Not connected to database",sqlException);
+            throw new DALException("Event not added to the database", sqlException);
         }
         //TODO in BLL check that event doesn't have same name
     }
 
-    public void addEventAndEMs(Event event, List<User> ems) throws DALException{
-        try{
+    public void addEventAndEMs(Event event, List<User> ems) throws DALException {
+        try {
             addEvent(event);
             String sql = "SELECT [ID] FROM Events WHERE [Name] = ?";
             Connection connection = connectionProvider.getConnection();
             PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            st.setString(1,event.getName());
+            st.setString(1, event.getName());
             st.execute();
             ResultSet rs = st.getResultSet();
-            while(rs.next()){
+            while (rs.next()) {
                 event.setId(rs.getInt("ID"));
             }
+        } catch (SQLException sqlException) {
+            throw new DALException("Not able to connect to database", sqlException);
         }
-        catch (SQLException sqlException) {
-            throw new DALException("Not able to connect to database",sqlException);
-        }
-        for(User user : ems){
-            try{
-                String sql = "SELECT [ID] FROM Users WHERE [Name] = ?";
-                Connection connection = connectionProvider.getConnection();
-                PreparedStatement st = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-                st.setString(1,user.getName());
-                st.execute();
-                ResultSet rs = st.getResultSet();
-                while(rs.next()){
-                    user.setId(rs.getInt("ID"));
-                }
-                try{
-                    String sql2 = "INSERT INTO [EmsInEvent] (EventId,EmID) VALUES (?,?)";
-                    Connection connection2 = connectionProvider.getConnection();
-                    PreparedStatement st2 = connection2.prepareStatement(sql2);
-                    st2.setInt(1,event.getId());
-                    st2.setInt(2,user.getId());
-                    st2.execute();
-                }
-                catch(SQLException sql2){
-                    sql2.printStackTrace();
-                    throw new DALException("Not able to connect to database",sql2);
-                }
+        try {
+            String sql2 = "INSERT INTO [EmsInEvent] (EventId,EmID) VALUES (?,?)";
+            Connection connection2 = connectionProvider.getConnection();
+            PreparedStatement st2 = connection2.prepareStatement(sql2);
+            for (User user : ems) {
+                st2.setInt(1, event.getId());
+                st2.setInt(2, user.getId());
+                st2.addBatch();
             }
-            catch(SQLException sqlException){
-                throw new DALException("Not able to connect to database",sqlException);
-            }
+            st2.executeBatch();
+        } catch (SQLException sql2) {
+            sql2.printStackTrace();
+            throw new DALException("Not able to add the Event Managers in charge for the event", sql2);
         }
     }
 
-    private java.util.Date parseDate(Date sqlDate){
+    private java.util.Date parseDate(Date sqlDate) {
         return new Date(sqlDate.getTime());
     }
 
-    public List<Event> getAllEvents() throws DALException{
+    public List<Event> getAllEvents() throws DALException {
         List<Event> allEvents = new ArrayList<>();
-        try{
+        try {
             String sql = "SELECT [ID],[Name],[Date],[Location],[Info],[StartTime],[EndTime] FROM Events ";
             Connection connection = connectionProvider.getConnection();
-            PreparedStatement st = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.execute();
             ResultSet rs = st.getResultSet();
-            while(rs.next()){
+            while (rs.next()) {
                 String ems = null;
                 int tickets = 0;
                 Event event = new Event(
@@ -107,41 +92,92 @@ public class DAOEvents {
                         rs.getString("StartTime"),
                         rs.getString("EndTime")
                 );
-                try{
+                try {
                     String sql2 = "SELECT [Name] FROM Users WHERE Users.ID IN (SELECT [EmID] FROM EmsInEvent WHERE EventID = ?)";
                     Connection connection1 = connectionProvider.getConnection();
-                    PreparedStatement st2 = connection1.prepareStatement(sql2,Statement.RETURN_GENERATED_KEYS);
-                    st2.setInt(1,event.getId());
+                    PreparedStatement st2 = connection1.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
+                    st2.setInt(1, event.getId());
                     st2.execute();
                     ResultSet rs2 = st2.getResultSet();
-                    while(rs2.next()){
+                    while (rs2.next()) {
                         event.addEventManager(rs2.getString("Name"));
                     }
-                }catch (SQLException sqlException2){
-                    throw new DALException("Error getting the EventManagers",sqlException2);
+                } catch (SQLException sqlException2) {
+                    throw new DALException("Error getting the EventManagers", sqlException2);
                 }
-                try{
+                try {
                     String sql3 = "SELECT COUNT([BARCODE]) AS NumberOfTickets FROM Tickets WHERE Tickets.BARCODE IN (SELECT [BARCODE] FROM TicketsInEvent WHERE EVENTID = ?)";
                     Connection connection2 = connectionProvider.getConnection();
-                    PreparedStatement st3 = connection2.prepareStatement(sql3,Statement.RETURN_GENERATED_KEYS);
-                    st3.setInt(1,event.getId());
+                    PreparedStatement st3 = connection2.prepareStatement(sql3, Statement.RETURN_GENERATED_KEYS);
+                    st3.setInt(1, event.getId());
                     st3.execute();
                     ResultSet rs3 = st3.getResultSet();
-                    while(rs3.next()){
+                    while (rs3.next()) {
                         tickets = rs3.getInt("NumberOfTickets");
                         event.setTickets(tickets);
                     }
-                }catch (SQLException sqlException3) {
+                } catch (SQLException sqlException3) {
                     throw new DALException("Error getting the number of tickets", sqlException3);
                 }
                 allEvents.add(event);
             }
 
-        }catch(SQLException sqlException){
-            throw new DALException("Not able to connect to database",sqlException);
+        } catch (SQLException sqlException) {
+            throw new DALException("Not able to connect to database", sqlException);
         }
         return allEvents;
     }
 
+    public void updateEventAndEms(Event event, List<User> ems) throws DALException {
+        try {
+            String sql = "UPDATE Events SET [Name] = ?, [Date] = ?, [Location] = ?,[Info] = ?,[StartTime] = ?,[EndTime] = ? WHERE ID = ?";
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, event.getName());
+            st.setDate(2, (Date) event.getDate());
+            st.setString(3, event.getLocation());
+            st.setString(4, event.getInfo());
+            st.setString(5, event.getStartTime());
+            st.setString(6, event.getEndTime());
+            st.setInt(7, event.getId());
+            st.execute();
 
+        } catch (SQLException sql) {
+            sql.printStackTrace();
+            throw new DALException("Not able to connect to update the Event and Event Managers in charge", sql);
+        }
+        if(ems.isEmpty()){
+            try{
+                String sql = "DELETE FROM EmsInEvent WHERE EventID = ?;";
+                Connection connection = connectionProvider.getConnection();
+                PreparedStatement st = connection.prepareStatement(sql);
+                st.setInt(1,event.getId());
+                st.execute();
+            }catch (SQLException sql) {
+                sql.printStackTrace();
+                throw new DALException("Not able to update Event Managers", sql);
+            }
+        }
+        else {
+            try {
+                String sql = "DELETE FROM EmsInEvent WHERE EventID = ?";
+                String sql2 = "INSERT INTO EmsInEvent ([EventID],[EmID]) VALUES (?,?)";
+                Connection connection = connectionProvider.getConnection();
+                PreparedStatement st = connection.prepareStatement(sql);
+                PreparedStatement st2 = connection.prepareStatement(sql2);
+                for (User user : ems) {
+                    st.setInt(1, event.getId());
+                    st.addBatch();
+                    st2.setInt(1,event.getId());
+                    st2.setInt(2,user.getId());
+                    st2.addBatch();
+                }
+                st.executeBatch();
+                st2.executeBatch();
+            } catch (SQLException sql) {
+                sql.printStackTrace();
+                throw new DALException("Not able to update Event Managers", sql);
+            }
+        }
+    }
 }

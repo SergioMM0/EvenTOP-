@@ -8,6 +8,8 @@ import dal.exceptions.DALException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class EventInfoModel {
 
     private BLLFacade bllFacade;
@@ -23,6 +25,7 @@ public class EventInfoModel {
 
     public void setChosenEvent(Event event){
         this.chosenEvent = event;
+
     }
 
     public Event getChosenEvent(){
@@ -73,5 +76,10 @@ public class EventInfoModel {
     public void removeEmInCharge(User user){
         emsNotInEvent.add(user);
         emsInEvent.remove(user);
+    }
+
+    public void updateEventAndEms(Event event, List<User> ems) throws DALException{
+        //event.setId(chosenEvent.getId());
+        bllFacade.updateEventAndEms(event,ems);
     }
 }

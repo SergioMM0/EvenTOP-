@@ -35,7 +35,8 @@ public class Event {
         this. info = info;
     }
 
-    public Event(String name, Date date, String location, String info,String startTime,String endTime){
+    public Event(int id, String name, Date date, String location, String info,String startTime,String endTime){
+        this.id = id;
         this.name = name;
         this.date = date;
         this.location = location;

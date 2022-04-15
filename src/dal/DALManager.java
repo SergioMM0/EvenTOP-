@@ -54,4 +54,9 @@ public class DALManager implements DALFacade{
         return daoEventManagers.getEmsNotInEvent(event);
     }
 
+    @Override
+    public void updateEventAndEms(Event event, List<User> ems) throws DALException {
+        daoEvents.updateEventAndEms(event,ems);
+    }
+
 }

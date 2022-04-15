@@ -185,7 +185,7 @@ public class NewEventController implements Initializable {
     private void addEvent() throws DALException {
         if (newEventModel.getRemovedEms().isEmpty()) {
             newEventModel.addEvent(
-                    new Event(
+                    new Event(0,
                             eventName.getText(),
                             java.sql.Date.valueOf(eventDate.getValue()),
                             eventLocation.getText(),
@@ -195,7 +195,7 @@ public class NewEventController implements Initializable {
                             ));
         } else {
             newEventModel.addEventAndEMs(
-                    new Event(
+                    new Event(0,
                             eventName.getText(),
                             java.sql.Date.valueOf(eventDate.getValue()),
                             eventLocation.getText(),
@@ -204,7 +204,7 @@ public class NewEventController implements Initializable {
                             endHour.getText()+ ":" +endMin.getText()
                             ),newEventModel.getRemovedEms());
         }
-        emvController.populateEventsTable();
+        emvController.repopulateEventsTable();
     }
 
     private void closeWindow() {

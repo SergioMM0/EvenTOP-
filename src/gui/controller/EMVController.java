@@ -185,6 +185,21 @@ public class EMVController implements Initializable {
             alert.getButtonTypes().setAll(okButton);
             alert.showAndWait();
         }
+    }
+
+    public void repopulateEventsTable(){
+        try{
+            eventTableView.refresh();
+            eventTableView.getItems().clear();
+            eventTableView.getItems().addAll(emvModel.getAllEvents());
+        }catch(DALException dalException){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("An error has ocurred");
+            alert.setHeaderText("Error updating events table, please check your connection");
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+        }
 
     }
 

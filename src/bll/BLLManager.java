@@ -46,26 +46,32 @@ public class BLLManager implements BLLFacade{
         return dalFacade.getEmsNotInEvent(event);
     }
 
+    @Override
+    public void updateEventAndEms(Event event, List<User> ems) throws DALException {
+        fixStartHour(event);
+        fixEndHour(event);
+        dalFacade.updateEventAndEms(event,ems);
+    }
+
 
     public void fixStartHour(Event event){
         String[] wrong = event.getStartTime().split(":");
-        if(Integer.parseInt(wrong[0]) < 10 ){
-            wrong[0] = "0"+wrong[0];
-        }
-        if (Integer.parseInt(wrong[1]) < 10){
-            wrong[1] = "0"+ wrong[1];
-        }
+        parseAndCompare(wrong);
         event.setStartTime(wrong[0],wrong[1]);
     }
 
     public void fixEndHour(Event event){
         String[] wrong = event.getEndTime().split(":");
-        if(Integer.parseInt(wrong[0]) < 10 ){
+        parseAndCompare(wrong);
+        event.setEndTime(wrong[0],wrong[1]);
+    }
+
+    private void parseAndCompare(String[] wrong) {
+        if(Integer.parseInt(wrong[0]) < 10 && wrong[0].length() == 1){
             wrong[0] = "0"+wrong[0];
         }
-        if (Integer.parseInt(wrong[1]) < 10){
+        if (Integer.parseInt(wrong[1]) < 10 && wrong[1].length() == 1){
             wrong[1] = "0"+ wrong[1];
         }
-        event.setEndTime(wrong[0],wrong[1]);
     }
 }
