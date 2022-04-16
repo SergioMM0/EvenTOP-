@@ -1,5 +1,6 @@
 package gui.controller;
 
+import be.Event;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
@@ -74,6 +75,8 @@ public class CreateTicketController implements Initializable {
     @FXML
     private JFXComboBox<?> ticketTypeComboBox;
 
+    private Event chosenEvent;
+
     @FXML
     void addExtra(ActionEvent event) {
 
@@ -112,6 +115,10 @@ public class CreateTicketController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public void setChosenEvent(Event chosenEvent) {
+        this.chosenEvent = chosenEvent;
     }
 }
 

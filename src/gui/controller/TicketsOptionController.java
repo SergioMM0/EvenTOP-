@@ -1,5 +1,6 @@
 package gui.controller;
 
+import be.Event;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +28,8 @@ public class TicketsOptionController implements Initializable {
     @FXML
     private JFXButton printTicketButton;
 
+    private Event chosenEvent;
+
     @FXML
     void back(ActionEvent event) {
 
@@ -42,6 +45,8 @@ public class TicketsOptionController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            CreateTicketController createTicketController = loader.getController();
+            createTicketController.setChosenEvent(chosenEvent);
             Stage stage = new Stage();
             stage.setTitle("Create ticket for event");
             assert root != null;
@@ -65,5 +70,9 @@ public class TicketsOptionController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public void setChosenEvent(Event selectedItem) {
+        this.chosenEvent = selectedItem;
     }
 }

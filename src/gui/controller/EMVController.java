@@ -1,7 +1,6 @@
 package gui.controller;
 
 import be.Event;
-import be.User;
 import com.jfoenix.controls.JFXButton;
 import dal.exceptions.DALException;
 import gui.model.EMVModel;
@@ -172,6 +171,8 @@ public class EMVController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                TicketsOptionController ticketsOptionController = loader.getController();
+                ticketsOptionController.setChosenEvent(eventTableView.getSelectionModel().getSelectedItem());
                 Stage stage = new Stage();
                 stage.setTitle("Ticket options");
                 assert root != null;
