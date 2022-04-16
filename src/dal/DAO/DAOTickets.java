@@ -1,6 +1,7 @@
 package dal.DAO;
 
 import be.TicketG;
+import be.TicketRS;
 import dal.connectionProvider.ConnectionProvider;
 import dal.exceptions.DALException;
 
@@ -30,6 +31,27 @@ public class DAOTickets {
             st.setString(3, ticketG.getExtras());
             st.setString(4, ticketG.getStartTime());
             st.setString(5, ticketG.getEndTime());
+            st.execute();
+        }catch(SQLException sqlException){
+            sqlException.printStackTrace();
+            throw new DALException("Not able to connect to database", sqlException);
+        }
+    }
+
+    public void addTicketRS(TicketRS ticketRS) throws DALException{
+        String sql = "INSERT INTO Tickets ([BARCODE]) VALUES (?);";
+        String sql2 = "INSERT INTO TicketsRS([BARCODE],[TYPE],[EXTRAS],[STARTTIME],[ENDTIME],[ROW],[SEAT]) VALUES(?,?,?,?,?,?,?);";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1,ticketRS.getBarCode());
+            st.execute();
+            PreparedStatement st2 = connection.prepareStatement(sql2);
+            st.setString(1, ticketRS.getBarCode());
+            st.setString(2,ticketRS.getTypeName());
+            st.setString(3, ticketRS.getExtras());
+            st.setString(4, ticketRS.getStartTime());
+            st.setString(5, ticketRS.getEndTime());
             st.execute();
         }catch(SQLException sqlException){
             sqlException.printStackTrace();

@@ -5,11 +5,16 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -46,10 +51,10 @@ public class CreateTicketController implements Initializable {
     private JFXButton deleteExtraButton;
 
     @FXML
-    private JFXComboBox<?> extrasComboBox;
+    private JFXComboBox<String> extrasComboBox;
 
     @FXML
-    private ListView<?> extrasList;
+    private ListView<String> extrasList;
 
     @FXML
     private TextField leaveHour;
@@ -73,7 +78,7 @@ public class CreateTicketController implements Initializable {
     private TextField seatNumber;
 
     @FXML
-    private JFXComboBox<?> ticketTypeComboBox;
+    private JFXComboBox<String> ticketTypeComboBox;
 
     private Event chosenEvent;
 
@@ -99,7 +104,22 @@ public class CreateTicketController implements Initializable {
 
     @FXML
     void openManageExtrasView(ActionEvent event) {
-
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/ManageExtrasView.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage stage = new Stage();
+            stage.setTitle("Extras of the ticket");
+            assert root != null;
+            stage.setScene(new Scene(root, 400, 300));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -110,6 +130,16 @@ public class CreateTicketController implements Initializable {
     @FXML
     void ticketTypeComboBox(ActionEvent event) {
 
+    }
+
+    private boolean timeIsCorrect(){
+        if(Integer.parseInt(assistHour.getText())>23 || Integer.parseInt(assistHour.getText()) < 0){
+            return false;
+        }
+        else if(Integer.parseInt(assistMin.getText())>59 || Integer.parseInt(assistMin.getText()) < 0 ){
+            return false;
+        }
+        else return true;
     }
 
     @Override
