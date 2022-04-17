@@ -32,7 +32,7 @@ public class TicketsOptionController implements Initializable {
 
     @FXML
     void back(ActionEvent event) {
-
+        closeWindow();
     }
 
     @FXML
@@ -47,7 +47,7 @@ public class TicketsOptionController implements Initializable {
             }
             CreateTicketController createTicketController = loader.getController();
             createTicketController.setChosenEvent(chosenEvent);
-            createTicketController.populateExtrasComboBox();
+            createTicketController.initializeView();
             Stage stage = new Stage();
             stage.setTitle("Create ticket for event");
             assert root != null;
@@ -75,5 +75,10 @@ public class TicketsOptionController implements Initializable {
 
     public void setChosenEvent(Event selectedItem) {
         this.chosenEvent = selectedItem;
+    }
+
+    private void closeWindow(){
+        Stage st = (Stage) backButton.getScene().getWindow();
+        st.close();
     }
 }

@@ -90,7 +90,16 @@ public class CreateTicketController implements Initializable {
 
     @FXML
     void addExtra(ActionEvent event) {
+        createTicketModel.addExtraToTicket(extrasComboBox.getValue());
+        repopulateExtrasComboBox();
+        repopulateExtrasList();
+    }
 
+    @FXML
+    void deleteExtra(ActionEvent event) {
+        createTicketModel.removeExtraToTicket(extrasList.getSelectionModel().getSelectedItem());
+        repopulateExtrasList();
+        repopulateExtrasComboBox();
     }
 
     @FXML
@@ -100,12 +109,7 @@ public class CreateTicketController implements Initializable {
 
     @FXML
     void cancelCreatingTicket(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deleteExtra(ActionEvent event) {
-
+        closeWindow();
     }
 
     @FXML
@@ -176,8 +180,22 @@ public class CreateTicketController implements Initializable {
         extrasComboBox.getItems().addAll(createTicketModel.getObservableExtras());
     }
 
+    public void repopulateExtrasList(){
+        extrasList.getItems().clear();
+        extrasList.getItems().addAll(createTicketModel.getExtrasInEvent());
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    }
+
+    public void initializeView(){
+        populateExtrasComboBox();
+    }
+
+    private void closeWindow(){
+        Stage st = (Stage) cancelButton.getScene().getWindow();
+        st.close();
     }
 }
 

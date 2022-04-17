@@ -32,11 +32,10 @@ public class CreateTicketModel {
     }
 
     public ObservableList<String> getAllExtras(Event chosenEvent) throws DALException {
+        allExtras.clear();
         allExtras.addAll(bllFacade.getAllExtrasForEvent(chosenEvent));
         return allExtras;
     }
-
-    
 
     public ObservableList<String> getObservableTypes(){
         return allTypes;
@@ -52,5 +51,19 @@ public class CreateTicketModel {
         for (int i = 0; i < extras.length-1; i++) {
             allExtras.add(i,extras[i]);
         }
+    }
+
+    public void addExtraToTicket(String value) {
+        extrasOnEvent.add(value);
+        allExtras.remove(value);
+    }
+
+    public void removeExtraToTicket(String value){
+        allExtras.add(value);
+        extrasOnEvent.remove(value);
+    }
+
+    public ObservableList<String> getExtrasInEvent() {
+        return extrasOnEvent;
     }
 }

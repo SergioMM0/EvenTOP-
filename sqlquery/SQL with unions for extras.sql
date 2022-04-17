@@ -1,0 +1,13 @@
+SELECT TicketsRS.EXTRAS 
+FROM TicketsRS
+INNER JOIN TicketsInEvent AS TE
+ON TE.EVENTID = (
+    SELECT [ID] AS EID FROM Events WHERE Events.ID = 1
+)
+UNION
+SELECT TicketsG.EXTRAS
+FROM TicketsG
+INNER JOIN TicketsInEvent AS TE
+ON TE.EVENTID = (
+    SELECT [ID] AS EID FROM Events WHERE Events.ID = 1
+)
