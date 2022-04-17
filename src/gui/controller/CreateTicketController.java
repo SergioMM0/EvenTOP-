@@ -3,15 +3,16 @@ package gui.controller;
 import be.Event;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import dal.exceptions.DALException;
+import gui.model.CreateTicketModel;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -80,7 +81,12 @@ public class CreateTicketController implements Initializable {
     @FXML
     private JFXComboBox<String> ticketTypeComboBox;
 
+    private CreateTicketModel createTicketModel;
     private Event chosenEvent;
+
+    public CreateTicketController(){
+        createTicketModel = new CreateTicketModel();
+    }
 
     @FXML
     void addExtra(ActionEvent event) {
@@ -112,6 +118,8 @@ public class CreateTicketController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            ManageExtrasController manageExtrasController = loader.getController();
+            manageExtrasController.setController(this);
             Stage stage = new Stage();
             stage.setTitle("Extras of the ticket");
             assert root != null;
@@ -142,13 +150,34 @@ public class CreateTicketController implements Initializable {
         else return true;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
     public void setChosenEvent(Event chosenEvent) {
         this.chosenEvent = chosenEvent;
+    }
+
+    public void setExtras(ObservableList<String> observableExtras) {
+        createTicketModel.setNewExtras(observableExtras);
+    }
+
+    public void populateExtrasComboBox(){
+        try{
+            extrasComboBox.getItems().addAll(createTicketModel.getAllExtras(chosenEvent));
+        }catch(DALException dalException){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText(dalException.getMessage());
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+        }
+    }
+
+    public void repopulateExtrasComboBox() {
+        extrasComboBox.getItems().clear();
+        extrasComboBox.getItems().addAll(createTicketModel.getObservableExtras());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 }
 

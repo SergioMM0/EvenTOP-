@@ -6,6 +6,7 @@ import dal.DALFacade;
 import dal.DALManager;
 import dal.exceptions.DALException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BLLManager implements BLLFacade{
@@ -51,6 +52,11 @@ public class BLLManager implements BLLFacade{
         fixStartHour(event);
         fixEndHour(event);
         dalFacade.updateEventAndEms(event,ems);
+    }
+
+    @Override
+    public ArrayList<String> getAllExtrasForEvent(Event event) throws DALException {
+        return dalFacade.getAllExtrasForEvent(event);
     }
 
 

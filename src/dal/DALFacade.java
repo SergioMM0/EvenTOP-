@@ -4,6 +4,7 @@ import be.Event;
 import be.User;
 import dal.exceptions.DALException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface DALFacade {
@@ -23,4 +24,6 @@ public interface DALFacade {
     List<User> getEmsNotInEvent(Event event) throws DALException;
 
     void updateEventAndEms(Event event, List<User> ems) throws DALException;
+
+    ArrayList<String> getAllExtrasForEvent(Event event) throws DALException;
 }

@@ -1,5 +1,6 @@
 package dal.DAO;
 
+import be.Event;
 import be.TicketG;
 import be.TicketRS;
 import dal.connectionProvider.ConnectionProvider;
@@ -7,7 +8,9 @@ import dal.exceptions.DALException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DAOTickets {
 
@@ -24,17 +27,20 @@ public class DAOTickets {
             Connection connection = connectionProvider.getConnection();
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1,ticketG.getBarCode());
-            st.execute();
+            st.addBatch();
             PreparedStatement st2 = connection.prepareStatement(sql2);
-            st.setString(1, ticketG.getBarCode());
-            st.setString(2,ticketG.getTypeName());
-            st.setString(3, ticketG.getExtras());
-            st.setString(4, ticketG.getStartTime());
-            st.setString(5, ticketG.getEndTime());
-            st.execute();
+            st2.setString(1, ticketG.getBarCode());
+            st2.setString(2,ticketG.getTypeName());
+            st2.setString(3, ticketG.getExtras());
+            st2.setString(4, ticketG.getStartTime());
+            st2.setString(5, ticketG.getEndTime());
+            st2.addBatch();
+
+            st.executeBatch();
+            st2.executeBatch();
         }catch(SQLException sqlException){
             sqlException.printStackTrace();
-            throw new DALException("Not able to connect to database", sqlException);
+            throw new DALException("Not able to create Ticket for event, check again your connection", sqlException);
         }
     }
 
@@ -45,18 +51,55 @@ public class DAOTickets {
             Connection connection = connectionProvider.getConnection();
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1,ticketRS.getBarCode());
-            st.execute();
+            st.addBatch();
             PreparedStatement st2 = connection.prepareStatement(sql2);
-            st.setString(1, ticketRS.getBarCode());
-            st.setString(2,ticketRS.getTypeName());
-            st.setString(3, ticketRS.getExtras());
-            st.setString(4, ticketRS.getStartTime());
-            st.setString(5, ticketRS.getEndTime());
-            st.execute();
+            st2.setString(1, ticketRS.getBarCode());
+            st2.setString(2,ticketRS.getTypeName());
+            st2.setString(3, ticketRS.getExtras());
+            st2.setString(4, ticketRS.getStartTime());
+            st2.setString(5, ticketRS.getEndTime());
+            st2.setInt(6,ticketRS.getRow());
+            st2.setInt(7,ticketRS.getSeat());
+            st2.addBatch();
+
+            st.executeBatch();
+            st2.executeBatch();
         }catch(SQLException sqlException){
             sqlException.printStackTrace();
-            throw new DALException("Not able to connect to database", sqlException);
+            throw new DALException("Not able to create Ticket for event, check again your connection", sqlException);
         }
+    }
+
+    public ArrayList<String> getAllExtrasForEvent(Event event) throws DALException{
+        ArrayList<String> allExtras = new ArrayList<>();
+        String sql = "SELECT TicketsRS.EXTRAS \n" +
+                "FROM TicketsRS\n" +
+                "INNER JOIN TicketsInEvent AS TE\n" +
+                "ON TE.EVENTID = (\n" +
+                "    SELECT [ID] AS EID FROM Events WHERE Events.ID = ?\n" +
+                ")\n" +
+                "UNION\n" +
+                "SELECT TicketsG.EXTRAS\n" +
+                "FROM TicketsG\n" +
+                "INNER JOIN TicketsInEvent AS TE\n" +
+                "ON TE.EVENTID = (\n" +
+                "    SELECT [ID] AS EID FROM Events WHERE Events.ID = ?\n" +
+                ")";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1,event.getId());
+            st.setInt(2,event.getId());
+            st.execute();
+            ResultSet rs = st.getResultSet();
+            while(rs.next()){
+                allExtras.add(rs.getString("EXTRAS"));
+            }
+
+        }catch (SQLException sqlException){
+            throw new DALException("Not able to get extras for the event", sqlException);
+        }
+        return allExtras;
     }
 
 }

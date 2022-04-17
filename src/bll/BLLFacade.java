@@ -4,6 +4,7 @@ import be.Event;
 import be.User;
 import dal.exceptions.DALException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface BLLFacade {
@@ -22,4 +23,5 @@ public interface BLLFacade {
 
     void updateEventAndEms(Event event, List<User> ems) throws DALException;
 
+    ArrayList<String> getAllExtrasForEvent(Event event) throws DALException;
 }

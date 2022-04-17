@@ -47,6 +47,7 @@ public class TicketsOptionController implements Initializable {
             }
             CreateTicketController createTicketController = loader.getController();
             createTicketController.setChosenEvent(chosenEvent);
+            createTicketController.populateExtrasComboBox();
             Stage stage = new Stage();
             stage.setTitle("Create ticket for event");
             assert root != null;

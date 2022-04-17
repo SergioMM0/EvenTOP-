@@ -2,12 +2,13 @@ package dal;
 
 import be.Event;
 import be.User;
-import bll.exceptions.BLLException;
 import dal.DAO.DAOEventManagers;
 import dal.DAO.DAOEvents;
 import dal.DAO.DAOLogin;
+import dal.DAO.DAOTickets;
 import dal.exceptions.DALException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DALManager implements DALFacade{
@@ -15,11 +16,13 @@ public class DALManager implements DALFacade{
     private DAOLogin daoLogin;
     private DAOEvents daoEvents;
     private DAOEventManagers daoEventManagers;
+    private DAOTickets daoTickets;
 
     public DALManager(){
         daoLogin = new DAOLogin();
         daoEvents = new DAOEvents();
         daoEventManagers = new DAOEventManagers();
+        daoTickets = new DAOTickets();
     }
 
     @Override
@@ -59,4 +62,8 @@ public class DALManager implements DALFacade{
         daoEvents.updateEventAndEms(event,ems);
     }
 
+    @Override
+    public ArrayList<String> getAllExtrasForEvent(Event event) throws DALException {
+        return daoTickets.getAllExtrasForEvent(event);
+    }
 }

@@ -19,6 +19,7 @@ public class ManageExtrasModel {
         observableExtras.remove(string);
     }
 
-
-
+    public ObservableList<String> getObservableExtras() {
+        return observableExtras;
+    }
 }
