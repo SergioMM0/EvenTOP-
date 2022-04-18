@@ -6,10 +6,7 @@ import be.TicketRS;
 import dal.connectionProvider.ConnectionProvider;
 import dal.exceptions.DALException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class DAOTickets {
@@ -22,7 +19,7 @@ public class DAOTickets {
 
     public void addTicketG(TicketG ticketG) throws DALException{
         String sql = "INSERT INTO Tickets ([BARCODE]) VALUES (?);";
-        String sql2 = "INSERT INTO TicketsG([BARCODE],[TYPE],[EXTRAS],[STARTTIME],[ENDTIME]) VALUES(?,?,?,?,?);";
+        String sql2 = "INSERT INTO TicketsG([BARCODE],[TYPE],[EXTRAS],[STARTTIME],[ENDTIME],[EVENTID]) VALUES(?,?,?,?,?,?);";
         try{
             Connection connection = connectionProvider.getConnection();
             PreparedStatement st = connection.prepareStatement(sql);
@@ -72,19 +69,13 @@ public class DAOTickets {
 
     public ArrayList<String> getAllExtrasForEvent(Event event) throws DALException{
         ArrayList<String> allExtras = new ArrayList<>();
-        String sql = "SELECT TicketsRS.EXTRAS \n" +
-                "FROM TicketsRS\n" +
-                "INNER JOIN TicketsInEvent AS TE\n" +
-                "ON TE.EVENTID = (\n" +
-                "    SELECT [ID] AS EID FROM Events WHERE Events.ID = ?\n" +
-                ")\n" +
-                "UNION\n" +
-                "SELECT TicketsG.EXTRAS\n" +
+        String sql = "SELECT [EXTRAS]\n" +
                 "FROM TicketsG\n" +
-                "INNER JOIN TicketsInEvent AS TE\n" +
-                "ON TE.EVENTID = (\n" +
-                "    SELECT [ID] AS EID FROM Events WHERE Events.ID = ?\n" +
-                ")";
+                "WHERE EVENTID = ? \n" +
+                "UNION\n" +
+                "SELECT [EXTRAS]\n" +
+                "FROM TicketsRS\n" +
+                "WHERE EVENTID = ?";
         try{
             Connection connection = connectionProvider.getConnection();
             PreparedStatement st = connection.prepareStatement(sql);
@@ -97,9 +88,35 @@ public class DAOTickets {
             }
 
         }catch (SQLException sqlException){
-            throw new DALException("Not able to get extras for the event", sqlException);
+            throw new DALException("Not able to get extras for the event, check your connection", sqlException);
         }
         return allExtras;
+    }
+
+    public ArrayList<String> getAllTypesForEvent(Event event) throws DALException{
+        ArrayList<String> allTypes = new ArrayList<>();
+        String sql = "SELECT [TYPE]\n" +
+                "FROM TicketsG\n" +
+                "WHERE EVENTID = ? \n" +
+                "UNION \n" +
+                "SELECT [TYPE]\n" +
+                "FROM TicketsRS\n" +
+                "WHERE EVENTID = ?";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            st.setInt(1,event.getId());
+            st.setInt(2,event.getId());
+            st.execute();
+            ResultSet rs = st.getResultSet();
+            while(rs.next()){
+                allTypes.add(rs.getString("TYPE"));
+            }
+
+        }catch(SQLException sqlex){
+            throw new DALException("Not able to get types for event, check your connection", sqlex);
+        }
+        return allTypes;
     }
 
 }

@@ -59,6 +59,11 @@ public class BLLManager implements BLLFacade{
         return dalFacade.getAllExtrasForEvent(event);
     }
 
+    @Override
+    public ArrayList<String> getAllTypesForEvent(Event event) throws DALException {
+        return dalFacade.getAllTypesForEvent(event);
+    }
+
 
     public void fixStartHour(Event event){
         String[] wrong = event.getStartTime().split(":");

@@ -66,4 +66,11 @@ public class DALManager implements DALFacade{
     public ArrayList<String> getAllExtrasForEvent(Event event) throws DALException {
         return daoTickets.getAllExtrasForEvent(event);
     }
+
+    @Override
+    public ArrayList<String> getAllTypesForEvent(Event event) throws DALException {
+        return daoTickets.getAllTypesForEvent(event);
+    }
+
+
 }

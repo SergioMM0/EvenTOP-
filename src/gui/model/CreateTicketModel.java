@@ -13,14 +13,12 @@ public class CreateTicketModel {
     private ObservableList<String> allTypes;
     private ObservableList<String> allExtras;
     private ObservableList<String> extrasOnEvent;
-    private ObservableList<String> typesOnEvent;
 
     public CreateTicketModel(){
         bllFacade = new BLLManager();
         allExtras = FXCollections.observableArrayList();
         allTypes = FXCollections.observableArrayList();
         extrasOnEvent = FXCollections.observableArrayList();
-        typesOnEvent = FXCollections.observableArrayList();
     }
 
     public ObservableList<String> getObservableExtras(){
@@ -65,5 +63,10 @@ public class CreateTicketModel {
 
     public ObservableList<String> getExtrasInEvent() {
         return extrasOnEvent;
+    }
+
+    public ObservableList<String> getAllTypesForEvent(Event chosenEvent) throws DALException{
+        allTypes.addAll(bllFacade.getAllTypesForEvent(chosenEvent));
+        return allTypes;
     }
 }

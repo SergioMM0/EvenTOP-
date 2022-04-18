@@ -4,10 +4,12 @@ public abstract class Ticket {
 
     private int id;
     private String barCode;
+    private int eventID;
 
-    public Ticket(int id,String barCode){
+    public Ticket(int id,String barCode,int eventID){
         this.id = id;
         this.barCode = barCode;
+        this.eventID = eventID;
     }
 
     public Ticket(String barCode){
@@ -28,5 +30,13 @@ public abstract class Ticket {
 
     public void setBarCode(String barCode) {
         this.barCode = barCode;
+    }
+
+    public int getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
     }
 }

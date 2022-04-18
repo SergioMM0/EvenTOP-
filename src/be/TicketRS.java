@@ -9,8 +9,8 @@ public class TicketRS extends Ticket {
     private int row;
     private int seat;
 
-    public TicketRS(int id, String barCode, String name, String extras, String startTime, String endTime, int row, int seat) {
-        super(id, barCode);
+    public TicketRS(int id, String barCode,int eventId, String name, String extras, String startTime, String endTime, int row, int seat) {
+        super(id, barCode, eventId);
         this.typeName = name;
         this.extras = extras;
         this.startTime = startTime;

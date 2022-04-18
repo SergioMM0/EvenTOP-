@@ -167,7 +167,7 @@ public class CreateTicketController implements Initializable {
             extrasComboBox.getItems().addAll(createTicketModel.getAllExtras(chosenEvent));
         }catch(DALException dalException){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Error");
+            alert.setTitle("Something gone wrong");
             alert.setHeaderText(dalException.getMessage());
             ButtonType okButton = new ButtonType("OK");
             alert.getButtonTypes().setAll(okButton);
@@ -191,11 +191,27 @@ public class CreateTicketController implements Initializable {
 
     public void initializeView(){
         populateExtrasComboBox();
+        populateTypes();
     }
 
     private void closeWindow(){
         Stage st = (Stage) cancelButton.getScene().getWindow();
         st.close();
+    }
+
+    public void populateTypes(){
+        try{
+            ticketTypeComboBox.getItems().addAll(createTicketModel.getAllTypesForEvent(chosenEvent));
+        }catch(DALException dal){
+            dal.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Something gone wrong");
+            alert.setHeaderText(dal.getMessage());
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+        }
+
     }
 }
 

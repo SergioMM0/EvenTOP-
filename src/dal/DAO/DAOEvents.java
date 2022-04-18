@@ -106,10 +106,20 @@ public class DAOEvents {
                     throw new DALException("Error getting the EventManagers", sqlException2);
                 }
                 try {
-                    String sql3 = "SELECT COUNT([BARCODE]) AS NumberOfTickets FROM Tickets WHERE Tickets.BARCODE IN (SELECT [BARCODE] FROM TicketsInEvent WHERE EVENTID = ?)";
+                    String sql3 = "SELECT g, rs, (g + rs) AS NumberOfTickets\n" +
+                            "FROM(\n" +
+                            "    SELECT (\n" +
+                            "        SELECT COUNT(BARCODE)\n" +
+                            "        FROM TicketsG\n" +
+                            "        WHERE EVENTID = ?) AS g,\n" +
+                            "        (SELECT COUNT(BARCODE)\n" +
+                            "        FROM TicketsRS\n" +
+                            "        WHERE EVENTID = ?) AS rs\n" +
+                            ") t";
                     Connection connection2 = connectionProvider.getConnection();
                     PreparedStatement st3 = connection2.prepareStatement(sql3, Statement.RETURN_GENERATED_KEYS);
                     st3.setInt(1, event.getId());
+                    st3.setInt(2,event.getId());
                     st3.execute();
                     ResultSet rs3 = st3.getResultSet();
                     while (rs3.next()) {
