@@ -69,4 +69,12 @@ public class CreateTicketModel {
         allTypes.addAll(bllFacade.getAllTypesForEvent(chosenEvent));
         return allTypes;
     }
+
+    public void addTypeToList(String text) {
+        allTypes.add(text);
+    }
+
+    public ObservableList<String> getAllObservableTypes() {
+        return allTypes;
+    }
 }

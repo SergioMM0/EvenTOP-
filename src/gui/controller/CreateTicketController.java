@@ -136,7 +136,24 @@ public class CreateTicketController implements Initializable {
 
     @FXML
     void openManageTicketTypesView(ActionEvent event) {
-
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/ManageTypeView.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ManageTypeController manageTypeController = loader.getController();
+            manageTypeController.setController(this);
+            Stage stage = new Stage();
+            stage.setTitle("Add new ticket type");
+            assert root != null;
+            stage.setScene(new Scene(root, 400, 150));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -212,6 +229,15 @@ public class CreateTicketController implements Initializable {
             alert.showAndWait();
         }
 
+    }
+
+    public void addType(String text) {
+        createTicketModel.addTypeToList(text);
+    }
+
+    public void repopulateTypesComboBox() {
+        ticketTypeComboBox.getItems().clear();
+        ticketTypeComboBox.getItems().addAll(createTicketModel.getAllObservableTypes());
     }
 }
 

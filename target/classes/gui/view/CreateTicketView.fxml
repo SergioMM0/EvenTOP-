@@ -30,7 +30,7 @@
       <ListView fx:id="extrasList" layoutX="24.0" layoutY="287.0" prefHeight="132.0" prefWidth="224.0" />
       <Label layoutX="404.0" layoutY="213.0" prefHeight="18.0" prefWidth="70.0" text="Ticket type:" />
       <JFXComboBox fx:id="ticketTypeComboBox" layoutX="327.0" layoutY="249.0" onAction="#ticketTypeComboBox" prefHeight="26.0" prefWidth="224.0" />
-      <JFXButton fx:id="manageTicketTypesButton" layoutX="363.0" layoutY="370.0" onAction="#openManageTicketTypesView" prefHeight="40.0" prefWidth="150.0" text="Manage ticket types" />
+      <JFXButton fx:id="manageTicketTypesButton" layoutX="363.0" layoutY="370.0" onAction="#openManageTicketTypesView" prefHeight="40.0" prefWidth="150.0" text="Add new type" />
       <JFXButton fx:id="manageExtrasButton" layoutX="363.0" layoutY="313.0" onAction="#openManageExtrasView" prefHeight="40.0" prefWidth="150.0" text="Add new extras" />
       <JFXButton fx:id="addExtraButton" layoutX="194.0" layoutY="200.0" onAction="#addExtra" prefHeight="20.0" prefWidth="58.0" text="Add" />
       <JFXButton fx:id="deleteExtraButton" layoutX="194.0" layoutY="428.0" onAction="#deleteExtra" prefHeight="20.0" prefWidth="58.0" text="Delete" />
