@@ -1,6 +1,7 @@
 package gui.controller;
 
 import com.jfoenix.controls.JFXButton;
+import gui.model.ManageChangeExtrasModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,19 +23,21 @@ public class ManageChangeExtrasController implements Initializable {
     private JFXButton cancelButton;
 
     @FXML
-    private ListView<?> extrasAvailableView;
+    private ListView<?> extrasAvailableListView;
+
+    @FXML
+    private ListView<?> extrasOnTicketListView;
 
     @FXML
     private TextField newExtraField;
 
     @FXML
-    private JFXButton removeExtraFromTicketButton;
+    private JFXButton removeButton;
 
     @FXML
     private JFXButton saveButton;
-
-    @FXML
-    private ListView<?> ticketExtrasListView;
+    private ManageTicketsController manageTicketsController;
+    private ManageChangeExtrasModel manageChangeExtrasModel;
 
     @FXML
     void addExtraToTicket(ActionEvent event) {
@@ -42,12 +45,12 @@ public class ManageChangeExtrasController implements Initializable {
     }
 
     @FXML
-    void addNewExtraToTicket(ActionEvent event) {
+    void addNewExtra(ActionEvent event) {
 
     }
 
     @FXML
-    void backToManageTickets(ActionEvent event) {
+    void cancelEditing(ActionEvent event) {
 
     }
 
@@ -59,6 +62,10 @@ public class ManageChangeExtrasController implements Initializable {
     @FXML
     void saveChanges(ActionEvent event) {
 
+    }
+
+    public void setController(ManageTicketsController manageTicketsController){
+        this.manageTicketsController = manageTicketsController;
     }
 
     @Override

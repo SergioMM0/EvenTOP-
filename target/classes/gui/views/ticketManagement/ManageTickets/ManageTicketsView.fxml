@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.EMVController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ManageTicketsController">
    <children>
-      <TableView layoutX="39.0" layoutY="163.0" prefHeight="366.0" prefWidth="821.0">
+      <JFXButton fx:id="backButton" layoutX="14.0" layoutY="559.0" onAction="#goBackToTicketOptions" prefHeight="26.0" prefWidth="114.0" text="Back" />
+      <TableView fx:id="ticketTableView" layoutX="39.0" layoutY="72.0" prefHeight="400.0" prefWidth="822.0">
         <columns>
-          <TableColumn prefWidth="85.60003662109375" text="Ticket Type" />
-            <TableColumn prefWidth="85.60003662109375" text="Assist time" />
-            <TableColumn prefWidth="85.60003662109375" text="Leave time" />
-            <TableColumn prefWidth="48.0" text="Seat" />
-            <TableColumn prefWidth="48.800018310546875" text="Row" />
-          <TableColumn prefWidth="159.1999740600586" text="Extras" />
-            <TableColumn prefWidth="306.4000244140625" text="Barcode" />
+          <TableColumn fx:id="ticketTypeCol" prefWidth="85.60003662109375" text="Ticket Type" />
+            <TableColumn fx:id="assistTimeCol" prefWidth="85.60003662109375" text="Assist time" />
+            <TableColumn fx:id="leaveTimeCol" prefWidth="85.60003662109375" text="Leave time" />
+          <TableColumn fx:id="extrasCol" prefWidth="256.8000183105469" text="Extras" />
+            <TableColumn fx:id="barcodeCol" prefWidth="306.40008544921875" text="Barcode" />
         </columns>
       </TableView>
-      <JFXButton layoutX="14.0" layoutY="559.0" prefHeight="26.0" prefWidth="130.0" text="Back" />
-      <JFXButton layoutX="39.0" layoutY="54.0" prefHeight="40.0" prefWidth="148.0" text="Change extras" />
-      <JFXButton layoutX="204.0" layoutY="54.0" prefHeight="40.0" prefWidth="148.0" text="Change type" />
-      <JFXButton layoutX="738.0" layoutY="54.0" prefHeight="40.0" prefWidth="148.0" text="Delete ticket" />
-      <JFXButton layoutX="384.0" layoutY="54.0" prefHeight="40.0" prefWidth="148.0" text="Change seat/row" />
-      <JFXButton layoutX="577.0" layoutY="54.0" prefHeight="40.0" prefWidth="148.0" text="Change assist/leave time" />
+      <AnchorPane layoutX="38.0" layoutY="485.0" prefHeight="64.0" prefWidth="822.0">
+         <children>
+            <JFXButton fx:id="changeAssistLeaveButton" layoutX="351.0" layoutY="12.0" onAction="#changeAssistLeaveTime" prefHeight="40.0" prefWidth="148.0" text="Change assist/leave time" />
+            <JFXButton fx:id="changeExtrasButton" layoutX="14.0" layoutY="12.0" onAction="#changeExtrasToTicket" prefHeight="40.0" prefWidth="148.0" text="Change extras" />
+            <JFXButton fx:id="changeTypeButton" layoutX="191.0" layoutY="12.0" onAction="#changeTypeToTicket" prefHeight="40.0" prefWidth="148.0" text="Change type" />
+            <JFXButton fx:id="deleteTicketButton" layoutX="667.0" layoutY="12.0" onAction="#deleteTicket" prefHeight="40.0" prefWidth="148.0" text="Delete ticket" />
+            <JFXButton fx:id="changeSeatRowButton" layoutX="519.0" layoutY="12.0" onAction="#changeSeatRowToTicket" prefHeight="40.0" prefWidth="148.0" text="Change seat/row" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="322.0" layoutY="33.0" prefHeight="18.0" prefWidth="114.0" text="Search by barcode:" />
+      <TextField layoutX="446.0" layoutY="30.0" prefHeight="26.0" prefWidth="350.0" promptText="15b41b53-bf5c-473f-a7b6...." />
+      <JFXButton fx:id="searchButton" layoutX="807.0" layoutY="29.0" onAction="#searchInTicketTable" prefHeight="26.0" prefWidth="54.0" text="Search" />
    </children>
 </AnchorPane>

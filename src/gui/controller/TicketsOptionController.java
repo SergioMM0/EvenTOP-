@@ -60,7 +60,25 @@ public class TicketsOptionController implements Initializable {
 
     @FXML
     void openManageTicketsView(ActionEvent event) {
-
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/ticketManagement/ManageTickets/ManageTicketsView.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ManageTicketsController manageTicketsController = loader.getController();
+            manageTicketsController.initializeView();
+            manageTicketsController.setChosenEvent(chosenEvent);
+            Stage stage = new Stage();
+            stage.setTitle("Ticket Manager");
+            assert root != null;
+            stage.setScene(new Scene(root, 900, 600));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

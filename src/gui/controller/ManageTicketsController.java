@@ -1,5 +1,6 @@
 package gui.controller;
 
+import be.Event;
 import be.Ticket;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
@@ -53,6 +54,7 @@ public class ManageTicketsController {
 
     @FXML
     private TableColumn<String, Ticket> ticketTypeCol;
+    private Event chosenEvent;
 
     @FXML
     void changeAssistLeaveTime(ActionEvent event) {
@@ -89,4 +91,11 @@ public class ManageTicketsController {
 
     }
 
+    public void initializeView() {
+        
+    }
+
+    public void setChosenEvent(Event event) {
+        this.chosenEvent = event;
+    }
 }
