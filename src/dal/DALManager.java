@@ -1,6 +1,8 @@
 package dal;
 
 import be.Event;
+import be.TicketG;
+import be.TicketRS;
 import be.User;
 import dal.DAO.DAOEventManagers;
 import dal.DAO.DAOEvents;
@@ -70,6 +72,21 @@ public class DALManager implements DALFacade{
     @Override
     public ArrayList<String> getAllTypesForEvent(Event event) throws DALException {
         return daoTickets.getAllTypesForEvent(event);
+    }
+
+    @Override
+    public void addTicketRS(TicketRS ticketRS, Event event) throws DALException {
+        daoTickets.addTicketRS(ticketRS,event);
+    }
+
+    @Override
+    public void addTicketG(TicketG ticketG, Event event) throws DALException {
+        daoTickets.addTicketG(ticketG,event);
+    }
+
+    @Override
+    public boolean checkBarcode(String string) throws DALException {
+        return daoTickets.checkBarcode(string);
     }
 
 

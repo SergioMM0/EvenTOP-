@@ -84,7 +84,7 @@ public class CreateTicketController implements Initializable {
     private CreateTicketModel createTicketModel;
     private Event chosenEvent;
 
-    public CreateTicketController(){
+    public CreateTicketController() {
         createTicketModel = new CreateTicketModel();
     }
 
@@ -104,7 +104,42 @@ public class CreateTicketController implements Initializable {
 
     @FXML
     void addTicket(ActionEvent event) {
+        if (!timeIsCorrect()) {
+            throwAlert("Error", "Introduce a valid assist/leave time");
+        } else try {
+            doAddTicket();
+        } catch (DALException dalex) {
+            throwAlert("Something gone wrong", dalex.getMessage());
+        }
 
+    }
+
+    private void doAddTicket() throws DALException {
+        switch (checkTicketCreationType()) {
+            case 1:
+            
+        }
+    }
+
+    public int checkTicketCreationType() {
+        if (rowsSeatCheckBox.isSelected() && addCustomerInfoCheckBox.isSelected()) {
+            return 1; //ticketRS with user info
+        }
+        if (!rowsSeatCheckBox.isSelected() && addCustomerInfoCheckBox.isSelected()) {
+            return 2; //ticketG with user info
+        }
+        if (rowsSeatCheckBox.isSelected() && !addCustomerInfoCheckBox.isSelected()) {
+            return 3; // ticketRS without user info
+        } else return 4; // ticketG without user info
+    }
+
+    public void throwAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
+        alert.showAndWait();
     }
 
     @FXML
@@ -114,7 +149,7 @@ public class CreateTicketController implements Initializable {
 
     @FXML
     void openManageExtrasView(ActionEvent event) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/ManageExtrasView.fxml"));
             Parent root = null;
             try {
@@ -136,7 +171,7 @@ public class CreateTicketController implements Initializable {
 
     @FXML
     void openManageTicketTypesView(ActionEvent event) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/ManageTypeView.fxml"));
             Parent root = null;
             try {
@@ -156,19 +191,11 @@ public class CreateTicketController implements Initializable {
         }
     }
 
-    @FXML
-    void ticketTypeComboBox(ActionEvent event) {
-
-    }
-
-    private boolean timeIsCorrect(){
-        if(Integer.parseInt(assistHour.getText())>23 || Integer.parseInt(assistHour.getText()) < 0){
-            return false;
-        }
-        else if(Integer.parseInt(assistMin.getText())>59 || Integer.parseInt(assistMin.getText()) < 0 ){
-            return false;
-        }
-        else return true;
+    private boolean timeIsCorrect() {
+        return Integer.parseInt(assistHour.getText()) <= 23 && Integer.parseInt(assistHour.getText()) >= 0 &&
+                Integer.parseInt(assistMin.getText()) <= 59 && Integer.parseInt(assistMin.getText()) >= 0 &&
+                Integer.parseInt(leaveHour.getText()) <= 23 && Integer.parseInt(leaveHour.getText()) >= 0 &&
+                Integer.parseInt(leaveMin.getText()) <= 23 && Integer.parseInt(leaveMin.getText()) >= 0;
     }
 
     public void setChosenEvent(Event chosenEvent) {
@@ -179,10 +206,10 @@ public class CreateTicketController implements Initializable {
         createTicketModel.setNewExtras(observableExtras);
     }
 
-    public void populateExtrasComboBox(){
-        try{
+    public void populateExtrasComboBox() {
+        try {
             extrasComboBox.getItems().addAll(createTicketModel.getAllExtras(chosenEvent));
-        }catch(DALException dalException){
+        } catch (DALException dalException) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Something gone wrong");
             alert.setHeaderText(dalException.getMessage());
@@ -197,7 +224,7 @@ public class CreateTicketController implements Initializable {
         extrasComboBox.getItems().addAll(createTicketModel.getObservableExtras());
     }
 
-    public void repopulateExtrasList(){
+    public void repopulateExtrasList() {
         extrasList.getItems().clear();
         extrasList.getItems().addAll(createTicketModel.getExtrasInEvent());
     }
@@ -206,20 +233,20 @@ public class CreateTicketController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void initializeView(){
+    public void initializeView() {
         populateExtrasComboBox();
         populateTypes();
     }
 
-    private void closeWindow(){
+    private void closeWindow() {
         Stage st = (Stage) cancelButton.getScene().getWindow();
         st.close();
     }
 
-    public void populateTypes(){
-        try{
+    public void populateTypes() {
+        try {
             ticketTypeComboBox.getItems().addAll(createTicketModel.getAllTypesForEvent(chosenEvent));
-        }catch(DALException dal){
+        } catch (DALException dal) {
             dal.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Something gone wrong");

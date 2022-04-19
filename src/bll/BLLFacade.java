@@ -1,6 +1,8 @@
 package bll;
 
 import be.Event;
+import be.TicketG;
+import be.TicketRS;
 import be.User;
 import dal.exceptions.DALException;
 
@@ -26,4 +28,10 @@ public interface BLLFacade {
     ArrayList<String> getAllExtrasForEvent(Event event) throws DALException;
 
     ArrayList<String> getAllTypesForEvent(Event event) throws DALException;
+
+    void addTicketRS(TicketRS ticketRS, Event event) throws DALException;
+
+    void addTicketG(TicketG ticketG, Event event) throws DALException;
+
+    boolean checkBarcode(String string) throws DALException;
 }

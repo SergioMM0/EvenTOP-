@@ -1,6 +1,8 @@
 package gui.model;
 
 import be.Event;
+import be.TicketG;
+import be.TicketRS;
 import bll.BLLFacade;
 import bll.BLLManager;
 import dal.exceptions.DALException;
@@ -76,5 +78,13 @@ public class CreateTicketModel {
 
     public ObservableList<String> getAllObservableTypes() {
         return allTypes;
+    }
+
+    public void addTicketG(TicketG ticketG, Event event) throws DALException{
+        bllFacade.addTicketG(ticketG,event);
+    }
+
+    public void addTicketRS(TicketRS ticketRS, Event event) throws DALException{
+        bllFacade.addTicketRS(ticketRS,event);
     }
 }

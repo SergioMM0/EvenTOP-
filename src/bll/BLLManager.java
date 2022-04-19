@@ -1,13 +1,17 @@
 package bll;
 
 import be.Event;
+import be.TicketG;
+import be.TicketRS;
 import be.User;
 import dal.DALFacade;
 import dal.DALManager;
+import dal.DAO.DAOTickets;
 import dal.exceptions.DALException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class BLLManager implements BLLFacade{
 
@@ -64,6 +68,34 @@ public class BLLManager implements BLLFacade{
         return dalFacade.getAllTypesForEvent(event);
     }
 
+    @Override
+    public void addTicketRS(TicketRS ticketRS, Event event) throws DALException {
+        ticketRS.setBarCode(safeBarcode().toString());
+        dalFacade.addTicketRS(ticketRS,event);
+    }
+
+    @Override
+    public void addTicketG(TicketG ticketG, Event event) throws DALException {
+        ticketG.setBarCode(safeBarcode().toString());
+        dalFacade.addTicketG(ticketG,event);
+    }
+
+    @Override
+    public boolean checkBarcode(String string) throws DALException {
+        return dalFacade.checkBarcode(string);
+    }
+
+    public UUID safeBarcode() throws DALException {
+        UUID uuid = UUID.randomUUID();
+        while(uuidIsTaken(uuid)){
+            uuidIsTaken(uuid = UUID.randomUUID());
+        }
+        return uuid;
+    }
+
+    public boolean uuidIsTaken(UUID uuid) throws DALException{
+        return checkBarcode(uuid.toString());//true if taken & false if not
+    }
 
     public void fixStartHour(Event event){
         String[] wrong = event.getStartTime().split(":");
@@ -85,4 +117,6 @@ public class BLLManager implements BLLFacade{
             wrong[1] = "0"+ wrong[1];
         }
     }
+
+
 }

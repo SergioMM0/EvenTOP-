@@ -1,13 +1,10 @@
 package dal.DAO;
 
-
 import be.User;
 import be.UserType;
-import bll.exceptions.BLLException;
 import dal.connectionProvider.ConnectionProvider;
 import dal.exceptions.DALException;
 
-import java.security.InvalidParameterException;
 import java.sql.*;
 
 public class DAOLogin {

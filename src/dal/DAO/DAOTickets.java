@@ -8,6 +8,7 @@ import dal.exceptions.DALException;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class DAOTickets {
 
@@ -17,7 +18,7 @@ public class DAOTickets {
         connectionProvider = new ConnectionProvider();
     }
 
-    public void addTicketG(TicketG ticketG) throws DALException{
+    public void addTicketG(TicketG ticketG,Event event) throws DALException{
         String sql = "INSERT INTO Tickets ([BARCODE]) VALUES (?);";
         String sql2 = "INSERT INTO TicketsG([BARCODE],[TYPE],[EXTRAS],[STARTTIME],[ENDTIME],[EVENTID]) VALUES(?,?,?,?,?,?);";
         try{
@@ -31,6 +32,7 @@ public class DAOTickets {
             st2.setString(3, ticketG.getExtras());
             st2.setString(4, ticketG.getStartTime());
             st2.setString(5, ticketG.getEndTime());
+            st2.setInt(6,event.getId());
             st2.addBatch();
 
             st.executeBatch();
@@ -39,11 +41,12 @@ public class DAOTickets {
             sqlException.printStackTrace();
             throw new DALException("Not able to create Ticket for event, check again your connection", sqlException);
         }
+        System.out.println("added " + ticketG);
     }
 
-    public void addTicketRS(TicketRS ticketRS) throws DALException{
+    public void addTicketRS(TicketRS ticketRS,Event event) throws DALException{
         String sql = "INSERT INTO Tickets ([BARCODE]) VALUES (?);";
-        String sql2 = "INSERT INTO TicketsRS([BARCODE],[TYPE],[EXTRAS],[STARTTIME],[ENDTIME],[ROW],[SEAT]) VALUES(?,?,?,?,?,?,?);";
+        String sql2 = "INSERT INTO TicketsRS([BARCODE],[TYPE],[EXTRAS],[STARTTIME],[ENDTIME],[ROW],[SEAT],[EVENTID]) VALUES(?,?,?,?,?,?,?,?);";
         try{
             Connection connection = connectionProvider.getConnection();
             PreparedStatement st = connection.prepareStatement(sql);
@@ -57,6 +60,7 @@ public class DAOTickets {
             st2.setString(5, ticketRS.getEndTime());
             st2.setInt(6,ticketRS.getRow());
             st2.setInt(7,ticketRS.getSeat());
+            st2.setInt(8,event.getId());
             st2.addBatch();
 
             st.executeBatch();
@@ -117,6 +121,22 @@ public class DAOTickets {
             throw new DALException("Not able to get types for event, check your connection", sqlex);
         }
         return allTypes;
+    }
+
+    public boolean checkBarcode(String string) throws DALException{
+        String sql = "SELECT * \n" +
+                "FROM Tickets\n" +
+                "WHERE BARCODE = ?";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            st.setString(1,string);
+            st.execute();
+            ResultSet rs = st.getResultSet();
+            return rs.next(); //true = taken & false = not taken
+        }catch (SQLException ex){
+            throw new DALException("Not able to check if the barcode exists, check your connection", ex);
+        }
     }
 
 }
