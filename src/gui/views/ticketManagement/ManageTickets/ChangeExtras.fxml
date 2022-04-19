@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="330.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.views.ticketManagement.ManageTickets.ChangeExtras">
+   <children>
+      <Label layoutX="19.0" layoutY="256.0" text="Add new extra:" />
+      <TextField fx:id="newExtraField" layoutX="112.0" layoutY="252.0" prefHeight="26.0" prefWidth="249.0" />
+      <JFXButton fx:id="addNewExtraButton" layoutX="380.0" layoutY="251.0" onAction="#addNewExtra" prefHeight="26.0" prefWidth="49.0" text="Add" />
+      <ListView fx:id="extrasAvailableListView" layoutX="32.0" layoutY="74.0" prefHeight="154.0" prefWidth="192.0" />
+      <ListView fx:id="extrasOnTicketListView" layoutX="251.0" layoutY="74.0" prefHeight="154.0" prefWidth="192.0" />
+      <Label layoutX="64.0" layoutY="35.0" prefHeight="18.0" prefWidth="93.0" text="Extras available" />
+      <Label layoutX="281.0" layoutY="35.0" prefHeight="18.0" prefWidth="93.0" text="Extras on ticket" />
+      <JFXButton fx:id="addExtraToTicketButton" layoutX="174.0" layoutY="31.0" onAction="#addExtraToTicket" prefHeight="26.0" prefWidth="49.0" text="Add" />
+      <JFXButton fx:id="removeButton" layoutX="381.0" layoutY="31.0" onAction="#removeExtraFromTicket" prefHeight="26.0" prefWidth="62.0" text="Remove" />
+      <JFXButton fx:id="cancelButton" layoutX="19.0" layoutY="294.0" onAction="#cancelEditing" prefHeight="26.0" prefWidth="69.0" text="Cancel" />
+      <JFXButton fx:id="saveButton" layoutX="391.0" layoutY="294.0" onAction="#saveChanges" prefHeight="26.0" prefWidth="69.0" text="Save" />
+   </children>
+</AnchorPane>
