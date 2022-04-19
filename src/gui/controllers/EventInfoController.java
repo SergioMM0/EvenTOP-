@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.controllers;
 
 import be.Event;
 import be.User;
@@ -9,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -54,6 +53,7 @@ public class EventInfoController implements Initializable {
 
     private EventInfoModel eventInfoModel;
     private EMVController emvController;
+    private static final String errTitle = "Something went wrong";
 
     public EventInfoController(){
         eventInfoModel = new EventInfoModel();
@@ -149,55 +149,25 @@ public class EventInfoController implements Initializable {
         Date setDate = null;
         try {
             if (Objects.equals(eventName.getText(), "") || eventName.getText() == null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Editing event");
-                alert.setHeaderText("Introduce a name for the event");
-                ButtonType okButton = new ButtonType("OK");
-                alert.getButtonTypes().setAll(okButton);
-                alert.showAndWait();
+                throwAlert(errTitle,"Introduce a valid name for the event");
             } else if (currentDate.compareTo(java.sql.Date.valueOf(eventDate.getValue())) > 0 || eventDate.getValue() == null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Editing event");
-                alert.setHeaderText("Introduce a valid date for the event");
-                ButtonType okButton = new ButtonType("OK");
-                alert.getButtonTypes().setAll(okButton);
-                alert.showAndWait();
+                throwAlert(errTitle,"Introduce a valid date for the event");
             } else if (Objects.equals(eventLocation.getText(), "") || eventLocation.getText() == null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Editing event");
-                alert.setHeaderText("Introduce a location for the event");
-                ButtonType okButton = new ButtonType("OK");
-                alert.getButtonTypes().setAll(okButton);
-                alert.showAndWait();
+                throwAlert(errTitle,"Introduce a location for the event");
             } else if (!timeIsCorrect()){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Editing event");
-                alert.setHeaderText("Introduce a valid start time");
-                ButtonType okButton = new ButtonType("OK");
-                alert.getButtonTypes().setAll(okButton);
-                alert.showAndWait();
+                throwAlert(errTitle,"Introduce a valid start time");
             }
             else {
                 setDate = java.sql.Date.valueOf(eventDate.getValue());
                 try {
                     editEvent();
                 } catch (DALException dalException) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Not able to connect to database, check your internet connection");
-                    alert.setHeaderText(dalException.getMessage());
-                    ButtonType okButton = new ButtonType("OK");
-                    alert.getButtonTypes().setAll(okButton);
-                    alert.showAndWait();
+                    throwAlert(errTitle,dalException.getMessage());
                 }
                 closeWindow();
             }
         } catch (NullPointerException ex) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Login credentials");
-            alert.setHeaderText("Introduce a valid date for the event");
-            ButtonType okButton = new ButtonType("OK");
-            alert.getButtonTypes().setAll(okButton);
-            alert.showAndWait();
+            throwAlert(errTitle,"Introduce a valid date for the event");
         }
     }
 
@@ -207,8 +177,16 @@ public class EventInfoController implements Initializable {
         }
         else if(Integer.parseInt(startMin.getText())>59 || Integer.parseInt(startMin.getText()) < 0 ){
             return false;
+        }//is optional to add end hour
+        try{
+            Integer.parseInt(startHour.getText());
+            Integer.parseInt(startMin.getText());
+            Integer.parseInt(endHour.getText());
+            Integer.parseInt(endMin.getText());
+        }catch (NumberFormatException numberFormatException){
+            return false;
         }
-        else return true;
+        return true;
     }
 
     public void editEvent()throws DALException{
@@ -237,6 +215,15 @@ public class EventInfoController implements Initializable {
     private void closeWindow(){
         Stage st = (Stage) eventName.getScene().getWindow();
         st.close();
+    }
+
+    public void throwAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
+        alert.showAndWait();
     }
 
     public void setController(EMVController emvController) {

@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.controllers;
 
 import be.User;
 import bll.exceptions.BLLException;
@@ -84,7 +84,7 @@ public class LoginController implements Initializable {
 
     private void openEMView(){
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/view/EMView.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource("gui/views/userViews/EMView.fxml"));
         Parent root = null;
         try{root = loader.load();}
         catch (IOException ignored){

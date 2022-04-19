@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.CreateTicketController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CreateTicketController">
    <children>
       <Label layoutX="25.0" layoutY="82.0" prefHeight="18.0" prefWidth="70.0" text="Assist time:" />
       <TextField fx:id="assistHour" layoutX="103.0" layoutY="78.0" prefHeight="26.0" prefWidth="34.0" promptText="13" />

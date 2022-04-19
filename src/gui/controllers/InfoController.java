@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.controllers;
 
 import javafx.fxml.Initializable;
 

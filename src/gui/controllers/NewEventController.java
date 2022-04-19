@@ -1,4 +1,4 @@
-package gui.controller;
+package gui.controllers;
 
 import be.Event;
 import be.User;
@@ -120,26 +120,11 @@ public class NewEventController implements Initializable {
         Date setDate = null;
         try {
             if (Objects.equals(eventName.getText(), "") || eventName.getText() == null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Creating event");
-                alert.setHeaderText("Introduce a name for the event");
-                ButtonType okButton = new ButtonType("OK");
-                alert.getButtonTypes().setAll(okButton);
-                alert.showAndWait();
+                throwAlert(errTitle,"Introduce a valid name for the event");
             } else if (currentDate.compareTo(java.sql.Date.valueOf(eventDate.getValue())) > 0 || eventDate.getValue() == null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Creating event");
-                alert.setHeaderText("Introduce a valid date for the event");
-                ButtonType okButton = new ButtonType("OK");
-                alert.getButtonTypes().setAll(okButton);
-                alert.showAndWait();
+                throwAlert(errTitle,"Introduce a valid date for the event");
             } else if (Objects.equals(eventLocation.getText(), "") || eventLocation.getText() == null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Creating event");
-                alert.setHeaderText("Introduce a location for the event");
-                ButtonType okButton = new ButtonType("OK");
-                alert.getButtonTypes().setAll(okButton);
-                alert.showAndWait();
+                throwAlert(errTitle,"Introduce a location for the event");
             } else if (!timeIsCorrect()){
                 throwAlert(errTitle,"Introduce a valid start time");
             }
@@ -161,10 +146,18 @@ public class NewEventController implements Initializable {
         if(Integer.parseInt(startHour.getText())>23 || Integer.parseInt(startHour.getText()) < 0){
             return false;
         }
-        else if(Integer.parseInt(startMin.getText())>59 || Integer.parseInt(startMin.getText()) < 0 ){
+        if(Integer.parseInt(startMin.getText())>59 || Integer.parseInt(startMin.getText()) < 0 ){
             return false;
         }
-        else return true;
+        try{
+            Integer.parseInt(startHour.getText());
+            Integer.parseInt(startMin.getText());
+            Integer.parseInt(endHour.getText());
+            Integer.parseInt(endMin.getText());
+        }catch (NumberFormatException numberFormatException){
+            return false;
+        }
+        return true;
     }
 
     private void addEvent() throws DALException {
