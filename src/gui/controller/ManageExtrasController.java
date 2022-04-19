@@ -1,10 +1,14 @@
-package gui.controllers;
+package gui.controller;
 
+import be.Event;
 import com.jfoenix.controls.JFXButton;
+import dal.exceptions.DALException;
 import gui.model.ManageExtrasModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;

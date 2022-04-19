@@ -1,4 +1,4 @@
-package gui.controllers;
+package gui.controller;
 
 import be.Event;
 import be.User;

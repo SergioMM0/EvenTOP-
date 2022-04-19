@@ -1,4 +1,4 @@
-package gui.controllers;
+package gui.controller;
 
 import be.Event;
 import com.jfoenix.controls.JFXButton;
