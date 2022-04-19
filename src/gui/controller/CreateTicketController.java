@@ -116,6 +116,7 @@ public class CreateTicketController implements Initializable {
         if(isNotANumber()){
             throwAlert("Error", "Introduce a valid row/seat number");
         }
+
         else {
             try {
                 switchAddTicket();
@@ -235,6 +236,7 @@ public class CreateTicketController implements Initializable {
             return 3; // ticketRS without user info
         }
         else return 4; // ticketG without user info
+
     }
 
     public void throwAlert(String title, String message) {
@@ -373,7 +375,9 @@ public class CreateTicketController implements Initializable {
     public void disableRS(){
         rs = false;
         rowNumber.setDisable(true);
+        rowNumber.clear();
         seatNumber.setDisable(true);
+        seatNumber.clear();
     }
 
     public void enableRS(){
@@ -393,6 +397,9 @@ public class CreateTicketController implements Initializable {
         customerName.setDisable(false);
         customerEmail.setDisable(false);
         customerPhone.setDisable(false);
+        customerName.clear();
+        customerEmail.clear();
+        customerPhone.clear();
     }
 
     private void disableUserInfo() {
@@ -400,6 +407,9 @@ public class CreateTicketController implements Initializable {
         customerName.setDisable(true);
         customerEmail.setDisable(true);
         customerPhone.setDisable(true);
+        customerName.clear();
+        customerEmail.clear();
+        customerPhone.clear();
     }
 }
 
