@@ -39,6 +39,9 @@ public class CreateTicketModel {
     }
 
     public String getExtrasInEventAsString(){
+        if(extrasOnEvent.size() == 0){
+            return "No extras";
+        }
         StringBuilder all = new StringBuilder();
         for (int i = 0; i < extrasOnEvent.size()-1; i++) {
             all.append(extrasOnEvent.get(i)).append(", ");

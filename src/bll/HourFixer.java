@@ -45,9 +45,9 @@ public class HourFixer {
     }
 
     public void fixTicketRSAssist(TicketRS ticketRS){
-        String[] wrong = ticketRS.getEndTime().split(":");
+        String[] wrong = ticketRS.getStartTime().split(":");
         parseAndCompare(wrong);
-        ticketRS.setEndTime(wrong[0],wrong[1]);
+        ticketRS.setStartTime(wrong[0],wrong[1]);
     }
 
     public void fixTicketGLeave(TicketG ticketG){

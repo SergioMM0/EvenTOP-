@@ -21,7 +21,5 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch();
-        String hola = "hola";
-        System.out.println(hola.length());
     }
 }

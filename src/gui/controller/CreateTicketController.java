@@ -109,11 +109,35 @@ public class CreateTicketController implements Initializable {
     void addTicket(ActionEvent event) {
         if (!timeIsCorrect()) {
             throwAlert("Error", "Introduce a valid assist/leave time");
-        } else try {
-            switchAddTicket();
-        } catch (DALException dalex) {
-            throwAlert("Something gone wrong", dalex.getMessage());
         }
+        if(typeSelected()){
+            throwAlert("Error", "Introduce a type for the event");
+        }
+        if(isNotANumber()){
+            throwAlert("Error", "Introduce a valid row/seat number");
+        }
+        else {
+            try {
+                switchAddTicket();
+            } catch (DALException dalex) {
+                throwAlert("Something gone wrong", dalex.getMessage());
+            }
+        }
+    }
+
+    private boolean isNotANumber() {
+        try{
+            Integer.parseInt(rowNumber.getText());
+            Integer.parseInt(seatNumber.getText());
+            return false;
+        }
+        catch (NumberFormatException e){
+            return true;
+        }
+    }
+
+    private boolean typeSelected() {
+        return ticketTypeComboBox.getSelectionModel().isEmpty();
     }
 
     private void switchAddTicket() throws DALException {
