@@ -49,16 +49,16 @@ public class TicketRS extends Ticket {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setStartTime(String hour, String min) {
+        this.startTime = hour + ":" + min;
     }
 
     public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setEndTime(String hour, String min) {
+        this.endTime = hour + ":" + min;
     }
 
     public int getRow() {

@@ -8,10 +8,11 @@ public class User {
     private String name;
     private String phoneNumber;
 
-    public User(int id, UserType type, String email, String name, String phoneNumber) {
+    public User(int id, UserType type, String email, String password, String name, String phoneNumber) {
         this.id = id;
         this.type = type;
         this.email = email;
+        this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
@@ -29,6 +30,10 @@ public class User {
 
     public UserType getType() {
         return type;
+    }
+
+    public String getTypeToString(){
+        return this.type.toString();
     }
 
     public void setType(UserType type) {

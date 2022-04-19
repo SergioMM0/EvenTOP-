@@ -36,4 +36,6 @@ public interface DALFacade {
     void addTicketG(TicketG ticketG, Event event) throws DALException;
 
     boolean checkBarcode(String string) throws DALException;
+
+    void addUser(User user) throws DALException;
 }

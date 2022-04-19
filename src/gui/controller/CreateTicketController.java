@@ -1,6 +1,6 @@
 package gui.controller;
 
-import be.Event;
+import be.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import dal.exceptions.DALException;
@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -83,6 +84,8 @@ public class CreateTicketController implements Initializable {
 
     private CreateTicketModel createTicketModel;
     private Event chosenEvent;
+    private boolean rs;
+    private boolean ci;
 
     public CreateTicketController() {
         createTicketModel = new CreateTicketModel();
@@ -107,17 +110,93 @@ public class CreateTicketController implements Initializable {
         if (!timeIsCorrect()) {
             throwAlert("Error", "Introduce a valid assist/leave time");
         } else try {
-            doAddTicket();
+            switchAddTicket();
         } catch (DALException dalex) {
             throwAlert("Something gone wrong", dalex.getMessage());
         }
-
     }
 
-    private void doAddTicket() throws DALException {
+    private void switchAddTicket() throws DALException {
         switch (checkTicketCreationType()) {
-            case 1:
-            
+            case 1 -> {
+                addTicketRSAndUser();
+            }
+            case 2 -> {
+                addTicketGAndUser();
+            }
+            case 3 -> addTicketRS();
+            case 4 -> addTicketG();
+        }
+        closeWindow();
+    }
+
+    public void addTicketRS(){
+        try{
+            createTicketModel.addTicketRS(new TicketRS(
+                            null,
+                            ticketTypeComboBox.getValue(),
+                            createTicketModel.getExtrasInEventAsString(),
+                            assistHour.getText() + ":" + assistMin.getText(),
+                            leaveHour.getText()+":"+leaveMin.getText(),
+                            Integer.parseInt(rowNumber.getText()),
+                            Integer.parseInt(seatNumber.getText())),
+                    chosenEvent);
+        }catch (DALException dal){
+            throwAlert("Error creating the ticket",dal.getMessage());
+        }
+    }
+
+    public void addTicketRSAndUser(){
+        try{
+            createTicketModel.addTicketRSAndUser(new TicketRS(
+                            null,
+                            ticketTypeComboBox.getValue(),
+                            createTicketModel.getExtrasInEventAsString(),
+                            assistHour.getText() + ":" + assistMin.getText(),
+                            leaveHour.getText()+":"+leaveMin.getText(),
+                            Integer.parseInt(rowNumber.getText()),
+                            Integer.parseInt(seatNumber.getText())),
+                    chosenEvent,
+                    new User(0,
+                            UserType.CUSTOMER,customerEmail.getText(),
+                            null,
+                            customerName.getText(),
+                            customerPhone.getText()));;
+        }catch (DALException dal){
+            throwAlert("Error creating the ticket",dal.getMessage());
+        }
+    }
+
+    public void addTicketG(){
+        try{
+            createTicketModel.addTicketG(new TicketG(
+                    null,
+                            ticketTypeComboBox.getValue(),
+                            createTicketModel.getExtrasInEventAsString(),
+                            assistHour.getText() + ":" + assistMin.getText(),
+                            leaveHour.getText()+":"+leaveMin.getText()),
+                            chosenEvent);
+        }catch (DALException dal){
+            throwAlert("Error creating the ticket",dal.getMessage());
+        }
+    }
+
+    public void addTicketGAndUser(){
+        try{
+            createTicketModel.addTicketGAndUser(new TicketG(
+                            null,
+                            ticketTypeComboBox.getValue(),
+                            createTicketModel.getExtrasInEventAsString(),
+                            assistHour.getText() + ":" + assistMin.getText(),
+                            leaveHour.getText()+":"+leaveMin.getText()),
+                    chosenEvent,
+                    new User(0,
+                            UserType.CUSTOMER,customerEmail.getText(),
+                            null,
+                            customerName.getText(),
+                            customerPhone.getText()));;
+        }catch (DALException dal){
+            throwAlert("Error creating the ticket",dal.getMessage());
         }
     }
 
@@ -130,7 +209,8 @@ public class CreateTicketController implements Initializable {
         }
         if (rowsSeatCheckBox.isSelected() && !addCustomerInfoCheckBox.isSelected()) {
             return 3; // ticketRS without user info
-        } else return 4; // ticketG without user info
+        }
+        else return 4; // ticketG without user info
     }
 
     public void throwAlert(String title, String message) {
@@ -156,6 +236,7 @@ public class CreateTicketController implements Initializable {
                 root = loader.load();
             } catch (IOException e) {
                 e.printStackTrace();
+                throwAlert("Something gone wrong",e.getLocalizedMessage());
             }
             ManageExtrasController manageExtrasController = loader.getController();
             manageExtrasController.setController(this);
@@ -178,6 +259,7 @@ public class CreateTicketController implements Initializable {
                 root = loader.load();
             } catch (IOException e) {
                 e.printStackTrace();
+                throwAlert("Something gone wrong",e.getLocalizedMessage());
             }
             ManageTypeController manageTypeController = loader.getController();
             manageTypeController.setController(this);
@@ -210,12 +292,7 @@ public class CreateTicketController implements Initializable {
         try {
             extrasComboBox.getItems().addAll(createTicketModel.getAllExtras(chosenEvent));
         } catch (DALException dalException) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Something gone wrong");
-            alert.setHeaderText(dalException.getMessage());
-            ButtonType okButton = new ButtonType("OK");
-            alert.getButtonTypes().setAll(okButton);
-            alert.showAndWait();
+            throwAlert("Something gone wrong", dalException.getMessage());
         }
     }
 
@@ -236,6 +313,8 @@ public class CreateTicketController implements Initializable {
     public void initializeView() {
         populateExtrasComboBox();
         populateTypes();
+        disableRS();
+        disableUserInfo();
     }
 
     private void closeWindow() {
@@ -247,13 +326,7 @@ public class CreateTicketController implements Initializable {
         try {
             ticketTypeComboBox.getItems().addAll(createTicketModel.getAllTypesForEvent(chosenEvent));
         } catch (DALException dal) {
-            dal.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Something gone wrong");
-            alert.setHeaderText(dal.getMessage());
-            ButtonType okButton = new ButtonType("OK");
-            alert.getButtonTypes().setAll(okButton);
-            alert.showAndWait();
+            throwAlert("Something gone wrong",dal.getMessage());
         }
 
     }
@@ -265,6 +338,44 @@ public class CreateTicketController implements Initializable {
     public void repopulateTypesComboBox() {
         ticketTypeComboBox.getItems().clear();
         ticketTypeComboBox.getItems().addAll(createTicketModel.getAllObservableTypes());
+    }
+
+    public void addRowAndSeat(MouseEvent actionEvent) {
+        if(rs){
+            disableRS();
+        }else enableRS();
+    }
+
+    public void disableRS(){
+        rs = false;
+        rowNumber.setDisable(true);
+        seatNumber.setDisable(true);
+    }
+
+    public void enableRS(){
+        rs = true;
+        rowNumber.setDisable(false);
+        seatNumber.setDisable(false);
+    }
+
+    public void addCustomerInfo(MouseEvent actionEvent) {
+        if(ci){
+            disableUserInfo();
+        }else enableUserInfo();
+    }
+
+    private void enableUserInfo(){
+        ci = true;
+        customerName.setDisable(false);
+        customerEmail.setDisable(false);
+        customerPhone.setDisable(false);
+    }
+
+    private void disableUserInfo() {
+        ci = false;
+        customerName.setDisable(true);
+        customerEmail.setDisable(true);
+        customerPhone.setDisable(true);
     }
 }
 

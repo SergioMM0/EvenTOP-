@@ -20,7 +20,7 @@
       <Label layoutX="143.0" layoutY="122.0" prefHeight="18.0" prefWidth="5.0" text=":" />
       <Label layoutX="194.0" layoutY="98.0" prefHeight="18.0" prefWidth="70.0" text="(24hr format)" />
       <Label layoutX="76.0" layoutY="22.0" prefHeight="20.0" prefWidth="120.0" text="Ticket information" />
-      <CheckBox fx:id="rowsSeatCheckBox" layoutX="296.0" layoutY="42.0" mnemonicParsing="false" onAction="#addRowAndSeat" text="Add row and seat number" />
+      <CheckBox fx:id="rowsSeatCheckBox" layoutX="296.0" layoutY="42.0" mnemonicParsing="false" onMouseClicked="#addRowAndSeat" text="Add row and seat number" />
       <Label layoutX="297.0" layoutY="82.0" prefHeight="18.0" prefWidth="79.0" text="Row number:" />
       <Label layoutX="297.0" layoutY="122.0" prefHeight="18.0" prefWidth="79.0" text="Seat number:" />
       <TextField fx:id="rowNumber" layoutX="387.0" layoutY="78.0" prefHeight="26.0" prefWidth="57.0" promptText="3" />
@@ -36,7 +36,7 @@
       <JFXButton fx:id="deleteExtraButton" layoutX="194.0" layoutY="428.0" onAction="#deleteExtra" prefHeight="20.0" prefWidth="58.0" text="Delete" />
       <JFXButton fx:id="cancelButton" layoutX="19.0" layoutY="460.0" onAction="#cancelCreatingTicket" prefHeight="26.0" prefWidth="113.0" text="Cancel" />
       <JFXButton fx:id="addTicketButton" layoutX="653.0" layoutY="460.0" onAction="#addTicket" prefHeight="26.0" prefWidth="113.0" text="Add ticket" />
-      <CheckBox fx:id="addCustomerInfoCheckBox" layoutX="564.0" layoutY="42.0" mnemonicParsing="false" onAction="#addCustomerInfo" text="Add customer info" />
+      <CheckBox fx:id="addCustomerInfoCheckBox" layoutX="564.0" layoutY="42.0" mnemonicParsing="false" onMouseClicked="#addCustomerInfo" text="Add customer info" />
       <Label layoutX="527.0" layoutY="82.0" prefHeight="18.0" prefWidth="47.0" text="Name:" />
       <TextField fx:id="customerName" layoutX="617.0" layoutY="78.0" prefHeight="26.0" prefWidth="150.0" promptText="Jhon" />
       <Label layoutX="527.0" layoutY="122.0" prefHeight="18.0" prefWidth="47.0" text="Phone:" />

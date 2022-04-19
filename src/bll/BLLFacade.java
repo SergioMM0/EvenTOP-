@@ -34,4 +34,10 @@ public interface BLLFacade {
     void addTicketG(TicketG ticketG, Event event) throws DALException;
 
     boolean checkBarcode(String string) throws DALException;
+
+    void addUser(User user) throws DALException;
+
+    void addTicketRSAndUser(TicketRS ticketRS,Event event,User user) throws DALException;
+
+    void addTicketGAndUser(TicketG ticketG,Event event,User user) throws DALException;
 }

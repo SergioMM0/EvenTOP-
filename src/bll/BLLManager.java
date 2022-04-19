@@ -16,15 +16,17 @@ import java.util.UUID;
 public class BLLManager implements BLLFacade{
 
     private DALFacade dalFacade;
+    private HourFixer hourFixer;
 
     public BLLManager(){
         dalFacade = new DALManager();
+        hourFixer = hourFixer.getInstance();
     }
 
     @Override
     public void addEvent(Event event) throws DALException {
-        fixStartHour(event);
-        fixEndHour(event);
+        hourFixer.fixStartHour(event);
+        hourFixer.fixEndHour(event);
         dalFacade.addEvent(event);
     }
 
@@ -33,8 +35,8 @@ public class BLLManager implements BLLFacade{
     }
 
     public void addEventAndEMs(Event event, List<User> ems) throws DALException{
-        fixStartHour(event);
-        fixEndHour(event);
+        hourFixer.fixStartHour(event);
+        hourFixer.fixEndHour(event);
         dalFacade.addEventAndEMs(event,ems);
     }
 
@@ -53,8 +55,8 @@ public class BLLManager implements BLLFacade{
 
     @Override
     public void updateEventAndEms(Event event, List<User> ems) throws DALException {
-        fixStartHour(event);
-        fixEndHour(event);
+        hourFixer.fixStartHour(event);
+        hourFixer.fixEndHour(event);
         dalFacade.updateEventAndEms(event,ems);
     }
 
@@ -70,13 +72,33 @@ public class BLLManager implements BLLFacade{
 
     @Override
     public void addTicketRS(TicketRS ticketRS, Event event) throws DALException {
+        hourFixer.fixTicketRSAssist(ticketRS);
+        hourFixer.fixTicketRSLeave(ticketRS);
         ticketRS.setBarCode(safeBarcode().toString());
+        dalFacade.addTicketRS(ticketRS,event);
+    }
+
+    public void addTicketRSAndUser(TicketRS ticketRS,Event event,User user) throws DALException{
+        ticketRS.setBarCode(safeBarcode().toString());
+        user.setPassword(getBarcodePassword(ticketRS.getBarCode()));
+        addUser(user);
         dalFacade.addTicketRS(ticketRS,event);
     }
 
     @Override
     public void addTicketG(TicketG ticketG, Event event) throws DALException {
+        hourFixer.fixTicketGAssist(ticketG);
+        hourFixer.fixTicketGLeave(ticketG);
         ticketG.setBarCode(safeBarcode().toString());
+        dalFacade.addTicketG(ticketG,event);
+    }
+
+    public void addTicketGAndUser(TicketG ticketG,Event event,User user) throws DALException{
+        hourFixer.fixTicketGAssist(ticketG);
+        hourFixer.fixTicketGLeave(ticketG);
+        ticketG.setBarCode(safeBarcode().toString());
+        user.setPassword(getBarcodePassword(ticketG.getBarCode()));
+        addUser(user);
         dalFacade.addTicketG(ticketG,event);
     }
 
@@ -85,7 +107,17 @@ public class BLLManager implements BLLFacade{
         return dalFacade.checkBarcode(string);
     }
 
-    public UUID safeBarcode() throws DALException {
+    @Override
+    public void addUser(User user) throws DALException {
+        dalFacade.addUser(user);
+    }
+
+    private String getBarcodePassword(String barcode){
+        int length = barcode.length();
+        return barcode.substring(length-10);
+    }
+
+    private UUID safeBarcode() throws DALException {
         UUID uuid = UUID.randomUUID();
         while(uuidIsTaken(uuid)){
             uuidIsTaken(uuid = UUID.randomUUID());
@@ -93,29 +125,8 @@ public class BLLManager implements BLLFacade{
         return uuid;
     }
 
-    public boolean uuidIsTaken(UUID uuid) throws DALException{
+    private boolean uuidIsTaken(UUID uuid) throws DALException{
         return checkBarcode(uuid.toString());//true if taken & false if not
-    }
-
-    public void fixStartHour(Event event){
-        String[] wrong = event.getStartTime().split(":");
-        parseAndCompare(wrong);
-        event.setStartTime(wrong[0],wrong[1]);
-    }
-
-    public void fixEndHour(Event event){
-        String[] wrong = event.getEndTime().split(":");
-        parseAndCompare(wrong);
-        event.setEndTime(wrong[0],wrong[1]);
-    }
-
-    private void parseAndCompare(String[] wrong) {
-        if(Integer.parseInt(wrong[0]) < 10 && wrong[0].length() == 1){
-            wrong[0] = "0"+wrong[0];
-        }
-        if (Integer.parseInt(wrong[1]) < 10 && wrong[1].length() == 1){
-            wrong[1] = "0"+ wrong[1];
-        }
     }
 
 

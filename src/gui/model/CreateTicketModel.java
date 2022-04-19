@@ -3,6 +3,7 @@ package gui.model;
 import be.Event;
 import be.TicketG;
 import be.TicketRS;
+import be.User;
 import bll.BLLFacade;
 import bll.BLLManager;
 import dal.exceptions.DALException;
@@ -37,20 +38,12 @@ public class CreateTicketModel {
         return allExtras;
     }
 
-    public ObservableList<String> getObservableTypes(){
-        return allTypes;
-    }
-
-    public void addTypesToList(String[] types){
-        for (int i = 0; i < types.length-1; i++) {//to test with the length -1
-            allTypes.add(i,types[i]);
+    public String getExtrasInEventAsString(){
+        StringBuilder all = new StringBuilder();
+        for (int i = 0; i < extrasOnEvent.size()-1; i++) {
+            all.append(extrasOnEvent.get(i)).append(", ");
         }
-    }
-
-    public void addExtrasToList(String[] extras){
-        for (int i = 0; i < extras.length-1; i++) {
-            allExtras.add(i,extras[i]);
-        }
+        return all.toString();
     }
 
     public void addExtraToTicket(String value) {
@@ -86,5 +79,13 @@ public class CreateTicketModel {
 
     public void addTicketRS(TicketRS ticketRS, Event event) throws DALException{
         bllFacade.addTicketRS(ticketRS,event);
+    }
+
+    public void addTicketRSAndUser(TicketRS ticketRS,Event event,User user) throws DALException{
+        bllFacade.addTicketRSAndUser(ticketRS,event,user);
+    }
+
+    public void addTicketGAndUser(TicketG ticketG,Event event,User user) throws DALException{
+        bllFacade.addTicketGAndUser(ticketG,event,user);
     }
 }

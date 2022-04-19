@@ -4,10 +4,7 @@ import be.Event;
 import be.TicketG;
 import be.TicketRS;
 import be.User;
-import dal.DAO.DAOEventManagers;
-import dal.DAO.DAOEvents;
-import dal.DAO.DAOLogin;
-import dal.DAO.DAOTickets;
+import dal.DAO.*;
 import dal.exceptions.DALException;
 
 import java.util.ArrayList;
@@ -19,12 +16,14 @@ public class DALManager implements DALFacade{
     private DAOEvents daoEvents;
     private DAOEventManagers daoEventManagers;
     private DAOTickets daoTickets;
+    private DAOUsers daoUsers;
 
     public DALManager(){
         daoLogin = new DAOLogin();
         daoEvents = new DAOEvents();
         daoEventManagers = new DAOEventManagers();
         daoTickets = new DAOTickets();
+        daoUsers = new DAOUsers();
     }
 
     @Override
@@ -87,6 +86,11 @@ public class DALManager implements DALFacade{
     @Override
     public boolean checkBarcode(String string) throws DALException {
         return daoTickets.checkBarcode(string);
+    }
+
+    @Override
+    public void addUser(User user) throws DALException {
+        daoUsers.addUser(user);
     }
 
 

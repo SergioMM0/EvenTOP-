@@ -22,8 +22,11 @@ public class DAOUsers {
             Connection connection = connectionProvider.getConnection();
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1,user.getEmail());
-
-
+            st.setString(2, user.getPassword());
+            st.setString(3,user.getPhoneNumber());
+            st.setString(4, user.getTypeToString());
+            st.setString(5,user.getName());
+            st.execute();
         }catch (SQLException dalException){
             throw new DALException("Not able to add user", dalException);
         }
