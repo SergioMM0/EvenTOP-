@@ -34,15 +34,15 @@
       <JFXButton fx:id="manageExtrasButton" layoutX="363.0" layoutY="313.0" onAction="#openManageExtrasView" prefHeight="40.0" prefWidth="150.0" text="Add new extras" />
       <JFXButton fx:id="addExtraButton" layoutX="194.0" layoutY="200.0" onAction="#addExtra" prefHeight="20.0" prefWidth="58.0" text="Add" />
       <JFXButton fx:id="deleteExtraButton" layoutX="194.0" layoutY="428.0" onAction="#deleteExtra" prefHeight="20.0" prefWidth="58.0" text="Delete" />
-      <JFXButton fx:id="cancelButton" layoutX="19.0" layoutY="460.0" onAction="#cancelCreatingTicket" prefHeight="26.0" prefWidth="113.0" text="Cancel" />
-      <JFXButton fx:id="addTicketButton" layoutX="653.0" layoutY="460.0" onAction="#addTicket" prefHeight="26.0" prefWidth="113.0" text="Add ticket" />
+      <JFXButton fx:id="cancelButton" layoutX="617.0" layoutY="415.0" onAction="#cancelCreatingTicket" prefHeight="50.0" prefWidth="150.0" text="Cancel" />
+      <JFXButton fx:id="addTicketButton" layoutX="617.0" layoutY="328.0" onAction="#addTicket" prefHeight="50.0" prefWidth="150.0" text="Add ticket" />
       <CheckBox fx:id="addCustomerInfoCheckBox" layoutX="564.0" layoutY="42.0" mnemonicParsing="false" onMouseClicked="#addCustomerInfo" text="Add customer info" />
       <Label layoutX="527.0" layoutY="82.0" prefHeight="18.0" prefWidth="47.0" text="Name:" />
       <TextField fx:id="customerName" layoutX="617.0" layoutY="78.0" prefHeight="26.0" prefWidth="150.0" promptText="Jhon" />
       <Label layoutX="527.0" layoutY="122.0" prefHeight="18.0" prefWidth="47.0" text="Phone:" />
-      <TextField fx:id="customerPhone" layoutX="617.0" layoutY="118.0" prefHeight="26.0" prefWidth="150.0" promptText="Jhon" />
+      <TextField fx:id="customerPhone" layoutX="617.0" layoutY="118.0" prefHeight="26.0" prefWidth="150.0" promptText="55 20 40 40" />
       <Label layoutX="527.0" layoutY="164.0" prefHeight="18.0" prefWidth="47.0" text="Email:" />
-      <TextField fx:id="customerEmail" layoutX="617.0" layoutY="160.0" prefHeight="26.0" prefWidth="150.0" promptText="Jhon" />
+      <TextField fx:id="customerEmail" layoutX="617.0" layoutY="160.0" prefHeight="26.0" prefWidth="150.0" promptText="Jhon@gmail.com" />
       <Label layoutX="86.0" layoutY="253.0" prefHeight="18.0" prefWidth="93.0" text="Extras on event:" />
    </children>
 </AnchorPane>

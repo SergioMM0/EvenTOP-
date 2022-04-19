@@ -79,6 +79,8 @@ public class BLLManager implements BLLFacade{
     }
 
     public void addTicketRSAndUser(TicketRS ticketRS,Event event,User user) throws DALException{
+        hourFixer.fixTicketRSAssist(ticketRS);
+        hourFixer.fixTicketRSLeave(ticketRS);
         ticketRS.setBarCode(safeBarcode().toString());
         user.setPassword(getBarcodePassword(ticketRS.getBarCode()));
         addUser(user);

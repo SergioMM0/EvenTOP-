@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import dal.exceptions.DALException;
 import gui.model.CreateTicketModel;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
+import javax.swing.*;
+import java.lang.Object;
 
 import java.io.IOException;
 import java.net.URL;
@@ -127,14 +131,17 @@ public class CreateTicketController implements Initializable {
     }
 
     private boolean isNotANumber() {
-        try{
-            Integer.parseInt(rowNumber.getText());
-            Integer.parseInt(seatNumber.getText());
-            return false;
+        if(!rowNumber.getText().isEmpty() || !seatNumber.getText().isEmpty()){
+            try{
+                Integer.parseInt(rowNumber.getText());
+                Integer.parseInt(seatNumber.getText());
+                return false;
+            }
+            catch (NumberFormatException e){
+                return true;
+            }
         }
-        catch (NumberFormatException e){
-            return true;
-        }
+        else return false;
     }
 
     private boolean typeSelected() {
@@ -142,17 +149,25 @@ public class CreateTicketController implements Initializable {
     }
 
     private void switchAddTicket() throws DALException {
+        System.out.println(checkTicketCreationType());
         switch (checkTicketCreationType()) {
-            case 1 -> {
+            case 1:
                 addTicketRSAndUser();
-            }
-            case 2 -> {
+                closeWindow();
+                break;
+            case 2:
+                addTicketRS();
+                closeWindow();
+                break;
+            case 3:
+                addTicketG();
+                closeWindow();
+                break;
+            case 4:
                 addTicketGAndUser();
-            }
-            case 3 -> addTicketRS();
-            case 4 -> addTicketG();
+                closeWindow();
+                break;
         }
-        closeWindow();
     }
 
     public void addTicketRS(){
@@ -226,17 +241,14 @@ public class CreateTicketController implements Initializable {
     }
 
     public int checkTicketCreationType() {
-        if (rowsSeatCheckBox.isSelected() && addCustomerInfoCheckBox.isSelected()) {
-            return 1; //ticketRS with user info
+        if(rs) {
+            if(ci){
+                return 1;//ticketRS with userinfo
+            }else return 2; //ticketRS without user info
         }
-        if (!rowsSeatCheckBox.isSelected() && addCustomerInfoCheckBox.isSelected()) {
-            return 2; //ticketG with user info
-        }
-        if (rowsSeatCheckBox.isSelected() && !addCustomerInfoCheckBox.isSelected()) {
-            return 3; // ticketRS without user info
-        }
-        else return 4; // ticketG without user info
-
+        if(ci){
+            return 3; //ticketG with user info
+        }else return 4; //ticketG without userinfo
     }
 
     public void throwAlert(String title, String message) {

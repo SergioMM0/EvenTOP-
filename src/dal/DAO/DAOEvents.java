@@ -30,9 +30,8 @@ public class DAOEvents {
             st.setString(6, event.getEndTime());
             st.execute();
         } catch (SQLException sqlException) {
-            throw new DALException("Event not added to the database", sqlException);
+            throw new DALException("Problem adding the event to the database", sqlException);
         }
-        //TODO in BLL check that event doesn't have same name
     }
 
     public void addEventAndEMs(Event event, List<User> ems) throws DALException {
@@ -48,7 +47,7 @@ public class DAOEvents {
                 event.setId(rs.getInt("ID"));
             }
         } catch (SQLException sqlException) {
-            throw new DALException("Not able to connect to database", sqlException);
+            throw new DALException("Problem adding the event to the database", sqlException);
         }
         try {
             String sql2 = "INSERT INTO [EmsInEvent] (EventId,EmID) VALUES (?,?)";
@@ -131,7 +130,6 @@ public class DAOEvents {
                 }
                 allEvents.add(event);
             }
-
         } catch (SQLException sqlException) {
             throw new DALException("Not able to connect to database", sqlException);
         }

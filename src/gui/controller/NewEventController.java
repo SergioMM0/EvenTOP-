@@ -51,6 +51,7 @@ public class NewEventController implements Initializable {
 
     private NewEventModel newEventModel;
     private EMVController emvController;
+    private static final String errTitle = "Something went wrong";
 
 
     @Override
@@ -140,36 +141,20 @@ public class NewEventController implements Initializable {
                 alert.getButtonTypes().setAll(okButton);
                 alert.showAndWait();
             } else if (!timeIsCorrect()){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Creating event");
-                alert.setHeaderText("Introduce a valid start time");
-                ButtonType okButton = new ButtonType("OK");
-                alert.getButtonTypes().setAll(okButton);
-                alert.showAndWait();
+                throwAlert(errTitle,"Introduce a valid start time");
             }
             else {
                 setDate = java.sql.Date.valueOf(eventDate.getValue());
                 try {
                     addEvent();
                 } catch (DALException dalException) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Reconnecting...");
-                    alert.setHeaderText(dalException.getMessage());
-                    ButtonType okButton = new ButtonType("OK");
-                    alert.getButtonTypes().setAll(okButton);
-                    alert.showAndWait();
+                    throwAlert("Something went wrong",dalException.getMessage());
                 }
                 closeWindow();
             }
         } catch (NullPointerException ex) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Login credentials");
-            alert.setHeaderText("Introduce a valid date for the event");
-            ButtonType okButton = new ButtonType("OK");
-            alert.getButtonTypes().setAll(okButton);
-            alert.showAndWait();
+            throwAlert(errTitle,"Introduce a valid date for the event");
         }
-
     }
 
     private boolean timeIsCorrect(){
@@ -210,6 +195,15 @@ public class NewEventController implements Initializable {
     private void closeWindow() {
         Stage st = (Stage) eventName.getScene().getWindow();
         st.close();
+    }
+
+    public void throwAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
+        alert.showAndWait();
     }
 
     public void setController(EMVController emvController) {
