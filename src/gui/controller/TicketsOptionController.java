@@ -38,7 +38,7 @@ public class TicketsOptionController implements Initializable {
     @FXML
     void openCreateTicketView(ActionEvent event) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/CreateTicketView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/ticketManagement/createTicketOption/CreateTicketView.fxml"));
             Parent root = null;
             try {
                 root = loader.load();

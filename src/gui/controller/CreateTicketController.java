@@ -268,7 +268,7 @@ public class CreateTicketController implements Initializable {
     @FXML
     void openManageExtrasView(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/ManageExtrasView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/ticketManagement/createTicketOption/ManageExtrasView.fxml"));
             Parent root = null;
             try {
                 root = loader.load();
@@ -291,7 +291,7 @@ public class CreateTicketController implements Initializable {
     @FXML
     void openManageTicketTypesView(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/ManageTypeView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/ticketManagement/createTicketOption/ManageTypeView.fxml"));
             Parent root = null;
             try {
                 root = loader.load();

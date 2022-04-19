@@ -98,7 +98,7 @@ public class EMVController implements Initializable {
     }
 
     private void openNewEventWindow(){
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/NewEventView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/eventManagement/NewEventView.fxml"));
         Parent root = null;
         try {
             root = loader.load();
@@ -125,7 +125,7 @@ public class EMVController implements Initializable {
         }
         else{
             try{
-                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/EventInfo.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/eventManagement/EventInfo.fxml"));
                 Parent root = null;
                 try {
                     root = loader.load();
@@ -164,7 +164,7 @@ public class EMVController implements Initializable {
         }
         else{
             try{
-                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/view/TicketsOptionView.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/ticketManagement/TicketsOptionView.fxml"));
                 Parent root = null;
                 try {
                     root = loader.load();
