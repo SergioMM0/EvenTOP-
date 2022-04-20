@@ -144,13 +144,17 @@ public class ManageTicketsController {
     @FXML
     void changeTypeToTicket(ActionEvent event) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/eventManagement/EventInfo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/ticketManagement/ManageTickets/TicketType.fxml"));
             Parent root = null;
             try {
                 root = loader.load();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            ManageChangeTypeToTicketController controller = loader.getController();
+            controller.setChosenEvent(chosenEvent);
+            controller.setChosenTicket(chosenTicket);
+            controller.populateComboBox(chosenEvent);
             Stage stage = new Stage();
             stage.setTitle("Event's info");
             assert root != null;
