@@ -17,4 +17,8 @@ public class LoginModel {
     public User checkCredentials(String email, String password) throws BLLException, DALException {
         return loginF.checkCredentials(email,password);
     }
+
+    public User checkBarcode(String text) throws BLLException, DALException{
+        return null;
+    }
 }

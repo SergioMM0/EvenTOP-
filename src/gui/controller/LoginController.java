@@ -11,10 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -40,6 +37,9 @@ public class LoginController implements Initializable {
     private JFXButton loginButton;
 
     @FXML
+    private Label credentialsLabel;
+
+    @FXML
     private JFXButton switchUserButton;
 
     @FXML
@@ -62,37 +62,59 @@ public class LoginController implements Initializable {
 
     @FXML
     void login(ActionEvent event) {
-        try{
-            logedUser = loginModel.checkCredentials(emailField.getText(), passwordField.getText());
-            System.out.println(logedUser);
-            switch (logedUser.getType()){
-                case EVENTMANAGER:
-                    openEMView();
-                    break;
-                case ADMIN:
-                    //implement
-                    break;
+        if(!isCustomer){
+            try{
+                logedUser = loginModel.checkCredentials(emailField.getText(), passwordField.getText());
+                System.out.println(logedUser);
+                switch (logedUser.getType()){
+                    case EVENTMANAGER:
+                        openEMView();
+                        break;
+                    case ADMIN:
+                        //implement
+                        break;
+                }
+            } catch(BLLException loginEX){
+                if(ints < 2){
+                    throwAlert("User not found, try again");
+                    ints++;
+                }else{
+                    throwAlert("If you're a customer, make sure you have checked the box.\n" +
+                            "your user and password are the last 8 digits of the barcode in your ticket");
+                    ints--;
+                }
+            } catch (DALException databaseEx) {
+                throwAlert("Not able to connect to database");
             }
-        } catch(BLLException loginEX){
-            if(ints < 2){
-                throwAlert("User not found, try again");
-                ints++;
-            }else{
-                throwAlert("If you're a customer, make sure you have checked the box.\n" +
-                        "your user and password are the last 8 digits of the barcode in your ticket");
-                ints--;
-            }
-
-
-        } catch (DALException databaseEx) {
-            throwAlert("Not able to connect to database");
-
         }
+        else{
+            if(!barcodeMatches()){
+                throwAlert("Your ticket was not found, try again");
+            }else {
+                try {
+                    logedUser = loginModel.checkBarcode(emailField.getText());
+                } catch (BLLException | DALException ex) {
+                    throwAlert(ex.getMessage());
+                }
+            }
+        }
+    }
+
+    private boolean barcodeMatches() {
+        return emailField.getText().equals(passwordField.getText());
     }
 
     @FXML
     void switchLoginForm(ActionEvent event) {
-
+        if(!isCustomer){
+            isCustomer = true;
+            credentialsLabel.setText("Introduce the last 8 digits of your barcode");
+            switchUserButton.setText("I'm a User!");
+        }else{
+            isCustomer = false;
+            credentialsLabel.setText("Introduce your user credentials");
+            switchUserButton.setText("I'm a Customer!");
+        }
     }
 
     private void openEMView(){

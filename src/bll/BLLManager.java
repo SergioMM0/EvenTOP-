@@ -101,6 +101,7 @@ public class BLLManager implements BLLFacade{
         ticketG.setBarCode(safeBarcode().toString());
         user.setPassword(getBarcodePassword(ticketG.getBarCode()));
         addUser(user);
+        System.out.println(user);
         dalFacade.addTicketG(ticketG,event);
     }
 
