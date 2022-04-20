@@ -6,7 +6,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="180.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ManageChangeTypeToTicketController">
    <children>
       <Label layoutX="28.0" layoutY="25.0" prefHeight="18.0" prefWidth="76.0" text="Ticket type:" />

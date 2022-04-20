@@ -34,6 +34,6 @@ public class ManageChangeTypeToTicketModel {
     }
 
     public void updateTicket(TicketG chosenTicket) throws DALException {
-        //TO IMPLEMENT
+        bllFacade.updateTicketType(chosenTicket);
     }
 }

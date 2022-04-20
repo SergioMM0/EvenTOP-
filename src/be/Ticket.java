@@ -59,4 +59,15 @@ public abstract class Ticket {
     public void setExtras(String extras) {
         this.extras = extras;
     }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "barCode='" + barCode + '\'' +
+                ", typeName='" + typeName + '\'' +
+                ", extras='" + extras + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                '}';
+    }
 }

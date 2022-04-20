@@ -36,13 +36,19 @@ public class ManageChangeTypeToTicketController implements Initializable {
 
     private Event chosenEvent;
     private TicketG chosenTicket;
+    private ManageTicketsController manageTicketsController;
     private ManageChangeTypeToTicketModel model;
     private static final String errTitle = "Something went wrong";
 
     @FXML
     void addNewType(ActionEvent event) {
-        model.addNewType(newTypeField.getText());
-        repopulateComboBox();
+        if(newTypeField.getText().isEmpty()){
+            throwAlert("Introduce a valid type");
+        }else{
+            model.addNewType(newTypeField.getText());
+            repopulateComboBox();
+            newTypeField.clear();
+        }
     }
 
     public void populateComboBox(Event chosenEvent){
@@ -76,12 +82,15 @@ public class ManageChangeTypeToTicketController implements Initializable {
     void updateTicketType(ActionEvent event) {
         if(!typesComboBox.getSelectionModel().isEmpty()){
             try{
+                chosenTicket.setTypeName(typesComboBox.getSelectionModel().getSelectedItem());
                 model.updateTicket(chosenTicket);
             }catch (DALException dalException){
+                dalException.printStackTrace();
                 throwAlert(dalException.getMessage());
             }
         }else throwAlert("Please select a type for the ticket");
-
+        manageTicketsController.repopulateTicketsView();
+        closeWindow();
     }
 
     public void setChosenEvent(Event chosenEvent) {
@@ -100,6 +109,10 @@ public class ManageChangeTypeToTicketController implements Initializable {
     private void closeWindow() {
         Stage st = (Stage) cancelButton.getScene().getWindow();
         st.close();
+    }
+
+    public void setController(ManageTicketsController manageTicketsController) {
+        this.manageTicketsController = manageTicketsController;
     }
 }
 

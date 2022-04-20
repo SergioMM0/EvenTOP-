@@ -160,10 +160,37 @@ public class DAOTickets {
                         rs.getString("STARTTIME"),
                         rs.getString("ENDTIME")
                         ));
+
             }
         }catch (SQLException sqlException){
             throw new DALException("Not able to get all tickets from database, try again",sqlException);
         }
         return allTickets;
+    }
+
+    public void updateTicketType(TicketG ticketG)throws DALException{
+        String sql = "IF EXISTS (\n" +
+                "    SELECT [BARCODE]\n" +
+                "    FROM TicketsRS\n" +
+                "    WHERE BARCODE = ?)\n" +
+                "BEGIN \n" +
+                "    UPDATE TicketsRS SET [TYPE] = ? WHERE BARCODE = ?\n" +
+                "END\n" +
+                "ELSE\n" +
+                "BEGIN \n" +
+                "UPDATE TicketsG SET [TYPE] = ? WHERE BARCODE = ?\n" +
+                "END";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1,ticketG.getBarCode());
+            st.setString(2,ticketG.getTypeName());
+            st.setString(3,ticketG.getBarCode());
+            st.setString(4,ticketG.getTypeName());
+            st.setString(5,ticketG.getBarCode());
+            st.execute();
+        }catch (SQLException sqlException){
+            throw new DALException("Not able to update the type of the ticket", sqlException);
+        }
     }
 }

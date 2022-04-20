@@ -18,6 +18,7 @@ public class ManageTicketsModel {
     }
 
     public ObservableList<TicketG> getAllTickets() throws DALException {
+        allTickets.clear();
         allTickets.addAll(bllFacade.getAllTickets());
         return allTickets;
     }

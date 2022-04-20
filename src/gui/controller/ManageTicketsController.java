@@ -152,13 +152,14 @@ public class ManageTicketsController {
                 e.printStackTrace();
             }
             ManageChangeTypeToTicketController controller = loader.getController();
+            controller.setController(this);
             controller.setChosenEvent(chosenEvent);
             controller.setChosenTicket(chosenTicket);
             controller.populateComboBox(chosenEvent);
             Stage stage = new Stage();
             stage.setTitle("Event's info");
             assert root != null;
-            stage.setScene(new Scene(root, 600, 450));
+            stage.setScene(new Scene(root, 450, 180));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -184,7 +185,7 @@ public class ManageTicketsController {
         populateTicketsView();
     }
 
-    private void populateTicketsView() {
+    public void populateTicketsView() {
         try{
             ticketTableView.getItems().addAll(manageTicketsModel.getAllTickets());
             ticketTypeCol.setCellValueFactory(new PropertyValueFactory<>("typeName"));
@@ -197,6 +198,12 @@ public class ManageTicketsController {
             dalException.printStackTrace();
             throwAlert(errTitle,dalException.getMessage());
         }
+    }
+
+    public void repopulateTicketsView(){
+
+            ticketTableView.getItems().clear();
+            populateTicketsView();
     }
 
     public void throwAlert(String title, String message) {

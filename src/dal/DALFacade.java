@@ -40,4 +40,6 @@ public interface DALFacade {
     void addUser(User user) throws DALException;
 
     List<TicketG> getAllTickets() throws DALException;
+
+    void updateTicketType(TicketG ticketG)throws DALException;
 }
