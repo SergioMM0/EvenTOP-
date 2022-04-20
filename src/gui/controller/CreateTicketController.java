@@ -159,11 +159,11 @@ public class CreateTicketController implements Initializable {
                 closeWindow();
             }
             case 3 -> {
-                addTicketG();
+                addTicketGAndUser();
                 closeWindow();
             }
             case 4 -> {
-                addTicketGAndUser();
+                addTicketG();
                 closeWindow();
             }
         }
@@ -245,9 +245,9 @@ public class CreateTicketController implements Initializable {
                 return 1;//ticketRS with userinfo
             }else return 2; //ticketRS without user info
         }
-        if(ci){
-            return 3; //ticketG with user info
-        }else return 4; //ticketG without userinfo
+        if(!ci){
+            return 4; //ticketG without user info
+        }else return 3; //ticketG with userinfo
     }
 
     public void throwAlert(String title, String message) {
@@ -365,7 +365,6 @@ public class CreateTicketController implements Initializable {
         } catch (DALException dal) {
             throwAlert("Something gone wrong",dal.getMessage());
         }
-
     }
 
     public void addType(String text) {
@@ -383,7 +382,7 @@ public class CreateTicketController implements Initializable {
         }else enableRS();
     }
 
-    public void disableRS(){
+    public void disableRS(){//Bugged
         rs = false;
         rowNumber.setDisable(true);
         rowNumber.clear();

@@ -83,7 +83,7 @@ public class EMVController implements Initializable {
     private Event chosenEvent;
     private EventInfoModel eventInfoModel;
     private static final String errTitle = "Something went wrong";
-    private User currentEM;
+    private User currentUser;
 
     public EMVController(){
         emvModel = new EMVModel();
@@ -198,7 +198,6 @@ public class EMVController implements Initializable {
                 e.printStackTrace();
             }
             UserInfoController emInfoController = loader.getController();
-
             Stage stage = new Stage();
             stage.setTitle("Ticket options");
             assert root != null;
@@ -249,7 +248,7 @@ public class EMVController implements Initializable {
     }
 
     public void setUser(User logedUser) {
-        this.currentEM = logedUser;
+        this.currentUser = logedUser;
     }
 }
 

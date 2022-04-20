@@ -101,7 +101,6 @@ public class BLLManager implements BLLFacade{
         ticketG.setBarCode(safeBarcode().toString());
         user.setPassword(getBarcodePassword(ticketG.getBarCode()));
         addUser(user);
-        System.out.println(user);
         dalFacade.addTicketG(ticketG,event);
     }
 
@@ -158,6 +157,5 @@ public class BLLManager implements BLLFacade{
     private boolean uuidIsTaken(UUID uuid) throws DALException{
         return checkBarcode(uuid.toString());//true if taken & false if not
     }
-
 
 }

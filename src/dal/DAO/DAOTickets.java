@@ -41,7 +41,6 @@ public class DAOTickets {
             sqlException.printStackTrace();
             throw new DALException("Not able to create Ticket for event, check again your connection", sqlException);
         }
-        System.out.println("added " + ticketG);
     }
 
     public void addTicketRS(TicketRS ticketRS,Event event) throws DALException{
