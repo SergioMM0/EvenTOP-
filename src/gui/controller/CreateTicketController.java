@@ -149,24 +149,23 @@ public class CreateTicketController implements Initializable {
     }
 
     private void switchAddTicket() throws DALException {
-        System.out.println(checkTicketCreationType());
         switch (checkTicketCreationType()) {
-            case 1:
+            case 1 -> {
                 addTicketRSAndUser();
                 closeWindow();
-                break;
-            case 2:
+            }
+            case 2 -> {
                 addTicketRS();
                 closeWindow();
-                break;
-            case 3:
+            }
+            case 3 -> {
                 addTicketG();
                 closeWindow();
-                break;
-            case 4:
+            }
+            case 4 -> {
                 addTicketGAndUser();
                 closeWindow();
-                break;
+            }
         }
     }
 

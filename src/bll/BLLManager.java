@@ -120,6 +120,13 @@ public class BLLManager implements BLLFacade{
     }
 
     @Override
+    public void updateAssistLeaveTime(TicketG ticketG) throws DALException {
+        hourFixer.fixTicketGAssist(ticketG);
+        hourFixer.fixTicketGLeave(ticketG);
+        dalFacade.updateAssistLeaveTime(ticketG);
+    }
+
+    @Override
     public boolean checkBarcode(String string) throws DALException {
         return dalFacade.checkBarcode(string);
     }

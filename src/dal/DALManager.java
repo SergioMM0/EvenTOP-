@@ -108,5 +108,10 @@ public class DALManager implements DALFacade{
         daoTickets.updateExtrasFromTicket(ticketg);
     }
 
+    @Override
+    public void updateAssistLeaveTime(TicketG ticketG) throws DALException {
+        daoTickets.updateAssistLeaveTime(ticketG);
+    }
+
 
 }

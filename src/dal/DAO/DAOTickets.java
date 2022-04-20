@@ -219,4 +219,33 @@ public class DAOTickets {
             throw new DALException("Not able to update extras of the ticket",sqlException);
         }
     }
+
+    public void updateAssistLeaveTime(TicketG ticketG)throws DALException{
+        String sql = "IF EXISTS (\n" +
+                "    SELECT [BARCODE]\n" +
+                "    FROM TicketsRS\n" +
+                "    WHERE BARCODE = ?)\n" +
+                "BEGIN \n" +
+                "    UPDATE TicketsRS SET [STARTTIME] = ? ,[ENDTIME] = ? WHERE BARCODE = ?\n" +
+                "END\n" +
+                "ELSE\n" +
+                "BEGIN \n" +
+                "UPDATE TicketsG SET [STARTTIME] = ? ,[ENDTIME] = ? WHERE BARCODE = ?\n" +
+                "END";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1,ticketG.getBarCode());
+            st.setString(2,ticketG.getStartTime());
+            st.setString(3,ticketG.getEndTime());
+            st.setString(4,ticketG.getBarCode());
+            st.setString(5,ticketG.getStartTime());
+            st.setString(6,ticketG.getEndTime());
+            st.setString(7,ticketG.getBarCode());
+            st.execute();
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+            throw new DALException("Not able to update assist/leave time for the ticket",sqlException);
+        }
+    }
 }

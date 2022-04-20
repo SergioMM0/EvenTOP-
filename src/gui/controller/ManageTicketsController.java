@@ -39,9 +39,6 @@ public class ManageTicketsController {
     private JFXButton changeExtrasButton;
 
     @FXML
-    private JFXButton changeSeatRowButton;
-
-    @FXML
     private JFXButton changeTypeButton;
 
     @FXML
@@ -83,18 +80,20 @@ public class ManageTicketsController {
     @FXML
     void changeAssistLeaveTime(ActionEvent event) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/eventManagement/EventInfo.fxml"));
-            Parent root = null; //tochangeview
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/ticketManagement/ManageTickets/ChangeAssistLeaveTimeView.fxml"));
+            Parent root = null;
             try {
                 root = loader.load();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            ManageChangeAssistLeaveController controller = loader.getController();
+            controller.setController(this);
+            controller.setTicket(chosenTicket);
             Stage stage = new Stage();
             stage.setTitle("Event's info");
             assert root != null;
-            stage.setScene(new Scene(root, 600, 450));
+            stage.setScene(new Scene(root, 300, 170));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -121,26 +120,6 @@ public class ManageTicketsController {
             stage.setTitle("Event's info");
             assert root != null;
             stage.setScene(new Scene(root, 475, 330));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void changeSeatRowToTicket(ActionEvent event) {
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/eventManagement/EventInfo.fxml"));
-            Parent root = null;
-            try {
-                root = loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Stage stage = new Stage();
-            stage.setTitle("Event's info");
-            assert root != null;
-            stage.setScene(new Scene(root, 600, 450));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

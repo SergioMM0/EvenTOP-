@@ -21,11 +21,10 @@
       </TableView>
       <AnchorPane layoutX="38.0" layoutY="485.0" prefHeight="64.0" prefWidth="822.0">
          <children>
-            <JFXButton fx:id="changeAssistLeaveButton" layoutX="351.0" layoutY="12.0" onAction="#changeAssistLeaveTime" prefHeight="40.0" prefWidth="148.0" text="Change assist/leave time" />
+            <JFXButton fx:id="changeAssistLeaveButton" layoutX="481.0" layoutY="12.0" onAction="#changeAssistLeaveTime" prefHeight="40.0" prefWidth="148.0" text="Change assist/leave time" />
             <JFXButton fx:id="changeExtrasButton" layoutX="14.0" layoutY="12.0" onAction="#changeExtrasToTicket" prefHeight="40.0" prefWidth="148.0" text="Change extras" />
-            <JFXButton fx:id="changeTypeButton" layoutX="191.0" layoutY="12.0" onAction="#changeTypeToTicket" prefHeight="40.0" prefWidth="148.0" text="Change type" />
-            <JFXButton fx:id="deleteTicketButton" layoutX="667.0" layoutY="12.0" onAction="#deleteTicket" prefHeight="40.0" prefWidth="148.0" text="Delete ticket" />
-            <JFXButton fx:id="changeSeatRowButton" layoutX="519.0" layoutY="12.0" onAction="#changeSeatRowToTicket" prefHeight="40.0" prefWidth="148.0" text="Change seat/row" />
+            <JFXButton fx:id="changeTypeButton" layoutX="232.0" layoutY="12.0" onAction="#changeTypeToTicket" prefHeight="40.0" prefWidth="148.0" text="Change type" />
+            <JFXButton fx:id="deleteTicketButton" layoutX="660.0" layoutY="12.0" onAction="#deleteTicket" prefHeight="40.0" prefWidth="148.0" text="Delete ticket" />
          </children>
       </AnchorPane>
       <Label layoutX="322.0" layoutY="33.0" prefHeight="18.0" prefWidth="114.0" text="Search by barcode:" />

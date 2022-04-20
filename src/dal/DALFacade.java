@@ -44,4 +44,6 @@ public interface DALFacade {
     void updateTicketType(TicketG ticketG)throws DALException;
 
     void updateExtrasFromTicket(TicketG ticketg) throws DALException;
+
+    void updateAssistLeaveTime(TicketG ticketG)throws DALException;
 }
