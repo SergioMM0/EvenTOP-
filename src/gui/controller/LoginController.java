@@ -64,6 +64,7 @@ public class LoginController implements Initializable {
     void login(ActionEvent event) {
         try{
             logedUser = loginModel.checkCredentials(emailField.getText(), passwordField.getText());
+            System.out.println(logedUser);
             switch (logedUser.getType()){
                 case EVENTMANAGER:
                     openEMView();

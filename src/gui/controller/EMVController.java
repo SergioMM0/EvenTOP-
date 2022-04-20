@@ -197,7 +197,7 @@ public class EMVController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            EMInfoController emInfoController = loader.getController();
+            UserInfoController emInfoController = loader.getController();
 
             Stage stage = new Stage();
             stage.setTitle("Ticket options");
