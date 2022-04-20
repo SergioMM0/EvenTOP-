@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class EventInfoController implements Initializable {
+public class EventInfoController {
 
     @FXML
     private JFXComboBox<String> emComboBox;
@@ -55,15 +55,15 @@ public class EventInfoController implements Initializable {
     private EventInfoModel eventInfoModel;
     private EMVController emvController;
     private static final String errTitle = "Something went wrong";
+    private Event chosenEvent;
 
     public EventInfoController(){
         eventInfoModel = new EventInfoModel();
         emList = new ListView<>();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
+    public void setChosenEvent(Event event){
+        this.chosenEvent = event;
     }
 
     public void populateEventInfo(Event event){
@@ -136,7 +136,11 @@ public class EventInfoController implements Initializable {
 
     @FXML
     void DeleteEvent(ActionEvent event) {
-
+        try{
+            eventInfoModel.deleteChosenEvent(chosenEvent);
+        }catch (DALException dalException){
+            throwAlert(dalException.getMessage());
+        }
     }
 
     @FXML
@@ -150,25 +154,25 @@ public class EventInfoController implements Initializable {
         Date setDate = null;
         try {
             if (Objects.equals(eventName.getText(), "") || eventName.getText() == null) {
-                throwAlert(errTitle,"Introduce a valid name for the event");
+                throwAlert("Introduce a valid name for the event");
             } else if (currentDate.compareTo(java.sql.Date.valueOf(eventDate.getValue())) > 0 || eventDate.getValue() == null) {
-                throwAlert(errTitle,"Introduce a valid date for the event");
+                throwAlert("Introduce a valid date for the event");
             } else if (Objects.equals(eventLocation.getText(), "") || eventLocation.getText() == null) {
-                throwAlert(errTitle,"Introduce a location for the event");
+                throwAlert("Introduce a location for the event");
             } else if (!timeIsCorrect()){
-                throwAlert(errTitle,"Introduce a valid start time");
+                throwAlert("Introduce a valid start time");
             }
             else {
                 setDate = java.sql.Date.valueOf(eventDate.getValue());
                 try {
                     editEvent();
                 } catch (DALException dalException) {
-                    throwAlert(errTitle,dalException.getMessage());
+                    throwAlert(dalException.getMessage());
                 }
                 closeWindow();
             }
         } catch (NullPointerException ex) {
-            throwAlert(errTitle,"Introduce a valid date for the event");
+            throwAlert("Introduce a valid date for the event");
         }
     }
 
@@ -218,9 +222,9 @@ public class EventInfoController implements Initializable {
         st.close();
     }
 
-    public void throwAlert(String title, String message) {
+    public void throwAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
+        alert.setTitle(errTitle);
         alert.setHeaderText(message);
         ButtonType okButton = new ButtonType("OK");
         alert.getButtonTypes().setAll(okButton);

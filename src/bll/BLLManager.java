@@ -127,6 +127,11 @@ public class BLLManager implements BLLFacade{
     }
 
     @Override
+    public void deleteEvent(Event event) throws DALException {
+        dalFacade.deleteEvent(event);
+    }
+
+    @Override
     public boolean checkBarcode(String string) throws DALException {
         return dalFacade.checkBarcode(string);
     }

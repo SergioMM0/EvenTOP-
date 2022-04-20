@@ -82,4 +82,8 @@ public class EventInfoModel {
         //event.setId(chosenEvent.getId());
         bllFacade.updateEventAndEms(event,ems);
     }
+
+    public void deleteChosenEvent(Event chosenEvent) throws DALException{
+        bllFacade.deleteEvent(chosenEvent);
+    }
 }

@@ -131,6 +131,7 @@ public class EMVController implements Initializable {
                 EventInfoController eventInfoController = loader.getController();
                 eventInfoController.setController(this); //establishes the EMVController as the controller.
                 eventInfoController.populateEventInfo(eventTableView.getSelectionModel().getSelectedItem());
+                eventInfoController.setChosenEvent(chosenEvent);
                 Stage stage = new Stage();
                 stage.setTitle("Event's info");
                 assert root != null;
@@ -139,7 +140,6 @@ public class EMVController implements Initializable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 

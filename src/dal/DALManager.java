@@ -113,5 +113,10 @@ public class DALManager implements DALFacade{
         daoTickets.updateAssistLeaveTime(ticketG);
     }
 
+    @Override
+    public void deleteEvent(Event event) throws DALException {
+        daoEvents.deleteEvent(event);
+    }
+
 
 }

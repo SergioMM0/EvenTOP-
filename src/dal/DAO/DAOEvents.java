@@ -188,4 +188,16 @@ public class DAOEvents {
             }
         }
     }
+
+    public void deleteEvent(Event event)throws DALException{
+        String sql = "DELETE FROM Events WHERE [ID] = ?";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, event.getId());
+            st.execute();
+        }catch (SQLException sqlException){
+            throw new DALException("Not able to delete the event",sqlException);
+        }
+    }
 }

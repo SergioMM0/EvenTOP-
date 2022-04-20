@@ -6,11 +6,9 @@ import be.TicketRS;
 import dal.connectionProvider.ConnectionProvider;
 import dal.exceptions.DALException;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class DAOTickets {
 
