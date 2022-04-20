@@ -23,4 +23,8 @@ public class ManageTicketsModel {
         return allTickets;
     }
 
+    public ObservableList<TicketG> getObservableTickets(){
+        return allTickets;
+    }
+
 }

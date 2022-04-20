@@ -6,20 +6,23 @@ import be.TicketG;
 import com.jfoenix.controls.JFXButton;
 import dal.exceptions.DALException;
 import gui.model.ManageTicketsModel;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ManageTicketsController {
 
@@ -54,7 +57,7 @@ public class ManageTicketsController {
     private TableColumn<Integer, TicketG> rowCol;
 
     @FXML
-    private JFXButton searchButton;
+    private TextField searchField;
 
     @FXML
     private TableColumn<Integer, TicketG> seatCol;
@@ -161,13 +164,9 @@ public class ManageTicketsController {
         closeWindow();
     }
 
-    @FXML
-    void searchInTicketTable(ActionEvent event) {
-
-    }
-
     public void initializeView() {
         populateTicketsView();
+        initializeTicketFilter();
     }
 
     public void populateTicketsView() {
@@ -178,7 +177,6 @@ public class ManageTicketsController {
             leaveTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
             extrasCol.setCellValueFactory(new PropertyValueFactory<>("extras"));
             barcodeCol.setCellValueFactory(new PropertyValueFactory<>("barCode"));
-
         }catch (DALException dalException){
             dalException.printStackTrace();
             throwAlert(errTitle,dalException.getMessage());
@@ -203,6 +201,24 @@ public class ManageTicketsController {
         this.chosenEvent = event;
     }
 
+    public void initializeTicketFilter(){
+        FilteredList<TicketG> filteredTickets = new FilteredList<>(manageTicketsModel.getObservableTickets(), b -> true);
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredTickets.setPredicate(ticketG ->{
+                if(newValue == null || newValue.isEmpty()){
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                if(ticketG.getBarCode().toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                }
+                else return ticketG.getTypeName().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
+        SortedList<TicketG> sortedTickets = new SortedList<>(filteredTickets);
+        sortedTickets.comparatorProperty().bind(ticketTableView.comparatorProperty());
+        ticketTableView.setItems(sortedTickets);
+    }
 
     @FXML
     void printTicket(ActionEvent event) {

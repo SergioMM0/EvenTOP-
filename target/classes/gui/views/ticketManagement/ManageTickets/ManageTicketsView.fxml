@@ -27,9 +27,8 @@
             <JFXButton fx:id="deleteTicketButton" layoutX="660.0" layoutY="12.0" onAction="#deleteTicket" prefHeight="40.0" prefWidth="148.0" text="Delete ticket" />
          </children>
       </AnchorPane>
-      <Label layoutX="322.0" layoutY="33.0" prefHeight="18.0" prefWidth="114.0" text="Search by barcode:" />
-      <TextField layoutX="446.0" layoutY="30.0" prefHeight="26.0" prefWidth="350.0" promptText="15b41b53-bf5c-473f-a7b6...." />
-      <JFXButton fx:id="searchButton" layoutX="807.0" layoutY="29.0" onAction="#searchInTicketTable" prefHeight="26.0" prefWidth="54.0" text="Search" />
+      <Label layoutX="379.0" layoutY="33.0" prefHeight="18.0" prefWidth="56.0" text="Search:" />
+      <TextField fx:id="searchField" layoutX="446.0" layoutY="30.0" prefHeight="26.0" prefWidth="413.0" promptText="15b41b53-bf5c-473f-a7b6...." />
       <JFXButton fx:id="printTicketButton" layoutX="38.0" layoutY="29.0" onAction="#printTicket" prefHeight="26.0" prefWidth="121.0" text="Print ticket" />
    </children>
 </AnchorPane>
