@@ -40,7 +40,15 @@ public class LoginController implements Initializable {
     private JFXButton loginButton;
 
     @FXML
+    private JFXButton switchUserButton;
+
+    @FXML
     private PasswordField passwordField;
+
+    private static final String errTitle = "Something went wrong";
+    private int ints = 0;
+    private boolean isCustomer;
+    private User logedUser;
 
     public LoginController() {
         loginModel = new LoginModel();
@@ -48,14 +56,15 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        isCustomer = false;
         anchorPane.getStylesheets().add("gui/css/Login.css");
     }
 
     @FXML
     void login(ActionEvent event) {
         try{
-            User user = loginModel.checkCredentials(emailField.getText(), passwordField.getText());
-            switch (user.getType()){
+            logedUser = loginModel.checkCredentials(emailField.getText(), passwordField.getText());
+            switch (logedUser.getType()){
                 case EVENTMANAGER:
                     openEMView();
                     break;
@@ -64,22 +73,25 @@ public class LoginController implements Initializable {
                     break;
             }
         } catch(BLLException loginEX){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Wrong login credentials");
-                alert.setHeaderText(loginEX.getMessage());
-                ButtonType okButton = new ButtonType("OK");
-                alert.getButtonTypes().setAll(okButton);
-                alert.showAndWait();
+            if(ints < 2){
+                throwAlert("User not found, try again");
+                ints++;
+            }else{
+                throwAlert("If you're a customer, make sure you have checked the box.\n" +
+                        "your user and password are the last 8 digits of the barcode in your ticket");
+                ints--;
+            }
+
 
         } catch (DALException databaseEx) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Database error");
-            alert.setHeaderText(databaseEx.getMessage());
-            ButtonType okButton = new ButtonType("OK");
-            alert.getButtonTypes().setAll(okButton);
-            alert.showAndWait();
+            throwAlert("Not able to connect to database");
 
         }
+    }
+
+    @FXML
+    void switchLoginForm(ActionEvent event) {
+
     }
 
     private void openEMView(){
@@ -90,6 +102,8 @@ public class LoginController implements Initializable {
         catch (IOException ignored){
             ignored.printStackTrace();
         }
+        EMVController emvController = loader.getController();
+        emvController.setUser(logedUser);
         assert root != null;
         root.getStylesheets().add("");  //CSS after
         Stage stage = new Stage();
@@ -105,4 +119,12 @@ public class LoginController implements Initializable {
         st.close();
     }
 
+    public void throwAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(errTitle);
+        alert.setHeaderText(message);
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
+        alert.showAndWait();
+    }
 }

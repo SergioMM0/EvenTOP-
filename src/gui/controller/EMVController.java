@@ -1,6 +1,7 @@
 package gui.controller;
 
 import be.Event;
+import be.User;
 import com.jfoenix.controls.JFXButton;
 import dal.exceptions.DALException;
 import gui.model.EMVModel;
@@ -82,6 +83,7 @@ public class EMVController implements Initializable {
     private Event chosenEvent;
     private EventInfoModel eventInfoModel;
     private static final String errTitle = "Something went wrong";
+    private User currentEM;
 
     public EMVController(){
         emvModel = new EMVModel();
@@ -187,7 +189,24 @@ public class EMVController implements Initializable {
 
     @FXML
     void openEmInfo(ActionEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/userViews/InfoView.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            EMInfoController emInfoController = loader.getController();
 
+            Stage stage = new Stage();
+            stage.setTitle("Ticket options");
+            assert root != null;
+            stage.setScene(new Scene(root, 400, 300));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void populateEventsTable(){
@@ -227,6 +246,10 @@ public class EMVController implements Initializable {
     @FXML
     void eventClicked(MouseEvent event) {
         chosenEvent = eventTableView.getSelectionModel().getSelectedItem();
+    }
+
+    public void setUser(User logedUser) {
+        this.currentEM = logedUser;
     }
 }
 

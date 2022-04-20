@@ -14,5 +14,6 @@
       <TextField fx:id="emailField" layoutX="75.0" layoutY="255.0" prefHeight="20.0" prefWidth="350.0" promptText="Email..." AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="74.60000000000002" AnchorPane.topAnchor="255.0" />
       <JFXButton fx:id="loginButton" layoutX="207.0" layoutY="337.0" onAction="#login" prefHeight="26.0" prefWidth="87.0" text="Log in" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="206.0" AnchorPane.topAnchor="337.0" />
       <Label layoutX="167.0" layoutY="216.0" prefHeight="18.0" prefWidth="168.0" text="Introduce your credentials:" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="165.0" AnchorPane.topAnchor="216.0" />
+      <JFXButton fx:id="switchUserButton" layoutX="326.0" layoutY="394.0" onAction="#switchLoginForm" prefHeight="26.0" prefWidth="98.0" text="I'm a customer!" />
    </children>
 </AnchorPane>

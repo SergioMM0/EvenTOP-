@@ -36,7 +36,7 @@ public class DAOLogin {
 
     public User checkCredentials(String email, String password) throws DALException {
         User user = null;
-        String sql = "SELECT Email, [Password], UserType FROM Users WHERE Email = ? AND [Password] = ?";
+        String sql = "SELECT * FROM Users WHERE Email = ? AND [Password] = ?";
         try (Connection connection = connectionProvider.getConnection()){
             PreparedStatement st = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1,email);
@@ -44,7 +44,14 @@ public class DAOLogin {
             st.execute();
             ResultSet rs = st.getResultSet();
             while (rs.next()){
-                user = new User(parseType(rs.getString("UserType")),rs.getString("Email"),rs.getString("Password"));
+                user = new User(
+                        rs.getInt("ID"),
+                        parseType(rs.getString("UserType")),
+                        rs.getString("Email"),
+                        rs.getString("Password"),
+                        rs.getString("Name"),
+                        rs.getString("PhoneNumber")
+                        );
             }
         } catch (SQLException throwables) {
             throw new DALException("Not able to connect to database", throwables);
