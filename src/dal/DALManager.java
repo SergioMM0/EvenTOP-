@@ -93,5 +93,10 @@ public class DALManager implements DALFacade{
         daoUsers.addUser(user);
     }
 
+    @Override
+    public List<TicketG> getAllTickets() throws DALException {
+        return daoTickets.getAllTickets();
+    }
+
 
 }

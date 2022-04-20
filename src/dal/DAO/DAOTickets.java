@@ -6,8 +6,10 @@ import be.TicketRS;
 import dal.connectionProvider.ConnectionProvider;
 import dal.exceptions.DALException;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class DAOTickets {
@@ -139,4 +141,29 @@ public class DAOTickets {
         }
     }
 
+    public List<TicketG> getAllTickets() throws DALException{
+        List<TicketG> allTickets = new ArrayList<>();
+        String sql = "SELECT [BARCODE],[TYPE],[EXTRAS],[STARTTIME],[ENDTIME]\n" +
+                "FROM TicketsG\n" +
+                "UNION\n" +
+                "SELECT [BARCODE],[TYPE],[EXTRAS],[STARTTIME],[ENDTIME]\n" +
+                "FROM TicketsRS";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            st.execute();
+            ResultSet rs = st.getResultSet();
+            while(rs.next()){
+                allTickets.add(new TicketG(rs.getString("BARCODE"),
+                        rs.getString("TYPE"),
+                        rs.getString("EXTRAS"),
+                        rs.getString("STARTTIME"),
+                        rs.getString("ENDTIME")
+                        ));
+            }
+        }catch (SQLException sqlException){
+            throw new DALException("Not able to get all tickets from database, try again",sqlException);
+        }
+        return allTickets;
+    }
 }

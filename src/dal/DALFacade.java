@@ -38,4 +38,6 @@ public interface DALFacade {
     boolean checkBarcode(String string) throws DALException;
 
     void addUser(User user) throws DALException;
+
+    List<TicketG> getAllTickets() throws DALException;
 }

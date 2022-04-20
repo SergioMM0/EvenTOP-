@@ -40,4 +40,6 @@ public interface BLLFacade {
     void addTicketRSAndUser(TicketRS ticketRS,Event event,User user) throws DALException;
 
     void addTicketGAndUser(TicketG ticketG,Event event,User user) throws DALException;
+
+    List<TicketG> getAllTickets() throws DALException;
 }

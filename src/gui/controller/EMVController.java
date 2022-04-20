@@ -81,6 +81,7 @@ public class EMVController implements Initializable {
     private EMVModel emvModel;
     private Event chosenEvent;
     private EventInfoModel eventInfoModel;
+    private static final String errTitle = "Something went wrong";
 
     public EMVController(){
         emvModel = new EMVModel();
@@ -116,12 +117,7 @@ public class EMVController implements Initializable {
     @FXML
     void openEventInfo(ActionEvent event) {
         if(chosenEvent == null){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("EvenTOP");
-            alert.setHeaderText("Chose an event to continue");
-            ButtonType okButton = new ButtonType("OK");
-            alert.getButtonTypes().setAll(okButton);
-            alert.showAndWait();
+            throwAlert(errTitle,"Please select an event");
         }
         else{
             try{
@@ -204,12 +200,7 @@ public class EMVController implements Initializable {
             locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
 
         }catch (DALException dalException){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("An error has ocurred");
-            alert.setHeaderText("Error updating events table, please check your connection");
-            ButtonType okButton = new ButtonType("OK");
-            alert.getButtonTypes().setAll(okButton);
-            alert.showAndWait();
+            throwAlert(errTitle,dalException.getMessage());
         }
     }
 
@@ -219,14 +210,18 @@ public class EMVController implements Initializable {
             eventTableView.getItems().clear();
             eventTableView.getItems().addAll(emvModel.getAllEvents());
         }catch(DALException dalException){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("An error has ocurred");
-            alert.setHeaderText("Error updating events table, please check your connection");
-            ButtonType okButton = new ButtonType("OK");
-            alert.getButtonTypes().setAll(okButton);
-            alert.showAndWait();
+            throwAlert(errTitle,dalException.getMessage());
         }
 
+    }
+
+    public void throwAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
+        alert.showAndWait();
     }
 
     @FXML
