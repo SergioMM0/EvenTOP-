@@ -115,6 +115,11 @@ public class BLLManager implements BLLFacade{
     }
 
     @Override
+    public void updateExtrasFromTicket(TicketG ticketg) throws DALException {
+        dalFacade.updateExtrasFromTicket(ticketg);
+    }
+
+    @Override
     public boolean checkBarcode(String string) throws DALException {
         return dalFacade.checkBarcode(string);
     }

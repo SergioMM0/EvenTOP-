@@ -193,4 +193,30 @@ public class DAOTickets {
             throw new DALException("Not able to update the type of the ticket", sqlException);
         }
     }
+
+    public void updateExtrasFromTicket(TicketG ticketg) throws DALException{
+        String sql = "IF EXISTS (\n" +
+                "    SELECT [BARCODE]\n" +
+                "    FROM TicketsRS\n" +
+                "    WHERE BARCODE = ?)\n" +
+                "BEGIN \n" +
+                "    UPDATE TicketsRS SET [EXTRAS] = ? WHERE BARCODE = ?\n" +
+                "END\n" +
+                "ELSE\n" +
+                "BEGIN \n" +
+                "UPDATE TicketsG SET [Extras] = ? WHERE BARCODE = ?\n" +
+                "END";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1,ticketg.getBarCode());
+            st.setString(2,ticketg.getTypeName());
+            st.setString(3,ticketg.getBarCode());
+            st.setString(4,ticketg.getTypeName());
+            st.setString(5,ticketg.getBarCode());
+            st.execute();
+        }catch(SQLException sqlException){
+            throw new DALException("Not able to update extras of the ticket",sqlException);
+        }
+    }
 }

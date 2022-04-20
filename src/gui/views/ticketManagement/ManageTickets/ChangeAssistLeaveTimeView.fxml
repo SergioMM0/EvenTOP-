@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="171.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.views.ticketManagement.ManageTickets.ChangeAssistLeaveTimeView">
+   <children>
+      <Label layoutX="43.0" layoutY="34.0" prefHeight="18.0" prefWidth="70.0" text="Assist time:" />
+      <TextField fx:id="assistHour" layoutX="121.0" layoutY="30.0" prefHeight="26.0" prefWidth="34.0" promptText="13" />
+      <TextField fx:id="assistMin" layoutX="168.0" layoutY="30.0" prefHeight="26.0" prefWidth="34.0" promptText="00" />
+      <Label layoutX="160.0" layoutY="34.0" prefHeight="18.0" prefWidth="5.0" text=":" />
+      <Label layoutX="43.0" layoutY="74.0" prefHeight="18.0" prefWidth="70.0" text="Leave time:" />
+      <TextField fx:id="leaveHour" layoutX="122.0" layoutY="70.0" prefHeight="26.0" prefWidth="34.0" promptText="01" />
+      <TextField fx:id="leaveMin" layoutX="169.0" layoutY="70.0" prefHeight="26.0" prefWidth="34.0" promptText="30" />
+      <Label layoutX="161.0" layoutY="74.0" prefHeight="18.0" prefWidth="5.0" text=":" />
+      <Label layoutX="212.0" layoutY="50.0" prefHeight="18.0" prefWidth="70.0" text="(24hr format)" />
+      <JFXButton fx:id="cancelButton" layoutX="26.0" layoutY="127.0" onAction="#cancel" text="Cancel" />
+      <JFXButton fx:id="saveButton" layoutX="230.0" layoutY="127.0" onAction="#saveChanges" text="Save" />
+   </children>
+</AnchorPane>

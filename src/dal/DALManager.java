@@ -103,5 +103,10 @@ public class DALManager implements DALFacade{
         daoTickets.updateTicketType(ticketG);
     }
 
+    @Override
+    public void updateExtrasFromTicket(TicketG ticketg) throws DALException {
+        daoTickets.updateExtrasFromTicket(ticketg);
+    }
+
 
 }

@@ -35,6 +35,7 @@ public class CreateTicketModel {
     public ObservableList<String> getAllExtras(Event chosenEvent) throws DALException {
         allExtras.clear();
         allExtras.addAll(bllFacade.getAllExtrasForEvent(chosenEvent));
+        allExtras.remove("No extras");
         return allExtras;
     }
 

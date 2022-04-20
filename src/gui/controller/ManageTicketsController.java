@@ -207,7 +207,6 @@ public class ManageTicketsController {
     }
 
     public void repopulateTicketsView(){
-
             ticketTableView.getItems().clear();
             populateTicketsView();
     }

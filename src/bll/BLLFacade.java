@@ -44,4 +44,6 @@ public interface BLLFacade {
     List<TicketG> getAllTickets() throws DALException;
 
     void updateTicketType(TicketG ticketG)throws DALException;
+
+    void updateExtrasFromTicket(TicketG ticketg) throws DALException;
 }
