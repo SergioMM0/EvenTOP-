@@ -1,10 +1,15 @@
 package gui.controller;
 
+import be.Event;
+import be.TicketG;
 import com.jfoenix.controls.JFXButton;
+import dal.exceptions.DALException;
 import gui.model.ManageChangeExtrasModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -23,10 +28,10 @@ public class ManageChangeExtrasController implements Initializable {
     private JFXButton cancelButton;
 
     @FXML
-    private ListView<?> extrasAvailableListView;
+    private ListView<String> extrasAvailableListView;
 
     @FXML
-    private ListView<?> extrasOnTicketListView;
+    private ListView<String> extrasOnTicketListView;
 
     @FXML
     private TextField newExtraField;
@@ -38,6 +43,9 @@ public class ManageChangeExtrasController implements Initializable {
     private JFXButton saveButton;
     private ManageTicketsController manageTicketsController;
     private ManageChangeExtrasModel manageChangeExtrasModel;
+    private Event chosenEvent;
+    private TicketG chosenTicket;
+    private static final String errTitle = "Something went wrong";
 
     @FXML
     void addExtraToTicket(ActionEvent event) {
@@ -70,6 +78,38 @@ public class ManageChangeExtrasController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        manageChangeExtrasModel = new ManageChangeExtrasModel();
+    }
 
+    public void setChosenEvent(Event chosenEvent) {
+        this.chosenEvent = chosenEvent;
+    }
+
+    public void setChosenTicket(TicketG ticket){
+        this.chosenTicket = ticket;
+    }
+
+    public void populateAllExtras() {
+        try{
+            extrasAvailableListView.getItems().addAll(manageChangeExtrasModel.getAllExtrasInEvent(chosenEvent));
+        }catch (DALException dalException){
+            throwAlert(dalException.getMessage());
+        }
+    }
+    private void throwAlert( String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(errTitle);
+        alert.setHeaderText(message);
+        ButtonType okButton = new ButtonType("OK");
+        alert.getButtonTypes().setAll(okButton);
+        alert.showAndWait();
+    }
+
+    public void populateExtrasOnEvent() {
+        String[] raw = chosenTicket.getExtras().split(", ");
+        for (String s : raw) {
+            manageChangeExtrasModel.addObservableExtra(s);
+        }
+        extrasOnTicketListView.getItems().addAll(manageChangeExtrasModel.getObservableExtras());
     }
 }

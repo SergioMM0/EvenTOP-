@@ -104,17 +104,23 @@ public class ManageTicketsController {
     @FXML
     void changeExtrasToTicket(ActionEvent event) {
         try{
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/eventManagement/EventInfo.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/ticketManagement/ManageTickets/ChangeExtras.fxml"));
             Parent root = null;
             try {
                 root = loader.load();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            ManageChangeExtrasController controller = loader.getController();
+            controller.setController(this);
+            controller.setChosenEvent(chosenEvent);
+            controller.setChosenTicket(chosenTicket);
+            controller.populateAllExtras();
+            controller.populateExtrasOnEvent();
             Stage stage = new Stage();
             stage.setTitle("Event's info");
             assert root != null;
-            stage.setScene(new Scene(root, 600, 450));
+            stage.setScene(new Scene(root, 475, 330));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
