@@ -56,6 +56,7 @@ public class EventInfoController {
     private EMVController emvController;
     private static final String errTitle = "Something went wrong";
     private Event chosenEvent;
+    private int tries = 0;
 
     public EventInfoController(){
         eventInfoModel = new EventInfoModel();
@@ -136,10 +137,25 @@ public class EventInfoController {
 
     @FXML
     void DeleteEvent(ActionEvent event) {
-        try{
-            eventInfoModel.deleteChosenEvent(chosenEvent);
-        }catch (DALException dalException){
-            throwAlert(dalException.getMessage());
+        if(tries == 0){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Event delete");
+            alert.setHeaderText("""
+                    You're about to delete an event,
+                    this will delete all the information about this event.
+                    Click the button again to delete it""");
+            ButtonType okButton = new ButtonType("OK");
+            alert.getButtonTypes().setAll(okButton);
+            alert.showAndWait();
+            tries++;
+        } else{
+            try{
+                eventInfoModel.deleteChosenEvent(chosenEvent);
+                emvController.repopulateEventsTable();
+                closeWindow();
+            }catch (DALException dalException){
+                throwAlert(dalException.getMessage());
+            }
         }
     }
 

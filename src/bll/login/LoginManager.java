@@ -12,6 +12,7 @@ import java.security.InvalidParameterException;
 public class LoginManager implements LoginFacade{
 
     DALFacade dalFacade;
+
     public LoginManager(){
         dalFacade = new DALManager();
     }

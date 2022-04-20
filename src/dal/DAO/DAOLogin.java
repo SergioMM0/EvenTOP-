@@ -11,9 +11,16 @@ public class DAOLogin {
 
     ConnectionProvider connectionProvider;
 
+    public static DAOLogin instance;
 
-    public DAOLogin(){
+    private DAOLogin(){
         connectionProvider = new ConnectionProvider();
+    }
+
+    public static DAOLogin getInstance(){
+        if(instance == null){
+            instance = new DAOLogin();
+        }return instance;
     }
 
     public UserType parseType(String userType){

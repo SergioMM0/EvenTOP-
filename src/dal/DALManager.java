@@ -12,14 +12,14 @@ import java.util.List;
 
 public class DALManager implements DALFacade{
 
-    private DAOLogin daoLogin;
-    private DAOEvents daoEvents;
-    private DAOEventManagers daoEventManagers;
-    private DAOTickets daoTickets;
-    private DAOUsers daoUsers;
+    private final DAOLogin daoLogin;
+    private static DAOEvents daoEvents;
+    private static DAOEventManagers daoEventManagers;
+    private static DAOTickets daoTickets;
+    private static DAOUsers daoUsers;
 
     public DALManager(){
-        daoLogin = new DAOLogin();
+        daoLogin = DAOLogin.instance.getInstance();
         daoEvents = new DAOEvents();
         daoEventManagers = new DAOEventManagers();
         daoTickets = new DAOTickets();
