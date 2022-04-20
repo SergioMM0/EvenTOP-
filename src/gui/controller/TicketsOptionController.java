@@ -25,9 +25,6 @@ public class TicketsOptionController implements Initializable {
     @FXML
     private JFXButton manageTicketsButton;
 
-    @FXML
-    private JFXButton printTicketButton;
-
     private Event chosenEvent;
 
     @FXML
@@ -79,11 +76,6 @@ public class TicketsOptionController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    void openPrintTicketView(ActionEvent event) {
-
     }
 
     @Override

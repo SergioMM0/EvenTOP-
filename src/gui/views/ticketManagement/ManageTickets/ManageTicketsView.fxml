@@ -10,7 +10,7 @@
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controller.ManageTicketsController">
    <children>
       <JFXButton fx:id="backButton" layoutX="14.0" layoutY="559.0" onAction="#goBackToTicketOptions" prefHeight="26.0" prefWidth="114.0" text="Back" />
-      <TableView fx:id="ticketTableView" layoutX="39.0" layoutY="72.0" prefHeight="400.0" prefWidth="822.0">
+      <TableView fx:id="ticketTableView" layoutX="39.0" layoutY="72.0" onMouseClicked="#ticketClicked" prefHeight="400.0" prefWidth="822.0">
         <columns>
           <TableColumn fx:id="ticketTypeCol" prefWidth="85.60003662109375" text="Ticket Type" />
             <TableColumn fx:id="assistTimeCol" prefWidth="85.60003662109375" text="Assist time" />
@@ -31,5 +31,6 @@
       <Label layoutX="322.0" layoutY="33.0" prefHeight="18.0" prefWidth="114.0" text="Search by barcode:" />
       <TextField layoutX="446.0" layoutY="30.0" prefHeight="26.0" prefWidth="350.0" promptText="15b41b53-bf5c-473f-a7b6...." />
       <JFXButton fx:id="searchButton" layoutX="807.0" layoutY="29.0" onAction="#searchInTicketTable" prefHeight="26.0" prefWidth="54.0" text="Search" />
+      <JFXButton fx:id="printTicketButton" layoutX="38.0" layoutY="29.0" onAction="#printTicket" prefHeight="26.0" prefWidth="121.0" text="Print ticket" />
    </children>
 </AnchorPane>

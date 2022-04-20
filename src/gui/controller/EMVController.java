@@ -172,7 +172,7 @@ public class EMVController implements Initializable {
                 Stage stage = new Stage();
                 stage.setTitle("Ticket options");
                 assert root != null;
-                stage.setScene(new Scene(root, 400, 400));
+                stage.setScene(new Scene(root, 400, 300));
                 stage.show();
             } catch (Exception e) {
                 e.printStackTrace();

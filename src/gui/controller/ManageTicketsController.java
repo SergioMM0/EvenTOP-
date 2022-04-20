@@ -2,27 +2,35 @@ package gui.controller;
 
 import be.Event;
 import be.Ticket;
+import be.TicketG;
 import com.jfoenix.controls.JFXButton;
 import dal.exceptions.DALException;
 import gui.model.ManageTicketsModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ManageTicketsController {
 
     @FXML
-    private TableColumn<String, Ticket> assistTimeCol;
+    private TableColumn<String, TicketG> assistTimeCol;
 
     @FXML
     private JFXButton backButton;
 
     @FXML
-    private TableColumn<String, Ticket> barcodeCol;
+    private TableColumn<String, TicketG> barcodeCol;
 
     @FXML
     private JFXButton changeAssistLeaveButton;
@@ -40,29 +48,33 @@ public class ManageTicketsController {
     private JFXButton deleteTicketButton;
 
     @FXML
-    private TableColumn<String, Ticket> extrasCol;
+    private TableColumn<String, TicketG> extrasCol;
 
     @FXML
-    private TableColumn<String, Ticket> leaveTimeCol;
+    private TableColumn<String, TicketG> leaveTimeCol;
 
     @FXML
-    private TableColumn<Integer, Ticket> rowCol;
+    private TableColumn<Integer, TicketG> rowCol;
 
     @FXML
     private JFXButton searchButton;
 
     @FXML
-    private TableColumn<Integer, Ticket> seatCol;
+    private TableColumn<Integer, TicketG> seatCol;
 
     @FXML
-    private TableView<Ticket> ticketTableView;
+    private JFXButton printTicketButton;
 
     @FXML
-    private TableColumn<String, Ticket> ticketTypeCol;
+    private TableView<TicketG> ticketTableView;
+
+    @FXML
+    private TableColumn<String, TicketG> ticketTypeCol;
 
     private Event chosenEvent;
     private ManageTicketsModel manageTicketsModel;
     private static final String errTitle = "Something went wrong";
+    private TicketG chosenTicket;
 
     public ManageTicketsController(){
         manageTicketsModel = new ManageTicketsModel();
@@ -70,22 +82,83 @@ public class ManageTicketsController {
 
     @FXML
     void changeAssistLeaveTime(ActionEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/eventManagement/EventInfo.fxml"));
+            Parent root = null; //tochangeview
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+            Stage stage = new Stage();
+            stage.setTitle("Event's info");
+            assert root != null;
+            stage.setScene(new Scene(root, 600, 450));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void changeExtrasToTicket(ActionEvent event) {
-
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/eventManagement/EventInfo.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage stage = new Stage();
+            stage.setTitle("Event's info");
+            assert root != null;
+            stage.setScene(new Scene(root, 600, 450));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void changeSeatRowToTicket(ActionEvent event) {
-
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/eventManagement/EventInfo.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage stage = new Stage();
+            stage.setTitle("Event's info");
+            assert root != null;
+            stage.setScene(new Scene(root, 600, 450));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void changeTypeToTicket(ActionEvent event) {
-
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("gui/views/eventManagement/EventInfo.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage stage = new Stage();
+            stage.setTitle("Event's info");
+            assert root != null;
+            stage.setScene(new Scene(root, 600, 450));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -95,7 +168,7 @@ public class ManageTicketsController {
 
     @FXML
     void goBackToTicketOptions(ActionEvent event) {
-
+        closeWindow();
     }
 
     @FXML
@@ -133,5 +206,21 @@ public class ManageTicketsController {
 
     public void setChosenEvent(Event event) {
         this.chosenEvent = event;
+    }
+
+
+    @FXML
+    void printTicket(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ticketClicked(MouseEvent event) {
+        this.chosenTicket = ticketTableView.getSelectionModel().getSelectedItem();
+    }
+
+    private void closeWindow() {
+        Stage st = (Stage) backButton.getScene().getWindow();
+        st.close();
     }
 }
