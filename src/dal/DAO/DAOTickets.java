@@ -1,8 +1,6 @@
 package dal.DAO;
 
-import be.Event;
-import be.TicketG;
-import be.TicketRS;
+import be.*;
 import dal.connectionProvider.ConnectionProvider;
 import dal.exceptions.DALException;
 
@@ -244,5 +242,50 @@ public class DAOTickets {
             sqlException.printStackTrace();
             throw new DALException("Not able to update assist/leave time for the ticket",sqlException);
         }
+    }
+
+    public Ticket getTicketByShorBarCode(User user) throws DALException{
+        Ticket ticket = null;
+        String sql = "IF EXISTS(SELECT BARCODE FROM TicketsG WHERE RIGHT(BARCODE,9) = ?)\n" +
+                "BEGIN \n" +
+                "SELECT * FROM TicketsG WHERE RIGHT(BARCODE,9) = ?\n" +
+                "END\n" +
+                "ELSE\n" +
+                "BEGIN\n" +
+                "SELECT * FROM TicketsRS WHERE RIGHT(BARCODE,9) = ? \n" +
+                "END";
+        try{
+            Connection connection = connectionProvider.getConnection();
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1,user.getPassword());
+            st.setString(2,user.getPassword());
+            st.setString(3,user.getPassword());
+            st.execute();
+            ResultSet rs = st.getResultSet();
+            while(rs.next()){
+                try{rs.getBoolean("ROW");
+                    ticket = new TicketRS(
+                            rs.getString("BARCODE"),
+                            rs.getString("TYPE"),
+                            rs.getString("EXTRAS"),
+                            rs.getString("STARTTIME"),
+                            rs.getString("ENDTIME"),
+                            rs.getInt("ROW"),
+                            rs.getInt("SEAT")
+                    );
+                }catch (SQLException sqlException){
+                    ticket = new TicketG(rs.getString("BARCODE"),
+                            rs.getString("TYPE"),
+                            rs.getString("EXTRAS"),
+                            rs.getString("STARTTIME"),
+                            rs.getString("ENDTIME"));
+                }
+            }
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+            throw new DALException("Not able to update assist/leave time for the ticket",sqlException);
+        }
+        System.out.println(ticket.);
+        return ticket;
     }
 }

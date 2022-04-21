@@ -4,6 +4,7 @@ import be.User;
 import bll.exceptions.BLLException;
 import com.jfoenix.controls.JFXButton;
 import dal.exceptions.DALException;
+import gui.model.CustomerMainModel;
 import gui.model.LoginModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -102,7 +103,23 @@ public class LoginController implements Initializable {
     }
 
     private void openCustomerView() {
-        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource("gui/views/CustomerViews/CustomerMainView.fxml"));
+        Parent root = null;
+        try{root = loader.load();}
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        CustomerMainController customerMainController = loader.getController();
+
+        assert root != null;
+        root.getStylesheets().add("");  //CSS after
+        Stage stage = new Stage();
+        stage.setTitle("EVENTOP");
+        stage.setScene(new Scene(root,1000,650));
+        stage.setResizable(false);
+        stage.show();
+        closeWindow();
     }
 
     private boolean barcodeMatches() {

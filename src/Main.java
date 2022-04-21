@@ -1,3 +1,7 @@
+import be.User;
+import be.UserType;
+import dal.DAO.DAOTickets;
+import dal.exceptions.DALException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,5 +22,12 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch();
+        DAOTickets daoTickets = new DAOTickets();
+
+        try {
+            daoTickets.getTicketByShorBarCode(new User(0, UserType.CUSTOMER,"0","fca8ecd19","2","0"));
+        } catch (DALException e) {
+            e.printStackTrace();
+        }
     }
 }
