@@ -8,4 +8,5 @@ public interface LoginFacade {
 
     User checkCredentials(String email, String password) throws BLLException, DALException;
 
+    User checkBarCodeExists(String barcode)throws DALException, BLLException;
 }

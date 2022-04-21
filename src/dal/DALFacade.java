@@ -48,4 +48,6 @@ public interface DALFacade {
     void updateAssistLeaveTime(TicketG ticketG)throws DALException;
 
     void deleteEvent(Event event)throws DALException;
+
+    User checkBarCodeExists(String barcode)throws DALException;
 }
