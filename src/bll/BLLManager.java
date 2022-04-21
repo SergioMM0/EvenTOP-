@@ -143,7 +143,7 @@ public class BLLManager implements BLLFacade{
 
     private String getBarcodePassword(String barcode){
         int length = barcode.length();
-        return barcode.substring(length-10);
+        return barcode.substring(length-9);
     }
 
     private UUID safeBarcode() throws DALException {

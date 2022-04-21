@@ -93,11 +93,16 @@ public class LoginController implements Initializable {
             }else {
                 try {
                     logedUser = loginModel.checkBarcode(emailField.getText());
+                    openCustomerView();
                 } catch (BLLException | DALException ex) {
                     throwAlert(ex.getMessage());
                 }
             }
         }
+    }
+
+    private void openCustomerView() {
+        
     }
 
     private boolean barcodeMatches() {

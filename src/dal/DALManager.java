@@ -118,5 +118,8 @@ public class DALManager implements DALFacade{
         daoEvents.deleteEvent(event);
     }
 
+    public User checkBarCodeExists(String barcode)throws DALException{
+        return daoLogin.checkBarCodeExists(barcode);
+    }
 
 }

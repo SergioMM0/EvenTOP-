@@ -19,6 +19,6 @@ public class LoginModel {
     }
 
     public User checkBarcode(String text) throws BLLException, DALException{
-        return null;
+        return loginF.checkBarCodeExists(text);
     }
 }

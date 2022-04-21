@@ -26,4 +26,14 @@ public class LoginManager implements LoginFacade{
         return user;
     }
 
+    @Override
+    public User checkBarCodeExists(String barcode) throws DALException, BLLException {
+        User user = dalFacade.checkBarCodeExists(barcode);
+        if(user == null){
+            throw new BLLException("Ticket not found, please try again", new InvalidParameterException());
+        }
+        return user;
+    }
+
+
 }
