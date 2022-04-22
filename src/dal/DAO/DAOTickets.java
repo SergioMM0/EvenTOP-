@@ -285,7 +285,7 @@ public class DAOTickets {
             sqlException.printStackTrace();
             throw new DALException("Not able to update assist/leave time for the ticket",sqlException);
         }
-        System.out.println(ticket.);
+
         return ticket;
     }
 }

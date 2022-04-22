@@ -72,7 +72,7 @@ public class LoginController implements Initializable {
                         openEMView();
                         break;
                     case ADMIN:
-                        //implement
+                        openAdminView();
                         break;
                 }
             } catch(BLLException loginEX){
@@ -100,6 +100,9 @@ public class LoginController implements Initializable {
                 }
             }
         }
+    }
+
+    private void openAdminView() {
     }
 
     private void openCustomerView() {

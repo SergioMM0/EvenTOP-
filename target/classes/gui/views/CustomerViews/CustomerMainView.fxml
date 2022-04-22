@@ -32,14 +32,10 @@
             <Label fx:id="locationLBL" layoutX="189.0" layoutY="105.0" prefHeight="18.0" prefWidth="376.0" text="eventlocation" />
             <Label layoutX="32.0" layoutY="141.0" prefHeight="18.0" prefWidth="116.0" text="Extras:" />
             <Label fx:id="extrasLBL" layoutX="189.0" layoutY="141.0" prefHeight="18.0" prefWidth="376.0" text="eventlocation" />
-            <Label layoutX="32.0" layoutY="177.0" prefHeight="18.0" prefWidth="116.0" text="Row:" />
-            <Label layoutX="32.0" layoutY="213.0" prefHeight="18.0" prefWidth="116.0" text="Seat:" />
-            <Label fx:id="rowLBL" layoutX="189.0" layoutY="177.0" prefHeight="18.0" prefWidth="376.0" text="eventlocation" />
-            <Label fx:id="seatLBL" layoutX="189.0" layoutY="213.0" prefHeight="18.0" prefWidth="376.0" text="eventlocation" />
-            <Label layoutX="32.0" layoutY="250.0" prefHeight="18.0" prefWidth="116.0" text="Start Time:" />
-            <Label layoutX="32.0" layoutY="281.0" prefHeight="18.0" prefWidth="116.0" text="End Time:" />
-            <Label fx:id="startTimeLBL" layoutX="189.0" layoutY="250.0" prefHeight="18.0" prefWidth="376.0" text="eventlocation" />
-            <Label fx:id="endTimeLBL" layoutX="190.0" layoutY="281.0" prefHeight="18.0" prefWidth="376.0" text="eventlocation" />
+            <Label layoutX="32.0" layoutY="178.0" prefHeight="18.0" prefWidth="116.0" text="Start Time:" />
+            <Label layoutX="32.0" layoutY="214.0" prefHeight="18.0" prefWidth="116.0" text="End Time:" />
+            <Label fx:id="startTimeLBL" layoutX="189.0" layoutY="178.0" prefHeight="18.0" prefWidth="376.0" text="eventlocation" />
+            <Label fx:id="endTimeLBL" layoutX="189.0" layoutY="214.0" prefHeight="18.0" prefWidth="376.0" text="eventlocation" />
             <JFXButton fx:id="printTicketButton" layoutX="595.0" layoutY="130.0" onAction="#printTicket" prefHeight="48.0" prefWidth="130.0" text="Print ticket" />
          </children>
       </AnchorPane>
